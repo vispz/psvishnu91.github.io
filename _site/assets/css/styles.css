@@ -56,6 +56,10 @@ body {
   margin-top: 0;
 }
 
+.list-group-item-heading {
+  font-weight: 300;
+}
+
 #sticky-sidebar {
   position: fixed;
 }
