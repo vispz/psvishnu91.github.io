@@ -1,0 +1,27 @@
+---
+title: Blogs
+layout: default
+---
+
+<!---------------Container  -------------->
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="list-group one">
+        <div class="list-group-item active">
+          <h2 class="list-group-item-heading" align="center">Blogs</h2>
+        </div>
+        {% for post in site.posts %}
+        <a href="{{ post.url }}" class="list-group-item">
+          <h4 class="list-group-item-heading">{{ post.title }}</h4>
+          <p style="color: gray; font-size: 15px">
+            {{ post.date | date: "%-d %B %Y" }}
+          </p>
+          {{ post.excerpt }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
