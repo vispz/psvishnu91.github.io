@@ -6,22 +6,36 @@ layout: default
 <!---------------Container  -------------->
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="list-group one">
-        <div class="list-group-item active">
-          <h2 class="list-group-item-heading" align="center">Blogs</h2>
+  <!-- Three columns per row. Each column is a blog type (blogs, ml notes etc.) -->
+  {% assign num_rows = site.data.blogs | size | divided_by: 3.0 | ceil %}
+  {% assign range = (1..num_rows) %}
+  {% for row in range %}
+    <div class="row">
+    <!-- In each row creating 3 columns -->
+      {% for blog_column in site.data.blogs limit: 3 offset: continue %}
+        <div class="col-lg-4">
+          <div class="list-group one">
+            <div class="list-group-item active">
+              <h2 class="list-group-item-heading" align="center">
+                {{ blog_column.name }}
+              </h2>
+            </div>
+            <!-- In each column we are listing all the relevant posts -->
+            {% for post in site.posts%}
+              {% if post.blog_type == blog_column.blog_type %}
+                <a href="{{ post.url }}" class="list-group-item">
+                  <h4 class="list-group-item-heading">{{ post.title }}</h4>
+                  <p style="color: gray; font-size: 15px">
+                    {{ post.date | date: "%-d %B %Y" }}
+                  </p>
+                  {{ post.excerpt }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
-        {% for post in site.posts %}
-        <a href="{{ post.url }}" class="list-group-item">
-          <h4 class="list-group-item-heading">{{ post.title }}</h4>
-          <p style="color: gray; font-size: 15px">
-            {{ post.date | date: "%-d %B %Y" }}
-          </p>
-          {{ post.excerpt }}
-        </a>
-        {% endfor %}
-      </div>
+      {% endfor %}
     </div>
-  </div>
+    <br/>
+  {% endfor %}
 </div>

@@ -1,0 +1,9 @@
+- name: Blogs
+  blog_type: blog
+
+- name: Machine learning Notes
+  blog_type: ml_notes
+
+- name: Programming Notes
+  blog_type: programming_notes
+
