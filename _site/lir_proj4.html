@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <a name="start"></a>
+    <div class="navbar navbar-dark bg-dark navbar-static-top">
+      <div class="container">
+        <a href="index.html" class="navbar-brand active">Home</a>
+
+        <button
+          class="navbar-toggle"
+          data-toggle="collapse"
+          data-target=".navHeaderCollapse"
+        >
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse navHeaderCollapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="https://www.linkedin.com/in/vishnu-s-3b33985a"
+                >LinkedIn
+              </a>
+            </li>
+            <li><a href="proj.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Blogs <b class="caret"></b
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="student_club.html">Student Club days</a></li>
+                <li>
+                  <a href="alma_mater.html">Alma Mater</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!------Content------>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a name="ml"></a>
+
+          <div class="page-header">
+            <h3>
+              Simultaneous Localization and Mapping with Particle Filters
+              <small>Posted on August, 25th, 2014</small>
+            </h3>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <iframe
+              width="100%"
+              height="500"
+              src="https://www.youtube.com/embed/vAwgxityzKQ"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <br />
+          <h4>Problem Statement</h4>
+          <p>
+            The objective of the project is to use data from the magic robot (a
+            mobile robot), with odometers on each of the 4 wheels, a LIDAR,
+            gyroscope (3 axes), accelerometer (3 axes) and a kinect sensor to
+            localize the robot and simultaneously map the environment by
+            implementing the Particle Filters SLAM algorithm.
+            <br />
+            <br />
+          </p>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <img
+                src="assets\Images\project\lir_ims\proj4\slam2.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+                width="100%"
+              />
+            </div>
+            <div class="col-lg-6">
+              <h4>Description of approach</h4>
+              I removed the bias and multiplied the sensitivities to the IMU
+              data (accelerometer and gyroscope) after smoothing. Then I ran
+              Unscented Kalman Filter to get the yaw, pitch and roll of the
+              robot at every time instant. This data is only used to remove the
+              LIDAR ray points hitting the ceiling or the floor when the robot
+              is on a ramp. I first do dead reckoning using only odometery and
+              then get an approximate map size. I use 100 particles in my
+              particle filter. I perform motion based on the odometery and then
+              randomly jitter the particles along x, y and the orientation phi
+              with a Gaussian centered at 0 and a standard deviation of 3 times
+              the change in x, y and phi. Then I compute weight as the sum of
+              the map values at the hit positions of the LIDAR rays where the
+              map value is the log odd value of it being an obstacle versus an
+              empty space. I choose the particle with the largest weight and
+              update the map with the LIDAR points. I increment the log odds of
+              the obstacles by 30, I use Bresenham’s algorithm to decrement the
+              points which are empty by only 1. Finally I resample every time
+              based on the weights of the particles.
+            </div>
+          </div>
+          <br />
+          <img
+            src="assets\Images\project\lir_ims\proj4\slam1.jpg"
+            alt="Generic placeholder thumbnail"
+            class="img-thumbnail"
+            width="100%"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+  <div class="list-group" id="sticky-sidebar">
+    
+    
+      <a href=lir_proj.html class="list-group-item active">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\lir_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Learning in Robotics</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=ai_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ai_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Intro to AI</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=cs_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\cs_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Control Systems</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=cv_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\cv_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Computer Vision</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=ml_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ml_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Machine Learning</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=intro_to_robotics_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\meam520_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Intro to Robotics</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=undergrad_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ug_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Undergrad Projects</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=research_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\research_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Research & Intern</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+  </body>
+</html>

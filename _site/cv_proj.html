@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Computer Vision Projects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <a name="start"></a>
+    <div class="navbar navbar-dark bg-dark navbar-static-top">
+      <div class="container">
+        <a href="index.html" class="navbar-brand active">Home</a>
+
+        <button
+          class="navbar-toggle"
+          data-toggle="collapse"
+          data-target=".navHeaderCollapse"
+        >
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse navHeaderCollapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="https://www.linkedin.com/in/vishnu-s-3b33985a"
+                >LinkedIn
+              </a>
+            </li>
+            <li><a href="proj.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                >Blogs <b class="caret"></b
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="student_club.html">Student Club days</a></li>
+                <li>
+                  <a href="alma_mater.html">Alma Mater</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!----- Text abt cv--->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a name="cv"></a>
+          <div class="page-header">
+            <h3>
+              Computer Vision Projects
+              <small>Posted on January, 20th, 2014</small>
+            </h3>
+          </div>
+
+          <a
+            href="https://alliance.seas.upenn.edu/~cis581/wiki/index.php?title=CIS_581:_Computer_Vision_%26_Computational_Photography"
+            ><img
+              class="featuredImg"
+              src="assets\Images\project\cv_projects.jpg"
+              width="100%"
+          /></a>
+
+          <p>
+            This was an introductory course to computer vision and computational
+            photography. In this course, we explored four topics: 1) image
+            features, 2) image morphing, 3) shape matching, and 4) image search.
+            All the programming was done in Matlab.
+          </p>
+
+          <h4>Logo Detection and Replacement</h4>
+
+          <img
+            class="featuredImg"
+            src="assets\Images\project\logo.jpg"
+            width="100%"
+          />
+
+          <p></p>
+          <ul>
+            <li>
+              The project involves detection of the Penn logo in an image and
+              replacement with any chosen logo.
+            </li>
+
+            <li>
+              Implemented SIFT for key point extraction and obtaining feature
+              descriptors which are scale and orientation invariant. More
+              details are available at the
+              <a href="http://www.vlfeat.org/api/sift.html">VLfeat site.</a>
+            </li>
+
+            <li>RANSAC was used for descriptor matching.</li>
+
+            <li>Estimate homography to get bounding box.</li>
+
+            <li>Use convex hull to identify the region of the logo.</li>
+
+            <li>Remove the logo and smoothen the background using roifill.</li>
+
+            <li>
+              Apply homography to the replacement logo and copy olnly the convex
+              hull of the replacement logo.
+            </li>
+
+            <li>
+              Use bilinear interpolation with inverse warping for smoothened
+              pixel output.
+            </li>
+
+            <li>
+              Use alpha blending to create a realistic look to the warped logo.
+            </li>
+          </ul>
+
+          <h4>Image Mosaicing</h4>
+
+          <img
+            class="featuredImg"
+            src="assets\Images\project\cv3.jpg"
+            width="100%"
+          />
+
+          <ul>
+            <li>
+              In this project, multiple images were taken to create an automatic
+              panaroma image.
+            </li>
+
+            <li>
+              Harris corner detector was used to get the corner response map.
+            </li>
+
+            <li>
+              Adaptive non maximum suppression was performed on the thresholded
+              corner response map.
+            </li>
+
+            <li>
+              Descriptors were obtained in a small window around the corner
+              points by subsampling and blurring.
+            </li>
+
+            <li>Features were matched with RANSAC</li>
+
+            <li>
+              Estimated the homography and placed the left image and right image
+              on top of the center image and the process was repeated.
+            </li>
+
+            <li>
+              The position of the warped image was adjusted to align with the
+              existing stitched image.
+            </li>
+          </ul>
+
+          <h4>Image Morphing</h4>
+
+          <div class="container">
+            <div class="column" align="center">
+              <div class="col-md-9">
+                <iframe
+                  width="420"
+                  height="315"
+                  src="http://www.youtube.com/embed/ALAen59QsfE"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+
+                <ul align="left">
+                  <li>
+                    In this project, I had to generate a video of my face being
+                    morphed to another image or a face.
+                  </li>
+
+                  <li>
+                    I chose the control points on both the images (such as ear
+                    to ear, nose to nose and eye to eye).
+                  </li>
+
+                  <li>
+                    Then I took the average of both the images and control
+                    points at the mean image.
+                  </li>
+
+                  <li>
+                    I constructed the Delaunay triangulation at the mean image.
+                  </li>
+
+                  <li>
+                    At each frame, I computed the barycentric coordinates of
+                    each pixel point of the intermediate image.
+                  </li>
+
+                  <li>
+                    I implemented inverse warping to get the corresponding
+                    points in both images using the barycentric coordinates.
+                  </li>
+
+                  <li>
+                    Used bilinear interpolation to get a finer output. I
+                    dissolved each of the image depending on which time frame,
+                    the intermediate image is being generated for.
+                  </li>
+
+                  <li>Combined the frames to produce the morphing video.</li>
+                </ul>
+              </div>
+
+              <div class="col-md-9">
+                <iframe
+                  width="420"
+                  height="315"
+                  src="http://www.youtube.com/embed/JLFtPiyoe9o"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+              </div>
+
+              <div class="col-md-9">
+                <iframe
+                  width="420"
+                  height="315"
+                  src="http://www.youtube.com/embed/tx1RxfUy-y0"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+
+                <ul align="left">
+                  <li>
+                    I chose the control points(matching) on both the images.
+                  </li>
+
+                  <li>
+                    For each frame of the intermediate image, I computed the
+                    weights and the constants of the TPS function, for both<br />
+                    x and y coordinates of the two images.
+                  </li>
+
+                  <li>
+                    Now using the coefficients of the equation, the
+                    corresponding pixel position in the source images were
+                    found.
+                  </li>
+
+                  <li>
+                    Used bilinear interpolation to get a finer output. I
+                    dissolved each of the image depending on which time frame,
+                    the intermediate image is being generated for.
+                  </li>
+
+                  <li>Combined the frames to produce the morphing video.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h4>Canny Edge Detection</h4>
+
+          <img
+            class="featuredImg"
+            src="assets\Images\project\cv11.jpg"
+            width="100%"
+          />
+
+          <img
+            class="featuredImg"
+            src="assets\Images\project\cv12.jpg"
+            width="100%"
+          />
+
+          <p></p>
+          <ul>
+            <li>
+              In this project, I as a part of a two membered team, implemented
+              the Canny Edge Detection, algorithm to detect the edges of an
+              image.
+            </li>
+
+            <li>
+              Obtained the gradient map of the image, in both the horizontal (x
+              axis) and the vertical (y axis) direction, using a simple
+              convolution function by taking the difference of the adjacent
+              points of the image with simultaneous blurring.
+            </li>
+
+            <li>
+              Used bilinear interpolation and performed non maximum suppression.
+            </li>
+
+            <li>
+              Obtained the upper thresholded image and performed hysteresis
+              based edge linking for the edges which were between the upper
+              threshold and the lower threshold
+            </li>
+
+            <li>
+              For thresholding, we performed a technique of adaptive
+              thresholding, in which the value of the upper threshold is chosen
+              at the point at which the intensity values of 65% of the pixels in
+              image are below by using a histogram based approach.
+            </li>
+
+            <li>
+              We were one of the few teams who got full points on this project.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+  <div class="list-group" id="sticky-sidebar">
+    
+    
+      <a href=lir_proj.html class="list-group-item active">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\lir_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Learning in Robotics</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=ai_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ai_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Intro to AI</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=cs_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\cs_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Control Systems</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=cv_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\cv_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Computer Vision</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=ml_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ml_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Machine Learning</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=intro_to_robotics_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\meam520_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Intro to Robotics</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=undergrad_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\ug_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Undergrad Projects</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+    
+      <a href=research_proj.html class="list-group-item">
+    
+      <table>
+        <tr>
+          <td>
+            <img
+              src=assets\Images\project\research_logo.jpg
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">Research & Intern</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    
+  </div>
+</div>
+
+  </div>
+</div>
+<!---end container text abt cv--->
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+  </body>
+</html>

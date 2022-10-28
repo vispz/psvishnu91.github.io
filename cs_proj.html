@@ -1,0 +1,109 @@
+---
+title: Control Systems Projects
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="page-header">
+            <h2>
+              Control Systems: Control of a DC Motor.
+              <small>Posted on August, 25th, 2014</small>
+            </h2>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <div align="center">
+              <iframe
+                src="https://onedrive.live.com/embed?cid=CDAE725D2F9D47AC&resid=CDAE725D2F9D47AC%21112&authkey=AHXs35V0Oua8aoA&em=2"
+                width="80%"
+                height="500"
+                frameborder="0"
+                scrolling="no"
+              ></iframe>
+            </div>
+          </div>
+
+          <br />
+
+          <p></p>
+          <h4>Problem Statement</h4>
+          <ul>
+            <li>Given a Lego DC motor set up.</li>
+            <li>
+              Connected to a circuitry allowing to manually adjust the desired
+              rpm and a way to sense the current rpm using an arduino board.
+            </li>
+
+            <li>
+              Make the actual motor rpm = desired rpm with a robust control.
+            </li>
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\cs_ims\im1.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+          </ul>
+          <br />
+          <h4>Outline</h4>
+          <ul>
+            <li>Do a simple PID with digital filtering</li>
+            <li>Build a PID control with low pass filter in Laplace space</li>
+            <li>Convert to discrete z space</li>
+            <li>Test for robustness and tracking</li>
+          </ul>
+          <br />
+          <div class="row">
+            <div class="col-lg-6">
+              <h4>Approach 1</h4>
+              <li>PID with digital filter with Feedforward</li>
+              <li>Used an usual implementation of PID</li>
+              <li>Smoothed the error with digital filter</li>
+              <div align="center">
+                <img
+                  src="assets\Images\project\cs_ims\im2.jpg"
+                  alt="Generic placeholder thumbnail"
+                  class="img-thumbnail"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h4>Approach 2</h4>
+
+              <ul>
+                <li>PID with low pass filter using difference equation</li>
+                <li>Equation in continuous Laplace s space</li>
+                <li>Convert to discrete space</li>
+              </ul>
+
+              <div align="center">
+                <img
+                  src="assets\Images\project\cs_ims\im3.jpg"
+                  alt="Generic placeholder thumbnail"
+                  class="img-thumbnail"
+                />
+              </div>
+            </div>
+          </div>
+          <br />
+
+          <img
+            src="assets\Images\project\cs_ims\logo.jpg"
+            alt="Generic placeholder thumbnail"
+            class="img-thumbnail"
+            width="100%"
+          />
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+  <!-----Sidebar end----->
+</div>

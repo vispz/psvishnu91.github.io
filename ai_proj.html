@@ -1,0 +1,126 @@
+---
+title: Academics: Projects
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="page-header">
+            <h2>
+              Artificial Intelligence
+              <small>Posted on August, 25th, 2014</small>
+            </h2>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_proj.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <p></p>
+          <h4>Assignments</h4>
+          <ol>
+            <br />
+            <li>
+              Solving the eight puzzle using Iterative Deepening Search.<br /><small
+                >Following picture is taken from the University of Minnesota
+                website.</small
+              >
+            </li>
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_ims\ep.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+            <br /><br />
+            <li>Sudoku Solving using constraint satisfaction using AC3.</li>
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_ims\sudoku.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+            <br /><br />
+
+            <li>
+              Generating texts using unigram, bigram and trigram Markov
+              generators.
+            </li>
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_ims\mg.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+            <br /><br />
+
+            <li>Shortest path algorithm using Djikstra and A-star search.</li>
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_ims\a_star.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+            <br /><br />
+
+            <li>
+              Spam filtering with Naive Bayes.
+              <br /><br />
+              <u> Problem Statement </u><br />
+              In this assignment, we were provided a standard dataset of 2000
+              labeled emails with equal number of spam and ham mails. We were
+              also provided a labeled validation set of 400 emails again with
+              equal number of spam and ham mails. The objective of the project
+              was to implement a standard Naive Bayes algorithm for spam
+              classification with any improvisation in the feature extraction
+              and smoothing parameters.
+              <br /><br />
+              <u>Algorithm and Result </u><br />
+              The final model chosen is a simple unigram model which was
+              tokenized by splitting by spaces without any stop word but with
+              header removal, and without any case adjustment or lemmatization
+              but with a manually selected smoothing (Lidstone Correction). As
+              shown in the results, this simple fast model was able to achieve
+              an accuracy of 99% on the dev set and an accuracy of 99.1% on
+              cross validation. The in sample training error for Spam and Ham
+              was 0%.
+            </li>
+
+            <br />
+            <div align="center">
+              <img
+                src="assets\Images\project\ai_ims\nb.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+            <br /><br />
+
+            <br />
+          </ol>
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+</div>

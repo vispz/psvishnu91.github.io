@@ -1,0 +1,136 @@
+---
+title: Research Project
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="page-header">
+            <h1>
+              Research & Intern <small>Posted on August, 25th, 2014</small>
+            </h1>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <div align="center">
+              <img
+                src="assets\Images\project\research\keyme_group.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <hr />
+          <h2>Research</h2>
+          <u>Guide</u> : Dr. Eric Eaton, Faculty, Computing and Information
+          Systems Dept., University of Pennsylvania <br /><br />
+          <u>Duration</u> : Sept 2013 - Feb 2014 <br /><br />
+          <u>Publication</u> :
+          <a
+            href="http://www.aaai.org/ocs/index.php/AAAI/AAAI14/paper/view/8610"
+            >Vishnu Purushothaman Sreenivasan, Haitham Bou Ammar, and Eric
+            Eaton.
+            <i>Online Multi-Task Gradient Temporal-Difference Learning.</i> In
+            Proceedings of the 28th AAAI Conference on Artificial Intelligence
+            (AAAI-14), July 2014. [Student Abstract]</a
+          >
+
+          <br /><br />
+
+          I worked on incorporating Lifelong Learning in a Reinforcement
+          Learning (RL) framework. The idea is an agent maybe required to learn
+          several RL tasks in order to perform the overall task. Each of these
+          task could be learnt by a standard RL learning algorithm but all these
+          different sub agents do not transfer knowledge between them (Transfer
+          Learning). A recent algorithm proposed by Paul Ruvolo and Eric Eaton,
+          "Efficient Lifelong Learning Algorithm" presents an efficient
+          methodology for transfer of knowledge between several similar tasks by
+          learning a set of shared basis vectors which form a knowledge base.
+          <br /><br />Details are present in this 2 page abstract paper accepted
+          in AAAI-14 conference.
+          <br />
+          <div align="center">
+            <a
+              href="assets/Docs/proj/research/gtd_ella.pdf"
+              class="navbar-btn btn-primary btn pull-center"
+              >Abstract Paper</a
+            >
+          </div>
+          <br />
+          <div align="center">
+            <a
+              href="assets/Docs/proj/research/poster.pdf"
+              class="navbar-btn btn-primary btn pull-center"
+            >
+              <img
+                src="assets\Images\project\research\poster.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+              />
+            </a>
+          </div>
+          <br />
+          <hr />
+          <h2>Software Internship - KeyMe Inc., NY</h2>
+          <u>Guide</u> : Ms. Paige Pruitt, Senior Embedded Engineer, KeyMe Inc.
+          <br /><br />
+          KeyMe is a New York City-based startup that is revolutionizing the
+          locksmith industry. KeyMe allows users to store, share, and duplicate
+          their physical keys using a digital scan that is securely stored in
+          the cloud. The KeyMe kiosks allow customers to instantly make copies
+          of their keys. It also allows them to securely store digital copies of
+          their keys so that if they ever get locked out, they can make a spare
+          key at the kiosk. There were two main projects I was working on
+          <ol>
+            <li>
+              Automating the calibration routine for the kiosk during
+              installation using computer vision and machine learning.
+            </li>
+            <li>Checking the post cut key for errors using computer vision.</li>
+          </ol>
+          <br />
+          <div class="row">
+            <div class="col-lg-4">
+              <img
+                src="assets\Images\project\research\keyme_me.jpg"
+                alt="Generic placeholder thumbnail"
+                width="100%"
+              />
+            </div>
+
+            <div class="col-lg-8">
+              <br /><br />
+              <h4>Methodology</h4>
+              <ul>
+                <li>
+                  I initially tried to perform background subtraction to extract
+                  the key image by modelling the background using GMM and
+                  performing grabcut to extract the foreground. But finally I
+                  just used simple thresholding in different color spaces to
+                  obtain the foreground. I used the extracted foreground image
+                  to extract information about the key and used this
+                  information, along with certain motion run tests on the kiosk
+                  to obtain the calibration parameters.
+                </li>
+                <li>
+                  For the postcut key bit depth extraction, I used standard
+                  vision techniques to find the bit tip positions. I tested the
+                  heights obtained from vision against a standard code book to
+                  check for errors in the cutting process.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+</div>

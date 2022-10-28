@@ -1,0 +1,79 @@
+---
+title: Learning In Robotics: Project 2
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a name="ml"></a>
+
+          <div class="page-header">
+            <h3>
+              3D orientation tracking with UKF
+              <small>Posted on August, 25th, 2014</small>
+            </h3>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <iframe
+              width="100%"
+              height="500px"
+              src="https://www.youtube.com/embed/s7UQKXhYSgU?list=UUTGjKbN_B5CrVVWF1x9M7DQ"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <br />
+          <h4>Problem Statement</h4>
+          <p>
+            The objective of the project is to use the noisy signals from an IMU
+            containing a 3 axis gyroscope and a 3 axis accelerometer to obtain a
+            robust estimate of the orientation of an object rotated in 3D space
+            and using the orientation to stitch a panoramic image of the photos
+            taken by a camera mounted on the object. We are also provided ground
+            truth of the orientations from a Vicon system.
+            <br />
+            <br />
+          </p>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <iframe
+                width="100%"
+                height="300"
+                src="https://www.youtube.com/embed/qSZMNCoFijw?list=UUTGjKbN_B5CrVVWF1x9M7DQ"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="col-lg-6">
+              <h4>Description of approach</h4>
+              I smoothed out the raw signals from the accelerometer to reduce
+              the high frequency noise and then removed the bias from all the
+              input signals. I multiplied the appropriate sensitivities to the
+              signals which I obtained by comparing the signals with the ground
+              truth from the Vicon data. I implemented Unscented Kalman
+              Filters(UKF), to obtain the orientation of the image which is in
+              the form of a rotation matrix, from which one can extract the
+              roll, pitch and yaw angles. Using these angles I pasted the
+              images, in the appropriate position on a large canvas, initially
+              without any transformation and then considering only about the
+              image plane. Both the techniques work only near the center of the
+              canvas. Throughout the project I referred to the equations on the
+              " Quaternion-based Unscented Kalman Filter for Orientation
+              Tracking" paper by Edgar Kraft, University of Bonn.
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+  <!-----Sidebar end----->
+</div>

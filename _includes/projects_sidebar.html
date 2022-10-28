@@ -1,0 +1,29 @@
+<div class="col-lg-3">
+  <div class="list-group" id="sticky-sidebar">
+    {% for project in site.data.projects %}
+    {% if project.url == "lir_proj.html" %}
+      <a href={{ project.url }} class="list-group-item active">
+    {% else %}
+      <a href={{ project.url }} class="list-group-item">
+    {% endif %}
+      <table>
+        <tr>
+          <td>
+            <img
+              src={{ project.img }}
+              alt="Generic placeholder thumbnail"
+              style="float: left"
+              width="40"
+              height="32"
+            />
+          </td>
+          <td>&nbsp</td>
+          <td>
+            <h4 class="list-group-item-heading">{{ project.name }}</h4>
+          </td>
+        </tr>
+      </table>
+    </a>
+    {% endfor %}
+  </div>
+</div>

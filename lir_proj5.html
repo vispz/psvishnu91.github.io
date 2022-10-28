@@ -1,0 +1,114 @@
+---
+title: Learning In Robotics: Project 5
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a name="ml"></a>
+
+          <div class="page-header">
+            <h3>
+              Imitation Learning for path planning using Learch
+              <small>Posted on August, 25th, 2014</small>
+            </h3>
+          </div>
+
+          <div style="position: static; left: 10px; top: 10px">
+            <img
+              src="assets\Images\project\lir_ims\proj5\im1.jpg"
+              alt="Generic placeholder thumbnail"
+              class="img-thumbnail"
+              width="100%"
+            />
+          </div>
+
+          <br />
+          <h4>Problem Statement</h4>
+          <p>
+            The objective of the project is to use the aerial map image from
+            Google maps of the Penn Campus and to learn a model for predicting
+            the optimal path which will be taken by a car and a pedestrian by
+            using imitation learning (a type of reinforcement learning). So in
+            the project a parameterized cost map generated using an
+            exponentiated sum of some weighted features. Using expert examples
+            of optimal policies in the Learch Algorithm, I get the weights for
+            the cost map that will produce behavior similar to that of the
+            expert policy.
+            <br />
+            <br />
+          </p>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <img
+                src="assets\Images\project\lir_ims\proj5\im2.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+                width="100%"
+              />
+              <img
+                src="assets\Images\project\lir_ims\proj5\im3.jpg"
+                alt="Generic placeholder thumbnail"
+                class="img-thumbnail"
+                width="100%"
+              />
+            </div>
+            <div class="col-lg-6">
+              <h4>Description of approach</h4>
+              A large chunk of this project work was focused on feature
+              engineering and choosing a good seed for the feature weights to
+              feed into the Learch algorithm for imitation learning. Throughout
+              this report I make references to the Learch algorithm which is
+              based on the paper, "Learning to Search: Functional Gradient
+              Techniques for Imitation Learning" by Ratliff et al. First the
+              image was resized to one eight the original size and then I
+              extracted a bunch of features for every image pixel. By looking at
+              the features I did an educated guess of the weights to be used as
+              a seed to the Learch algorithm which works better and faster when
+              the initial cost map is close to the ideal one. Now, I got a
+              better estimate of the weights using Learch, though I found in
+              some cases the initial seed was a better estimate when the
+              learning rate is not properly set. In every iteration in the
+              Learch algorithm, I compute the cost map with the recently
+              computed weights which I augment by adding a loss field function
+              which increases the costs at the desired path by a fraction of the
+              maximum value of the current cost map (10%). Then I used dijkstra
+              search, to get an optimal path. Now I take all the points in the
+              optimal path and the ones in the desired path of all the MDP's
+              perturb them randomly upto 3 pixels along x and y. I run a binary
+              classification between the features of the points on the perturbed
+              optimal path and the desired path with a L2 regularized Linear
+              Support Vector Machine using Liblinear. I update the old weights
+              with the weight obtained from the classification after scaling
+              with an exponentially decaying learning rate. This procedure was
+              done for both the car and the pedestrian.
+            </div>
+          </div>
+          <br />
+          <div align="center">
+            <h4>Feature Engineering</h4>
+
+            <img
+              src="assets\Images\project\lir_ims\proj5\f1.jpg"
+              alt="Generic placeholder thumbnail"
+            />
+            <img
+              src="assets\Images\project\lir_ims\proj5\f2.jpg"
+              alt="Generic placeholder thumbnail"
+            />
+            <img
+              src="assets\Images\project\lir_ims\proj5\f3.jpg"
+              alt="Generic placeholder thumbnail"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+</div>

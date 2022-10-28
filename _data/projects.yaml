@@ -1,0 +1,31 @@
+- name: Learning in Robotics
+  img: assets\Images\project\lir_logo.jpg
+  url: lir_proj.html
+
+- name: Intro to AI
+  img: assets\Images\project\ai_logo.jpg
+  url: ai_proj.html
+
+- name: Control Systems
+  img: assets\Images\project\cs_logo.jpg
+  url: cs_proj.html
+
+- name: Computer Vision
+  img: assets\Images\project\cv_logo.jpg
+  url: cv_proj.html
+
+- name: Machine Learning
+  img: assets\Images\project\ml_logo.jpg
+  url: ml_proj.html
+
+- name: Intro to Robotics
+  img: assets\Images\project\meam520_logo.jpg
+  url: intro_to_robotics_proj.html
+
+- name: Undergrad Projects
+  img: assets\Images\project\ug_logo.jpg
+  url: undergrad_proj.html
+
+- name: Research & Intern
+  img: assets\Images\project\research_logo.jpg
+  url: research_proj.html

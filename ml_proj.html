@@ -1,0 +1,109 @@
+---
+title: Machine learning Projects
+layout: default
+---
+
+<!------Content----->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <a name="ml"></a>
+
+          <div class="page-header">
+            <h3>
+              Machine Learning Assignments and Projects
+              <small>Posted on January, 20th, 2014</small>
+            </h3>
+          </div>
+
+          <a href="https://alliance.seas.upenn.edu/~cis520/wiki/"
+            ><img
+              class="featuredImg"
+              src="assets\Images\project\ml.jpg"
+              width="100%"
+          /></a>
+
+          <p>
+            Machine Learning was one of the most satisfying courses I have taken
+            at Penn. I felt so much more empowered at the end of this course and
+            I knew I was ready to tackle real world problems. ML was a
+            fundamental introduction to the mathematics, algorithms and practice
+            of machine learning. Topics covered include: Supervised learning:
+            least squares regression, logistic regression, perceptron, naive
+            Bayes, support vector machines. Model and feature selection,
+            ensemble methods, boosting. Learning theory: Bias/variance tradeoff.
+            Online learning. Unsupervised learning: Clustering. K-means. EM.
+            Mixture of Gaussians. PCA. Graphical models: HMMs, Bayesian and
+            Markov networks. Inference. Variable elimination. Miscellaneous:
+            Introduction to Active Learning and Big Data. All the programming
+            was done in Matlab.<br />
+
+            For the sake of prevention of copying of homework of solutions, I am
+            not including any graphs or results from the homework.
+          </p>
+
+          <h4>Assignments</h4>
+
+          <ul>
+            <li>
+              Implemented decision trees, Adaboost, Perceptrons, SVM (using
+              libsvm) for classification of "MNIST dataset" and studied their
+              learning curves and accuracy.
+            </li>
+
+            <li>
+              Implemented Naive Bayes and Logistic Regression for classification
+              "breast cancer Wisconsin dataset".
+            </li>
+
+            <li>
+              Also studied the effect of PCA of noisy data used for
+              classification and the drop in reconstruction error for addition
+              of each component of a PCAed data.
+            </li>
+          </ul>
+
+          <h4>Final Project</h4>
+
+          <p>
+            The task was to predict the rating of a restaurant from a short
+            descriptive review written by a user. The dataset chosen for this
+            particular task were the reviews obtained from the yelp website. The
+            problem was formulated as a regression task rather than a
+            classification task and (Root mean square error) RMSE was measured.
+            Correlation test was used for feature selection and feature
+            transformation algorithms, including TFIDF, correlation based
+            feature weighting with sentiment analysis, PCA and classification
+            algorithms, including Logistic regression, Naive Bayes, Perceptrons,
+            SVM, Random forests etc. were employed and the optimal combination
+            was chosen. The final algorithm employed was a combination of
+            Logistic Regression with Naïve Bayes and was able to achieve
+            significantly low RMSE in the out of sample test data and was
+            significantly faster than most of the other algorithms employed.
+          </p>
+
+          <p>
+            Our team came 14th out of the 47 teams in class and we also had the
+            second fastest algorithm in the top 15.
+          </p>
+          <div align="center">
+            <a
+              href="http://www.seas.upenn.edu/~cis520/fall13/finalfinalleaderboard.html"
+              class="btn btn-default"
+              >The final leaderboard</a
+            >
+            <a
+              href="assets\Docs\proj\ML_Project_Report.pdf"
+              class="btn btn-primary"
+              >More on our algorithm</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include projects_sidebar.html %}
+  </div>
+  <!-----Sidebar end----->
+</div>
