@@ -11,12 +11,12 @@ layout: default
   {% assign range = (1..num_rows) %}
   {% for row in range %}
     <div class="row">
-    <!-- In each row creating 3 columns -->
+      <!-- In each row creating 3 columns -->
       {% for blog_column in site.data.blogs limit: 3 offset: continue %}
         <div class="col-lg-4">
           <div class="list-group one">
-            <div class="list-group-item active">
-              <h2 class="list-group-item-heading" align="center">
+            <div class="list-group-item active" style="background-color: rgb(76, 146, 160)">
+              <h2 class="list-group-item-heading" align="center" style="color: whitesmoke">
                 {{ blog_column.name }}
               </h2>
             </div>

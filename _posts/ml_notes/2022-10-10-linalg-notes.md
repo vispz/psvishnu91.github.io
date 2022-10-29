@@ -1,8 +1,8 @@
 ---
 title: Linear algebra notes
-layout: default
 blog_type: ml_notes
 excerpt: Linear algebra notes based on 3Brown1Blue videos and ICL course.
+layout: post
 ---
 # Table of contents
 
@@ -45,7 +45,9 @@ excerpt: Linear algebra notes based on 3Brown1Blue videos and ICL course.
 These are notes taken during the following courses/videos
 
 - [Mathematics for Machine Learning: Linear Algebra - Imperial College London, Coursera](https://www.coursera.org/learn/linear-algebra-machine-learning)
-- [Essense of linear algebra - 3Blue1Brown, YT](https://youtu.be/fNk_zzaMoSs)
+- [Essense of linear algebra - 3Blue1Brown, YT](https://youtu.be/fNk_zzaMoSs).
+
+[Linear algebra cheatsheet from UCL.](/assets/Docs/posts/ml_notes/linearalgebra-formula.pdf)
 
 ## 1. <a name='Miscellaneous'></a>Miscellaneous
 

@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>{{ page.title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/x-icon" href="/assets/Images/favicon.png">
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/styles.css" rel="stylesheet" />
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/assets/css/styles.css" rel="stylesheet"/>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
   </head>
   <body>
     <a name="start"></a>
@@ -14,11 +14,7 @@
       <div class="container">
         <a href={{ "/index.html" | absolute_url}} class="navbar-brand active">Home</a>
 
-        <button
-          class="navbar-toggle"
-          data-toggle="collapse"
-          data-target=".navHeaderCollapse"
-        >
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -27,21 +23,24 @@
         <div class="collapse navbar-collapse navHeaderCollapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="https://www.linkedin.com/in/vishnu-s-3b33985a"
-                >LinkedIn
+              <a href="https://www.linkedin.com/in/vishnu-s-3b33985a">LinkedIn
               </a>
             </li>
-            <li><a href={{ "/proj.html" | absolute_url}}>Projects</a></li>
-            <li><a href={{ "/blogs.html" | absolute_url}}>Blogs</a></li>
-            <li><a href={{ "/contact.html" | absolute_url}}>Contact</a></li>
+            <li>
+              <a href={{ "/proj.html" | absolute_url}}>Projects</a>
+            </li>
+            <li>
+              <a href={{ "/blogs.html" | absolute_url}}>Blogs</a>
+            </li>
+            <li>
+              <a href={{ "/contact.html" | absolute_url}}>Contact</a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <br />
-    <div class="container">
+    <br/>
     {{ content }}
-  </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.js"></script>
   </body>
