@@ -230,7 +230,7 @@ If a vector is an eigen vector of a transformation matrix, it does not rotate or
 
 This process can be used to extract the eigen vector with the highest eigen value. Begin with a random vector and repeatedly multiply it with the transformation matrix A until convergence. This is called the Power method.
 
-> Notice what if you have a valid set of eigen vectors (enough to span the space), then deriving the eigen values is simple. (D = C^{-1} A C, where C is a matrix with the eigen vectors as columns).
+> Notice what if you have a valid set of eigen vectors (enough to span the space), then deriving the eigen values is simple. ($$D = C^{-1} A C$$, where C is a matrix with the eigen vectors as columns).
 
 ## Shear transformation matrix in 2-D
 
