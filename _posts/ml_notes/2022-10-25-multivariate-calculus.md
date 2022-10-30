@@ -2,7 +2,7 @@
 title: Multivariate Calculus
 blog_type: ml_notes
 excerpt: Notes based on ICL's brilliant course or coursera.
-layout: post
+layout: post_with_toc
 ---
 
 ## Acknowledgement

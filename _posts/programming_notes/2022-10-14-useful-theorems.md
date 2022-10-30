@@ -2,7 +2,7 @@
 title: Useful Theorems
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
-layout: post
+layout: post_with_toc
 ---
 
 ## Fermat's little theorem
@@ -43,7 +43,7 @@ $$3^{100,000} \equiv 81 \ (\text{mod}\ 53)$$
 $$3^{100,000} \equiv 28 \ (\text{mod}\ 53)$$
 
 <br/>
-## 2. Finding Greatest common divisor (GCD) <br/>or Highest Common Factor (HCF)
+## Finding Greatest common divisor (GCD) <br/>or Highest Common Factor (HCF)
 <br/>
 The key here is the **Euclidean algorithm**. $$gcd(a,b) = gcd(a,b-a)$$. That is GCD of two numbers is the same if we subtract the smaller number from the bigger. We can repeatedly subtract the smaller number from the bigger number without sacrificing correctness.
 

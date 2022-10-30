@@ -2,23 +2,10 @@
 title: Algorithms
 blog_type: programming_notes
 excerpt: Alogrithms for coding interviews.
-layout: post
+layout: post_with_toc
 ---
 
-# Table of Contents
-<!-- vscode-markdown-toc -->
-* 1. [Master method](#Mastermethod)
-	* 1.1. [Recursion tree method](#Recursiontreemethod)
-* 2. [Quicksort](#Quicksort)
-
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
-
-# Content
-##  1. <a name='Mastermethod'></a>Master method
+## Master method
 
 Master method describes the time complexity of recursive divide and conquer algorithms.
 Assumes that each subproblem of the recursion is of the same size. Here $$a$$ is the
@@ -40,15 +27,19 @@ $$
 \end{cases}
 $$
 
-###  1.1. <a name='Recursiontreemethod'></a>Recursion tree method
-<img src="/assets/Images/posts/programming_notes/recursion-tree-master-method.png" alt="Recursion tree master method" width="50%"/>
+**Recursion tree method**<br/>
+<a href="/assets/Images/posts/programming_notes/recursion-tree-master-method.png">
+    <img src="/assets/Images/posts/programming_notes/recursion-tree-master-method.png" alt="Recursion tree master method" width="50%"/>
+</a>
 
 
-##  2. <a name='Quicksort'></a>Quicksort
+## Quicksort
 Average run time $$O(n \log n)$$ and worst case running time $$O(n^2)$$. The running time of quicksort depends on the choice of the pivot element. For instance, if the pivot element chosen is the first element and the array is already sorted, then the running time will be $$O(n^2)$$. This is because in each step of the recursion, array is split into a left (smaller) subarray of size 0 and right subarray of size (n-i) where is the index of this pivot. The left recursion does no work, whereas in each right recursion, we recurse through $$n-1,n-2,...1$$ elements which is quadratic time.
 
 If at every iteration we pick the **median** as the pivot element, then the array will get perfectly split into two arrays of size $$n/2$$. This will perfectly match the mergesort situation ergo running in $$\theta(n \log n)$$ time.
 
 Even if we can choose a pivot that splits the problem into say 25-75 split, the run time will still be $$O(n \log n)$$. We can prove this with recursion tree method and the binomial theorem.
 
+<a href="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png">
 <img src="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png" alt="Recursion Tree unequal subproblems quicksort" width="50%"/>
+</a>
