@@ -2,6 +2,7 @@ name: Vishnu's Personal Website
 markdown: kramdown
 kramdown:
    math_engine: mathjax
+   parse_block_html: true
 defaults:
   - scope:
       path: "" # an empty string here means all files in the project

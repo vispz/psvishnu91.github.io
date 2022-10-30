@@ -6,6 +6,11 @@ body {
   color: "black";
 }
 
+.small-body {
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .p {
   font-weight: 300;
 }
