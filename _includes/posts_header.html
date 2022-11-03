@@ -1,13 +1,14 @@
 <br/>
-<div class="container" style="background-color: rgb(241, 240, 240)">
-      <div class="row">
-        <center>
-          <h1 style="font-weight: 200; color: rgb(3, 47, 43)">{{ page.title }}
-          </h1>
-          <p style="font-weight: 100; font-size: 20px; color: gray;">
-            {{ page.date | date: "%-d %B %Y" }}
-          </p>
-          </center>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8" style="text-align:center;background-color: rgb(241, 240, 240);">
+      <h1 style="font-weight: 200; color: rgb(3, 47, 43)">{{ page.title }}
+      </h1>
+      <p style="font-weight: 100; font-size: 20px; color: gray;">
+        {{ page.date | date: "%-d %B %Y" }}
+      </p>
+    </div>
+  </div>
 </div>
 <br/>
