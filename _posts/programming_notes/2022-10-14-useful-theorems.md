@@ -51,5 +51,10 @@ Proof: Let $$p$$ be the GCD of $$a$$ and $$b$$. We can write $$a$$ and $$b$$ as 
 
 <a href="/assets/Images/posts/programming_notes/euclid-theorem-proof.png"><img src="/assets/Images/posts/programming_notes/euclid-theorem-proof.png" alt="Euclid theorem formal proof" width="400"/></a>
 
+## Sum of natural numbers
+
+$$1 + 2 + 3 ... + n = \sum_k^n k = \drac{n(n+1)}{2}$$
+$$1^2 + 2^2 + 3^2 ... + n^2 = \sum_k^n k^2 = \drac{n(n+1)(2n+1)}{6}$$
+
 
 

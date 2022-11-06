@@ -43,3 +43,170 @@ Even if we can choose a pivot that splits the problem into say 25-75 split, the 
 <a href="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png">
 <img src="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png" alt="Recursion Tree unequal subproblems quicksort" width="50%"/>
 </a>
+
+### Decomposition principle
+
+To get time complexity of randomised algorithms
+1. Identify a random variable Y you care about
+2. Express Y as a sum of indicator random variables
+$$ Y = \sum_{e=0}^m  X_e $$
+
+3. Apply linearity of expectation: $$ E[Y] = \sum_{e=0}^m P[X_e = 1] $$
+
+## Selection problem
+
+Given an array A with n distinct numbers and k, return the kth order statistic. The
+k-th order statistic is the kth smallest number.
+
+10, 8, 2, 4 -> 3rd order statistic is 8. First order statistic is 2.
+
+The solution is O(n). Using reduction, we can sort the array in O(n log n) by sorting
+and returning the (k+1)th element.
+
+### Randomised
+Follows quicksort almost verbatim.
+
+{% include button.html url="https://github.com/psvishnu91/interview-problems/blob/master/design_of_algos/chapter_5_quicksort/selection_randomised.py" name="Github Solution" %}
+
+**Algorithm:**
+- Randomly choose a pivot and apply the partition subroutine from quicksort
+- If the index is of the pivot is k, return the value at the pivot.
+- If the index of the pivot is greater than k (kth order statistic), then recurse on
+the left half of the array, otherwise recurse on the right half of the array.
+
+**Time complexity**
+This is a linear time algorithm on expectation. The proof involves using
+- Number of phases. A phase is where the input array is reduced to at least (3/4)th
+the input size. Phase j=0, we are processing an array of size btw, $$\left(\frac{3}{4}\right)^1 n$$
+and $$\left(\frac{3}{4}\right)^0 n$$. Phase two (j=1), an array of size btw $$\left(\frac{3}{4}\right)^2 n$$
+and $$\left(\frac{3}{4}\right)^1 n$$.
+- Expected number of recursions to leave a phase (2). Because 50% of numbers result in a
+25/75 split, it's the same as the expected number of tosses of a coin before we see a head
+$$ E[n] = 1 + 0.5E[n]$$. This is because we need at least one toss. With 0.5 probability
+we are back to square one.
+- Then total work becomes upper bounded by $$2 \times c \times n \sum_j \left( \frac{3}{4}\right)^j
+$$. The infinite geometric sum is $$\frac{1}{1-r} = \frac{1}{1-\frac{3}{4}} = 4$$. The total
+work becomes upper bounded by $$8cn$$.
+
+
+### Deterministic - Median of medians
+
+The algorithm is precisely the same as the randomised approach except how we choose our
+pivots. This algorithgm is deterministically guaranteed to be of $$O(n)$$. However,
+we pay in terms of very large constants in the big-O notation, need for an extra storage
+of length $$O\left(\frac{n}{5}\right)$$.
+
+**Algorithm**
+- First split the array into n/5 buckets. For each bucket find the median through sorting.
+- Store these medians in a new list.
+- Then find the median of these medians by recursively calling this function.
+- Once we have the pivot the rest is the same as the randomised selection.
+
+**Time complexity**
+- We need to notice that after each round, the pivot is guaraneed to shrink the array
+by at least 30% each time. Say we have 100 elements in the array. We split into 20 buckets
+and arrive at 20 medians. Then we find the median of these medians (M). This will point to say
+the 11th bucket. This means, there are 10 medians smaller than this (by definition). For
+each bucket these 10 medians belong to there are 3 elements (including the bucket median)
+smaller than the median of medians (M). That is there are 30 elements out of the 100
+smaller than the  median of medians (M).
+- Next we write out the recurrence as $$ T(n) = cn + T\left(\frac{n}{5}\right) + T\left(\frac{7n}{10}\right)$$.
+We can then prove this with induction or a recursion tree approach.
+
+## Graph representation
+
+Elements: Nodes or vertices $$(V)$$ and edges $$(E)$$.
+
+**Types**
+{% include image.html id="/assets/Images/posts/programming_notes/graphs.png" width="20%" %}
+
+1. Undirected graph - Edges are directed or undirected. The nodes are unordered.
+2. Directed graph - Has directed edges. There is a first (tail) and the last vertex (head)
+   or end point. Directed edge is also called an Arc. If a -> b, then a is the tail
+   and b is the head.
+
+### Terminologies
+- Parallel edges are edges connecting the same two nodes.
+- Connected graph, no nodes with zero edges.
+- **Number of edges:** n-num vertices and m-num edges. For an connected undirected graph
+and with no parallel edges, the min and max number of possible edges is $$(n-1)$$ and
+$$\frac{n(n-1)}{2}$$.
+- Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$\Omega(n)$$ $$O(n^2)$$. If m is closer to
+  $$\Omega(n)$$ then it's a sparse graph, if it's closer to $$\Omega(n)$$ it's a dense graph.
+
+### Graph representation
+#### Adjacency matrix
+For a graph with n-vertices, the adjacency matrix is a $$n\times n$$
+matrix, where each entry A[i,j] represents if there is an edge btw the two nodes i and j.
+
+**Extensions**
+1. Parallel edges: A[i,j] has number of edges.
+2. Weighted edges: A[i,j] has weights.
+3. Directed edges: A[i,j], 1 if from i to j and -1 if from j to i.
+
+Space complexity: O(n^2). Can beat this with sparse matrix representations. 
+
+#### Adjacency list
+We store the following datastructure
+
+**Undirected**
+``` python
+@dataclass
+class Edge:
+    nodes: Optional[[Tuple['Node', 'Node']]] = None
+
+@dataclass
+class Node:
+    val: int = 0
+    edges: Optional[List['Edge']] = None
+
+"""
+Graph
+        (0) -- (1)
+         |
+        (2)
+"""
+nodes = [Node(val=0), Node(val=1), Node(val=2)]
+edges = [Edge(nodes=(nodes[0], nodes[1])), Edge(nodes=(node[0], node[2]))]
+```
+
+**Directed**
+
+``` python
+@dataclass
+class Edge:
+    head_node: Optional['Node']
+    tail_node: Optional['Node']
+
+@dataclass
+class Node:
+    val: int = 0
+    outward_edges: Optional[List['Edge']]
+    # This variable is optional and adds to storage. We
+    # can get away with just the outward edges.
+    inward_edges: Optional[List['Edge']]
+
+"""
+Graph
+        (0) --> (1)
+         Ʌ
+         |
+        (2)
+"""
+nodes = 
+```
+
+
+## Graph min cuts
+
+The goal is to split the graph of n-vertices into two non-empty sets A, B such that we have
+the least number of crossing edges. Min cut problem allows for _parallel edges_.
+
+{% include image.html id="/assets/Images/posts/programming_notes/graph-cut.png" width="80%" %}
+
+For undirected graphs these are any edges from vertices in set A to B or vice-versa.
+For directed graphs, we only count edges from A to B, i.e., tail in A and head in B.
+
+For a graph with n-nodes, we have have $$2^n-2$$ different cuts. This is because each
+node is a binary variable with two options, node 1 or node 2. We have a minus two because
+the empty set cases are disallowed (all are in set A or all are in set B). 

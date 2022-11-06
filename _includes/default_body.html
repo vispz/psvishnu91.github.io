@@ -1,0 +1,36 @@
+<body>
+  <a name="start"></a>
+  <div class="navbar navbar-dark bg-dark navbar-static-top">
+    <div class="container">
+      <a href={{ "/index.html" | absolute_url}} class="navbar-brand active">Home</a>
+
+      <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <div class="collapse navbar-collapse navHeaderCollapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="https://www.linkedin.com/in/vishnu-s-3b33985a">LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={{ "/proj.html" | absolute_url}}>Projects</a>
+          </li>
+          <li>
+            <a href={{ "/blogs.html" | absolute_url}}>Blogs</a>
+          </li>
+          <li>
+            <a href={{ "/contact.html" | absolute_url}}>Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br/>
+  {{ content }}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="/assets/js/bootstrap.js"></script>
+</body> 

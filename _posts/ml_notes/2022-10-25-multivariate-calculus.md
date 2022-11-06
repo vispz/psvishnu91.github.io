@@ -548,4 +548,3 @@ while i< 100_000:
 ```
 
 {% include gradient_descent.html %}
-

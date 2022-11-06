@@ -25,3 +25,12 @@ $$
 ## Regression metrics
 ### SSR - Sum of squared residuals
 $$SSR = \frac{1}{n}\sum_{i=1}^n\left(y_i - \hat y_i \right)^2$$
+
+## Linearity of expectations
+Let $$ X_1, X_2, \cdots, X_n $$ be random variables defined in the same sample space, then
+
+$$ E\left[\sum_{j=1}^n X_j\right] = \sum_{j=1}^n E[X_j]$$
+
+Linearity expecations works even in the random variables are not independent. This
+is certainly not true for products of random variables.
+

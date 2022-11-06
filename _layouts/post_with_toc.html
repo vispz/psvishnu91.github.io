@@ -1,18 +1,5 @@
 ---
-layout: default
+layout: post
 ---
-{% include posts_header.html %}
-<div class="small-body">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-8">
-        <h2>
-          Table of Contents
-        </h2>
-        {% include toc.html html=content ordered=true h_max=2%}
-        {{ content }}
-      </div>
-    </div>
-  </div>
-</div>
+{% include toc.html html=content ordered=true h_max=2%}
+{{ content }}
