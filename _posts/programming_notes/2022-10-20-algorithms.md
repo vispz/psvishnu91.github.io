@@ -153,7 +153,7 @@ We store the following datastructure
 ``` python
 @dataclass
 class Edge:
-    nodes: Optional[[Tuple['Node', 'Node']]] = None
+    nodes: Tuple['Node', 'Node']
 
 @dataclass
 class Node:
@@ -168,6 +168,9 @@ Graph
 """
 nodes = [Node(val=0), Node(val=1), Node(val=2)]
 edges = [Edge(nodes=(nodes[0], nodes[1])), Edge(nodes=(node[0], node[2]))]
+nodes[0].edges = [edge[0], edge[1]]
+nodes[1].edges = [edge[0]]
+nodes[2].edges = [edge[1]]
 ```
 
 **Directed**
@@ -175,8 +178,8 @@ edges = [Edge(nodes=(nodes[0], nodes[1])), Edge(nodes=(node[0], node[2]))]
 ``` python
 @dataclass
 class Edge:
-    head_node: Optional['Node']
-    tail_node: Optional['Node']
+    tail_node: 'Node'
+    head_node: 'Node'
 
 @dataclass
 class Node:
@@ -193,7 +196,17 @@ Graph
          |
         (2)
 """
-nodes = 
+nodes = [Node(val=0), Node(val=1), Node[val=2]]
+edges = [
+    Edge(tail_node=nodes[0], head_node=nodes[1]),
+    Edge(tail_node=nodes[2], head_node=nodes[0]),
+]
+nodes[0].outward_edges= [edges[0]]
+nodes[0].inward_edges = [edges[1]]
+nodes[1].outward_edges = [] 
+nodes[1].inward_edges = [edges[0]]
+nodes[2].outward_edges = [edges[1]] 
+nodes[2].inward_edges = [edges[0]] 
 ```
 
 
