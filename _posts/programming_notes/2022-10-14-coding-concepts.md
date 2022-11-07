@@ -166,8 +166,7 @@ Out[24]: 100
 ```
 
 ### Masking
-Bits are indexed 0 to n-1. So a 8-bit number is indexed 0 for the LSB and 7 for the
-MSB.
+Bits are indexed `0` to `n-1`. So a 8-bit number is indexed `0` for the LSB and `7` for the MSB.
 
 Credits: Picture below from [hackerrank tutorials](https://youtu.be/NLKQEOgBAnw).
 
