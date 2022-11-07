@@ -126,13 +126,19 @@ Elements: Nodes or vertices $$(V)$$ and edges $$(E)$$.
    and b is the head.
 
 ### Terminologies
-- Parallel edges are edges connecting the same two nodes.
-- Connected graph, no nodes with zero edges.
+- Parallel edges: They are edges connecting the same two nodes.
+- Connected graph: no nodes with zero edges.
+- Complete graph: A graph with all nodes connected to each other.
+- Degree of a node: Number of egdes incident on the node.
+  
+
+### Facts
 - **Number of edges:** n-num vertices and m-num edges. For an connected undirected graph
 and with no parallel edges, the min and max number of possible edges is $$(n-1)$$ and
 $$\frac{n(n-1)}{2}$$.
 - Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$\Omega(n)$$ $$O(n^2)$$. If m is closer to
   $$\Omega(n)$$ then it's a sparse graph, if it's closer to $$\Omega(n)$$ it's a dense graph.
+- $$\sum_v degree(v) = 2m$$. Each edge is a part of two nodes. 
 
 ### Graph representation
 #### Adjacency matrix
@@ -144,7 +150,7 @@ matrix, where each entry A[i,j] represents if there is an edge btw the two nodes
 2. Weighted edges: A[i,j] has weights.
 3. Directed edges: A[i,j], 1 if from i to j and -1 if from j to i.
 
-Space complexity: O(n^2). Can beat this with sparse matrix representations. 
+**Space complexity:** O(n^2). Can beat this with sparse matrix representations. 
 
 #### Adjacency list
 We store the following datastructure
@@ -209,6 +215,17 @@ nodes[2].outward_edges = [edges[1]]
 nodes[2].inward_edges = [edges[0]] 
 ```
 
+**Space complexity:** $$\theta(m+n)$$. This can be $$O(n^2)$$ for a compelte graph.
+However, this is an overestimate. The above complexity handles this as $$m$$ will be
+$$n^2$$, in this case.
+
+#### Which one should you choose
+Depends on graph density and operations we want to support.
+
+- For low density, high number of nodes in a graph, it's more efficient to choose
+adjacency list. Imagine the internet where the number of webpages is extremely large
+and the graph is rather sparse.
+- For graph search, adjacency list provides the appropriate operations we need.
 
 ## Graph min cuts
 

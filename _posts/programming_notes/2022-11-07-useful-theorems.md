@@ -1,5 +1,5 @@
 ---
-title: Useful Theorems
+title: Useful theorems
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
 layout: post_with_toc
@@ -53,8 +53,12 @@ Proof: Let $$p$$ be the GCD of $$a$$ and $$b$$. We can write $$a$$ and $$b$$ as 
 
 ## Sum of natural numbers
 
-$$1 + 2 + 3 ... + n = \sum_k^n k = \drac{n(n+1)}{2}$$
-$$1^2 + 2^2 + 3^2 ... + n^2 = \sum_k^n k^2 = \drac{n(n+1)(2n+1)}{6}$$
+$$
+\begin{align*}
+1 + 2 + 3 ... + n = \sum_k^n k &= \frac{n(n+1)}{2}\\
+1^2 + 2^2 + 3^2 ... + n^2 = \sum_k^n k^2 &= \frac{n(n+1)(2n+1)}{6}
+\end{align*}
+$$
 
 
 
