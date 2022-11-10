@@ -14,8 +14,8 @@ amount of information needed to remove the uncertainty in the system.
 
 $$Entropy(x) = S\left[P(x)\right] = - \sum_{x \in X}P(x)\log P(x) = - E_{x \sim P(x)} [\log P(x)]$$
 
-Above we are sampling $$x$$, from the distribution $$X$$: that is the probability of
-sampling the specific value $$x$$ is defined by the probability distribution $$X$$. 
+Above we are sampling $$x$$ from the distribution $$P(x)$$: that is the probability of
+sampling the specific value $$x$$ is defined by the probability distribution $$P(x)$$. 
 > To confirm (?): My understanding of why the expectation of the $$\log P(x)$$ is entropy or uncertainty
 > is because we need to $$\log_2 n$$ bits to represent n numbers
 > (3-bit => 8nums, 4-bit 16 nums). Since entropy is the amount of information needed to
@@ -23,7 +23,7 @@ sampling the specific value $$x$$ is defined by the probability distribution $$X
 > the uncertainty.
 
 Here's a [jupyter notebook](https://nbviewer.org/gist/psvishnu91/738cbc59e9f80fa72c3942e9aa2cfd48) 
-with visualisation of entropy as a function of how spread the distribution is.
+with visualisation of entropy as a function of how spread out a distribution is.
 
 <iframe 
     src="https://nbviewer.org/gist/psvishnu91/738cbc59e9f80fa72c3942e9aa2cfd48"
@@ -34,20 +34,22 @@ with visualisation of entropy as a function of how spread the distribution is.
 
 ### Cross entropy
 
-This is the entropy of a distribution $$q(x)$$ when x is sampled from another distribution
+This is the entropy of a distribution $$q(x)$$ when $$x$$ is sampled from another distribution
 $$p(x)$$. 
 
 > Paraphrasing **Wikipedia:** Cross entropy measures the average number of bits needed to represent
-> a specific $$x$$ if a coding scheme used is optimized for an
+> a specific $$x$$ if the coding scheme used is optimized for an
 > estimated probability distribution $$q(x)$$, rather than the true distribution $$p(x)$$.
 
 $$ H(p(x), q(x)) = - E_{x \sim p(x)}\left[ \log q(x) \right] $$
 
 In ML, $$p(x)$$ represents the true unknown distribution we are trying to model with $$q(x)$$.
-We never really have access to the true distribution $$p(x)$$, but only samples `X`, our
-dataset sampled from $$p(x)$$. When we actually go about computing cross entropy, we merely
-compute the average $$\log q(x)$$ with x's sampled from our data. This is an unbiased estimate
-of the true cross entropy of $$q(x)$$ wrt $$p(x)$$.
+We never really have access to the true distribution $$p(x)$$, but only $$X$$, our
+dataset sampled from $$p(x)$$. Here $$X$$ represents the entire dataset, $$X$$ 
+and $$y$$ in supervised learning, not just the features. When we actually go about 
+computing cross entropy, we merely compute the average $$\log q(x)$$ with $$x$$'s 
+sampled from our data. This is an unbiased estimate of the true cross entropy of
+$$q(x)$$ wrt $$p(x)$$.
 
 ``` python
 import numpy as np
@@ -55,13 +57,17 @@ import numpy.typing as npt
 
 Vector = npt.NDArray[np.float64]
 
+# Penalty for the model q(x) for estimating 0 probability of seeing a sample x
+# from p(x).
+LARGE_PENALTY = 100
+
 def q(x: Vector) -> Vector:
     model = fetch_model()
     return model.probability_of_x(x)
 
 def cross_entropy(qx: Vector) -> float:
     logs = np.log(qx)
-    logs[logs==-np.inf] = 0
+    logs[logs==-np.inf] = LARGE_PENALTY
     return logs.mean()
 
 X: Vector = sample_from_true_distrbn_p_of_x(size=100)
@@ -73,9 +79,8 @@ Read the treatise on KL-D from [UIUC](http://hanj.cs.illinois.edu/cs412/bk3/KL-d
 
 KL Divergence is a measure of closeness of two distributions. It is not a distance metric
 as it is asymmetric, more concretely, $$D_{KL}(p(x)||q(x)) \neq D_{KL}(q(x)||p(x))$$.
-In ML, $$q(x)$$ is usually the model we are building to approximate the true distribution
-$$p(x)$$. The dataset `X` in ML will be sampled from the true unseen distribution $$p(x)$$.
-Here `X` represents the entire dataset (`X` and `y` in supervised learning, not just the features).
+As mentioned above in ML, $$q(x)$$ is usually the model we are building to approximate
+the true distribution $$p(x)$$.
 
 **Discrete case**
 
@@ -98,13 +103,17 @@ for more details.
 
 Credits: [stats.stackexchange](https://stats.stackexchange.com/a/357974/84357)
 
+> **tl;dr:** KL-Divergence is composed of entropy of the true distribution
+>  $$p(x), E\left[\log p(x)\right]$$ and
+> the cross entropy, $$H(p(x), q_{\Theta}(x))$$. Since optimising the
+> dataset only depends on the $$H(p(x), q_{\Theta}(x))$$ term, optimising one is the
+> same as optimising the other.
+
 $$ 
 \begin{align*}
 D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\}\\
-\text{Entropy}(p(x)) &= - \sum_{x \in X}p(x)\log p(x) = E_{x\sim p(x)}\left[\log p(x)\right]\\
-D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[p(x)\right] - \sum_{x \in X} p(x) \log q(x)
+D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
 \end{align*}\\
-D_{KL}(p(x)||q(x)) = E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
 \boxed{D_{KL}(p(x)||q(x)) = \text{Entropy}\left[p(x)\right] - H(p(x), q(x))}\\
 \text{KL Divergence of $q(x)$ wrt $p(x)$} = \text{Entropy of } p(x) - \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$} 
 $$
@@ -117,7 +126,7 @@ distribution $$p(x)$$, so
 
 $$ 
 \begin{align*}
-\arg\min_{\Theta} E_{x\sim p(x)}\left[\log p(x) - \log q_{\Theta}(x)\right] &= \arg\min_{\Theta} - E_{x\sim p(x)} \left[\log q_{\Theta}(x)\right] (\because p(x) \perp \Theta)\\
+\arg\min_{\Theta} \left\{E_{x\sim p(x)}\left[\log p(x)\right] - E_{x\sim p(x)}\left[\log q_{\Theta}(x)\right]\right\} &= \arg\min_{\Theta} \left\{-E_{x\sim p(x)} \left[\log q_{\Theta}(x)\right] \right\}(\because p(x) \perp \Theta)\\
 \arg\min_{\Theta} D_{KL}(p(x)||q_\Theta(x)) &=  \arg\min_{\Theta} H(p(x),q_\Theta(x)) 
 \end{align*}
 $$
