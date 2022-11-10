@@ -2,7 +2,7 @@
 title: Minimising Cross Entropy = <br/> Minimising KL-Divergence?
 blog_type: ml_notes
 excerpt: What is entropy and KL-Divergence? Why minimising either, the same?
-layout: post_with_toc
+layout: post
 ---
 ## Entropy & KL-Divergence
 
