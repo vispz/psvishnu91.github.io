@@ -79,16 +79,16 @@ Read the treatise on KL-D from [UIUC](http://hanj.cs.illinois.edu/cs412/bk3/KL-d
 
 KL Divergence is a measure of closeness of two distributions. It is not a distance metric
 as it is asymmetric, more concretely, $$D_{KL}(p(x)||q(x)) \neq D_{KL}(q(x)||p(x))$$.
-As mentioned above in ML, $$q(x)$$ is usually the model we are building to approximate
+As mentioned above, in ML $$q(x)$$ is usually the model we are building to approximate
 the true distribution $$p(x)$$.
 
 **Discrete case**
 
-$$D_{KL}(p(x)||q(x)) =  \sum_{x \in X} P(x) \log p(x) - P(x) \log q(x) =  \sum_{x \in X} P(x) \log \frac{p(x)}{q(x)}$$
+$$D_{KL}(p(x)||q(x)) =  \sum_{x \in X} \left\{ P(x) \log p(x) - P(x) \log q(x) \right\} =  \sum_{x \in X} P(x) \log \frac{p(x)}{q(x)}$$
 
 **Continuous case**
 
-$$D_{KL}(p(x)||q(x)) = \int_{-\infty}^{\infty} p(x) \log \frac{p(x)}{q(x)}$$
+$$D_{KL}(p(x)||q(x)) = \int_{-\infty}^{\infty} { p(x) \log \frac{p(x)}{q(x)} dx}$$
 
 **When $$p(x) \neq 0$$ but $$q(x) = 0$$**
 
@@ -106,13 +106,14 @@ Credits: [stats.stackexchange](https://stats.stackexchange.com/a/357974/84357)
 > **tl;dr:** KL-Divergence is composed of entropy of the true distribution
 >  $$p(x), E\left[\log p(x)\right]$$ and
 > the cross entropy, $$H(p(x), q_{\Theta}(x))$$. Since optimising the
-> dataset only depends on the $$H(p(x), q_{\Theta}(x))$$ term, optimising one is the
-> same as optimising the other.
+> parameters of the model $$\left(\Theta\right)$$, only depends on $$q_\Theta{(x)}$$ and 
+> hence only the
+> $$H(p(x), q_{\Theta}(x))$$ term, we can leave out entropy of $$p(x)$$ from the objective function.
 
 $$ 
 \begin{align*}
-D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\}\\
-D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
+D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\} \\
+ D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
 \end{align*}\\
 \boxed{D_{KL}(p(x)||q(x)) = \text{Entropy}\left[p(x)\right] - H(p(x), q(x))}\\
 \text{KL Divergence of $q(x)$ wrt $p(x)$} = \text{Entropy of } p(x) - \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$} 
@@ -120,7 +121,7 @@ $$
 
 Hence, we can decompose KL-Divergence into the entropy of the true unknown distribution $$p(x)$$
 plus the cross entropy of $$q(x)$$ with respect to the true distribution $$p(x)$$.
-While learning a model, we try to figure out the parameters ($$\Theta$$) of our model defining $$q_{\Theta}(x)$$
+While learning a model, we try to figure out the parameters $$\left(\Theta\right)$$ of our model defining $$q_{\Theta}(x)$$
 which minises our loss. The parameters of the model do not affect the true probability
 distribution $$p(x)$$, so 
 
