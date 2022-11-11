@@ -1,2 +1,2 @@
 # Readme
-This is my personal website hosted at [psvishnu.com](www.psvishnu.com) (also accessible at [vishnu.uk](www.vishnu.uk)).
+This is my personal website hosted at [vishnu.uk](www.vishnu.uk) (also accessible at [psvishnu.com](www.psvishnu.com)).

@@ -6,8 +6,6 @@ layout: post
 ---
 ## Entropy & KL-Divergence
 
-> Below $$ \log = \ln $$
-
 ### Entropy
 Measures the uncertainty in a system. In an information theoretic view, it's the
 amount of information needed to remove the uncertainty in the system.
@@ -68,7 +66,7 @@ def q(x: Vector) -> Vector:
 def cross_entropy(qx: Vector) -> float:
     logs = np.log(qx)
     logs[logs==-np.inf] = LARGE_PENALTY
-    return logs.mean()
+    return -logs.mean()
 
 X: Vector = sample_from_true_distrbn_p_of_x(size=100)
 print(cross_entropy(qx=q(x=X)))
@@ -139,7 +137,27 @@ $$
 $$
 
 ## So what should you measure in production?
-Well honestly, you can track either KL-Divergence $$D_(KL)$$ or Cross entropy $$H$$ in production. 
-Your goal will always be to minimise the cross-entropy or KL-Divergence as minimising one is
-the same as the other as we have seen above.
+Well honestly, you can track either KL-Divergence $$D_{KL}$$ or Cross entropy $$H$$ in production. 
+Minimising either loss is identical as we have seen above.
+
+However, KL-Divergence is slightly easier to reason with. Let's say we have a perfect model
+such that $$q(x) = p(x) \forall x \in X$$. Say that, for $$x=1$$, $$p(x)=0.5$$ and hence $$q(x)=0.5$$,
+also that for $$x=2$$,  $$p(x)=q(x)=0.2$$. We would expect the cross-entropy even if not zero
+should be identical 
+
+
+``` python
+In [1]: import numpy as np
+
+In [2]: p_of_x = np.arange(0.1,1,0.1)
+
+In [3]: cross_entropy = np.round(- p_of_x * np.log(p_of_x), 2)
+
+In [4]: entropy_p_of_x = np.round(- p_of_x * np.log(p_of_x), 2)
+
+In [5]: entropy_p_of_x
+Out[5]: array([0.23, 0.32, 0.36, 0.37, 0.35, 0.31, 0.25, 0.18, 0.09])
+
+In [6]: # if q(x) is identical to p(x), then cross entropy will be the same as entropy of p(x)
+```
 
