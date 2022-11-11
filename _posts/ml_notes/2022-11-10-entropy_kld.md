@@ -110,14 +110,20 @@ Credits: [stats.stackexchange](https://stats.stackexchange.com/a/357974/84357)
 > hence only the
 > $$H(p(x), q_{\Theta}(x))$$ term, we can leave out entropy of $$p(x)$$ from the objective function.
 
+Cross-entropy is the loss function used in logistic regression. We pair softmax and cross-entropy
+loss in 
+
 $$ 
 \begin{align*}
 D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\} \\
  D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
 \end{align*}\\
-\boxed{D_{KL}(p(x)||q(x)) = \text{Entropy}\left[p(x)\right] - H(p(x), q(x))}\\
-\text{KL Divergence of $q(x)$ wrt $p(x)$} = \text{Entropy of } p(x) - \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$} 
+\boxed{D_{KL}(p(x)||q(x)) = -\text{Entropy}\left[p(x)\right] + H(p(x), q(x))}\\
+\text{KL Divergence of $q(x)$ wrt $p(x)$} = -\text{Entropy of } p(x) + \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$} 
 $$
+
+The signs are flipped in the final equation because entropy and cross entropy are
+the negative expectation of log the distributions.
 
 Hence, we can decompose KL-Divergence into the entropy of the true unknown distribution $$p(x)$$
 plus the cross entropy of $$q(x)$$ with respect to the true distribution $$p(x)$$.
@@ -131,3 +137,9 @@ $$
 \arg\min_{\Theta} D_{KL}(p(x)||q_\Theta(x)) &=  \arg\min_{\Theta} H(p(x),q_\Theta(x)) 
 \end{align*}
 $$
+
+## So what should you measure in production?
+Well honestly, you can track either KL-Divergence $$D_(KL)$$ or Cross entropy $$H$$ in production. 
+Your goal will always be to minimise the cross-entropy or KL-Divergence as minimising one is
+the same as the other as we have seen above.
+
