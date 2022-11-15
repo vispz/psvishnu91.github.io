@@ -179,7 +179,7 @@ print(F.cross_entropy(input=torch.log(y_pred_tnsr), target=y_true_tnsr))
 # Output: tensor(1.5916, dtype=torch.float64)
 ```
 
-## Which one should you use in production?
+## Which one should you use in production? Normalised Cross Entropy
 Well honestly, you can track either KL-Divergence $$D_{KL}$$ or Cross entropy $$H$$ in production. 
 Minimising either loss is identical as we have seen above.
 
@@ -192,26 +192,68 @@ For a concrete example, say for $$x=1$$, $$p(x)=0.5$$ and hence $$q(x)=0.5$$,
 cross entropy will be $$ H(p, q) = - p(x) \log q(x) = - 0.5 \log 0.5 = 0.35 $$, whereas
 KL-Divergence will be $$D_{KL}(p, q) = E[\log p] + H(p, q) = -0.35 + 0.35 = 0 $$.
 
+### Real world example of cross entropy interpretation issues
+Say we are modelling the probability that the user clicks on an ad (or the Ads Click through Rate).
+We want to build two models one on the home page and one on a search page. Let's say
+that users are more likely to click on ads on the search page than the home page, such
+that the $$P(click=True \mid page=home) = 0.1$$ and $$P(click=True \mid page=search) = 0.3$$.
 
+Now we come up with the simplest model possible, a model that predicts the average
+click through rate every time which is ($$0.1$$ for home and $$0.3$$ for search).
+We collected 100 visits to our home page and 100 visits to our search page which resulted
+in 10 and 30 ad clicks respectively. We want to compute the model performance in terms
+of cross entropy.
+
+$$
+\begin{align*}
+\text{Cross Entropy of homepage model} &= - \frac{1}{100} \left[10 \log(0.1) +  90 \log(0.9) \right] = 0.32 \\
+\text{Cross Entropy of searchpage model} &= - \frac{1}{100} \left[30 \log(0.3) +  70 \log(0.7) \right] = 0.61
+\end{align*}
+$$
+
+**Does that mean our homepage model is twice as good as the searchpage model?** Well intuitively
+we want to say no. We see that cross entropy value is highest when the probability of the
+binary number variable is 0.5 and we predict 0.5 for all the samples. This makes comparing
+models difficult with cross entropy. Note: KL-Divergence of the above example will be 0. 
+
+### Normalised Cross Entropy
+
+As discussed above cross entorpy is hard to reason about. Is a cross entropy of 0.3 good?
+Who knows?! The standard trick to arrive at numbers that we can intuit about is to normalise. 
+
+From the [literature](http://quinonero.net/Publications/predicting-clicks-facebook.pdf)
+literature, we see that Normalised Cross Entropy is used widely in the industry
+(we did use it at Yelp). Normalised Cross Entropy is the ratio of your model's cross
+entropy over the cross entropy of a model that simply predicts the mean of the labels.
+
+**The smaller the number the better.** The idea is that the denominator is predicting the
+average and if your model is doing worse using features than predicting the average
+class probability then you are better off just predicting the average. For the homepage
+and searchpage example discussed above this will be 1 in both cases.
+
+$$ \text{NE} = \frac{-\frac{1}{N} \sum_{i=1}^n(y_i\log(p_i) + (1-y_i)\log(1-p_i))}{-(p\log(p) + (1-p)\log(1-p))} $$
+
+where $$p_i$$ is the estimated $$P(y_i=1 \mid X=x_i)$$ and $$p=\frac{\sum_i y_i}{N}$$ is the mean of $$Y$$.
 
 
 ``` python
-In [1]: import numpy as np
-
-In [2]: p_of_x = np.arange(0.1,1,0.1)
-
-In [3]: cross_entropy = np.round(- p_of_x * np.log(p_of_x), 2)
-
-In [4]: entropy_p_of_x = np.round(- p_of_x * np.log(p_of_x), 2)
-
-In [5]: entropy_p_of_x
-Out[5]: array([0.23, 0.32, 0.36, 0.37, 0.35, 0.31, 0.25, 0.18, 0.09])
-
-In [6]: # if q(x) is identical to p(x), then cross entropy will be the same as entropy of p(x)
+def normalised_cross_entropy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    model_cross_entropy = cross_entropy(y_true=y_true, y_pred=y_pred)
+    y_pred_baseline = y_true.mean() * np.ones_like(y_pred)
+    baseline_cross_entropy = cross_entropy(y_true=y_true, y_pred=y_pred_baseline)
+    return model_cross_entropy / baseline_cross_entropy
 ```
 
+### Why not KL-Divergence?
 
-## Entropy through graphs and pictures
+Well honestly it's still difficult to intuit about values of KL-Divergence. Is a KL-Divergence
+of 0.3 good? I don't know. I find Normalised Cross Entropy easy to reason about when
+comparing model performance. Nothing is stopping us from normalising KL-Divergence
+by dividing with the KL-Divergence of the mean prediction similar to Cross Entropy
+but I haven't seen it in the literature as much. In my opinion, this could work just as well.
+<br/>
+<br/>
+## Appendix: Entropy through graphs and pictures
 
 Below is a plot of $$ - \log x$$. So an event $$x$$ which has a probability of 1, will have
 a surprise of 0 or equally in an optimal coding, we will use 0 bits to communicate this
