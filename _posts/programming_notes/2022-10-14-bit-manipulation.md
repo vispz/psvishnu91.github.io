@@ -1,14 +1,12 @@
 ---
-title: Coding concepts
+title: Bit Manipulation
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
-layout: post_with_toc
+layout: post
 ---
 
-## Bit manipulation
-
-### Storage
-#### Storing positive numbers
+## Storage
+### Storing positive numbers
 A 1 bit number can store two numbers `{0, 1}`, 2-bit number can store 4
 `{0,1,2,3 => 00,01,10,11}` and so on.
 
@@ -53,7 +51,7 @@ def infer_num_bits_pos_2(num: int) -> int:
 ```
 <br/>
 
-#### Storing integers (negative, 0 and positive)
+### Storing integers (negative, 0 and positive)
 
 However, we don't have to restrict ourselves to non negative integers. Say we want to store
 `-4 to 3`, we have eight numbers, so a 3-bit store should be able to support this.
@@ -142,7 +140,7 @@ def infer_num_bits_integers(num: int) -> int:
         return math.ceil(nbits) + 1
 ```
 
-### Shifting
+## Shifting
 ``` python
 >>> x =0
 >>> x = x | 1 << 4
@@ -165,7 +163,7 @@ In [24]: a << 2
 Out[24]: 100
 ```
 
-### Masking
+## Masking
 Bits are indexed `0` to `n-1`. So a 8-bit number is indexed `0` for the LSB and `7` for the MSB.
 
 Credits: Picture below from [hackerrank tutorials](https://youtu.be/NLKQEOgBAnw).
