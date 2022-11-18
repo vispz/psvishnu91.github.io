@@ -140,6 +140,17 @@ def infer_num_bits_integers(num: int) -> int:
         return math.ceil(nbits) + 1
 ```
 
+### Finding the rightmost set bit (rightmost 1)
+Something you can notice above in the two's complement representation is that x and -x only have one common set bit which is the rightmost bit. Also for powers of two there's exactly one set bit.
+
+So for the leetcode problem find if a number is a power of 2, you can simply do
+``` python
+if n == 0:
+    return False
+else:
+    return (x & (-x)) == x
+```
+
 ## Shifting
 ``` python
 >>> x =0
