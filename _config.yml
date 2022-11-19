@@ -15,3 +15,4 @@ name: Vishnu's Personal Website
 plugins:
   - jekyll-sitemap
 url: "https://vishnu.uk"
+permalink: /blogs/:title:output_ext

@@ -1,9 +1,8 @@
-- name: Personal
-  blog_type: blog
+- name: Programming Notes
+  blog_type: programming_notes
 
 - name: Machine Learning Notes
   blog_type: ml_notes
 
-- name: Programming Notes
-  blog_type: programming_notes
-
+- name: Personal
+  blog_type: blog

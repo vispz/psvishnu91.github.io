@@ -240,3 +240,9 @@ For directed graphs, we only count edges from A to B, i.e., tail in A and head i
 For a graph with n-nodes, we have have $$2^n-2$$ different cuts. This is because each
 node is a binary variable with two options, node 1 or node 2. We have a minus two because
 the empty set cases are disallowed (all are in set A or all are in set B). 
+
+## Topological sort
+
+
+## Dijkstra
+
