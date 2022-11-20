@@ -21,14 +21,14 @@ In this blog, I am going to play around with spark with databricks running on AW
 - **Credentials configuration:** Used this [documentation](https://docs.databricks.com/administration-guide/account-api/iam-role.html) to
   * To create a new IAM role with an external AWS account ie., databricks' account (ID: 414351767826).
   * We also copy our private external account ID from <br/>
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/databricks-cloud-rsrc.png" width="70%" %}
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-external-id.png" width="70%" %}
+    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/databricks-cloud-rsrc.png" width="45%" %}
+    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-external-id.png" width="45%" %}
   * Attach an inline policy. We copy the JSON for [the default policy](https://docs.databricks.com/administration-guide/account-api/iam-role.html#default-policy) 
   which sets up spark in databricks' VPC instead of our private VPC.
   * Copy the ARN of the created policy back to databricks credential management.
 - **Storage credentials:**
   * In the databricks storage credentials, added our bucket name and copied the generated policy.<br/>
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-s3-storage-config.png" width="70%" %}
+    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-s3-storage-config.png" width="45%" %}
   * In AWS, `S3->buckets->spark-learning->Permissions->Edit bucket policy` copied over the
   JSON policy generated in databricks in the previous step.
 - We are done with the AWS setup 😄
@@ -46,14 +46,15 @@ In this blog, I am going to play around with spark with databricks running on AW
     Num workers = 1 
   ```
 - This spun up two instances on aws.
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/ec2-mc-spun-up.png" width="70%" %}
+    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/ec2-mc-spun-up.png" width="45%" %}
 <br/>
 ### Add data
 Let's first create a table, this can be done in the workspace console
 `Data -> Table -> Create table`. For data, we are using this telecommunication data from
 [kaggle](https://www.kaggle.com/datasets/abhinav89/telecom-customer). We are going
 to directly upload the data from this csv file into DataBricks DBFS fmt table creator.
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/tbl-created.png" width="70%" %}
+
+    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/tbl-created.png" width="45%" %}
 <br/>
 
 ### Create a notebook in databricks
