@@ -55,7 +55,8 @@ Let's first create a table, this can be done in the workspace console
 [kaggle](https://www.kaggle.com/datasets/abhinav89/telecom-customer). We are going
 to directly upload the data from this csv file into DataBricks DBFS fmt table creator.
 
-    {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/tbl-created.png" width="45%" %}
+{% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/tbl-created.png" width="45%" %}
+
 <br/>
 
 ### Create a notebook in databricks
