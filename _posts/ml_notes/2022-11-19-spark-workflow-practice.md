@@ -48,6 +48,7 @@ In this blog, I am going to play around with spark with databricks running on AW
 - This spun up two instances on aws.
     {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/ec2-mc-spun-up.png" width="45%" %}
 <br/>
+
 ### Add data
 Let's first create a table, this can be done in the workspace console
 `Data -> Table -> Create table`. For data, we are using this telecommunication data from
