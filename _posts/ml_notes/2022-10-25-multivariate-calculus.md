@@ -440,6 +440,10 @@ def next_step(f, J, H) :
 
 
 ## Lagrange multipliers & constrained optimisation
+<div style="text-align: center">
+{% include youtube.html id="5A39Ht9Wcu0" width="40%" height="100%" %}
+</div>
+
 Say we have an objective function $$f(x,y)=x^2y$$ that we would like to optimise. However,
 we would like to constraint to solutions which lie on the circle $$g(x,y)=x^2+y^2=a^2$$.
 Lagrange noticed that this happens when the surface of the objective function $$f(x,y)$$
@@ -548,3 +552,88 @@ while i< 100_000:
 ```
 
 {% include gradient_descent.html %}
+
+
+## Advanced optimisation techniques
+Given some loss function $$J(\theta)$$ and gradient $$\nabla_{\theta} J(\theta)$$, we can use more advanced optimisation algorithms than canonical gradient descent ie.,
+
+$$\theta^{(i+1)} = \theta^{(i)} - \alpha \nabla_{\theta} J(\theta) $$
+
+Some of these algorithms are LBFGS, BFGS and conjugate gradient descent. Some advantage include their ability to arrive at a reasonable learning rate themselves, usually a different one each time. This could be arrived at through the **Line Search** algorithm. They often converge faster than gradient descent.
+
+## Convex optimisation
+
+> **Credits for the images below: [Visually Explained](https://www.youtube.com/@VisuallyExplained) youtube channel.**<br/>
+> [Youtube video series](https://youtu.be/AM6BY4btj-M). 
+
+### Optimisation
+
+**Decision variable:** $$x \in \mathcal{R}^n$$
+
+**Cost function:** $$f:\mathcal{R}^n \rightarrow \mathcal{R}$$
+
+**Constraints**
+* Equality constraints <br/>
+$$ h(x)=0, i=1,...$$<br/>
+Example: $$x_1+x_2+...= 0$$
+
+* Inequality constraints<br/>
+$$g(x) \leq 0 j=1, \dots$$<br/>
+Example: $$x_1^2 + x_2^2 \leq = x_3^2$$
+
+The constraints, together form the feasible set.
+#### Examples
+##### Linear program
+When the cost function $$f(x)$$, the equality constraints $$h(x),$$ and the inequality constraints $$g(x) $$ are all linear, the problem is called a **linear programming** problem.
+
+To visualise linear functions $$f(x) = c^T x + d$$, either as a hyperplane or a normal vector.
+
+**Hyperplane**
+
+Think of a hyperplane as planes $$f(x)=0, f(x) =1, f(x) =2 ....$$. 
+
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/hyperplane.png" width="40%" %}
+
+Hyperplane divides a space
+into three regions. The positive half space $$x_1+x_2+x_3>0$$, null region or the 
+hyperplane itself $$x_1+x_2+x_3=0$$ and the negative half space  $$x_1+x_2+x_3<0$$.
+A linear inequality constraint will cut off a part of the feasible space.
+
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/feasible-region.png" width="40%" %}
+
+
+##### Linear regression
+In linear regression, we have no constraints but our cost function is simply $$|| \mathbf{Ax} - \mathbf{b}||^2$$, is a quadratic loss function.
+
+##### Portfolio optimisation
+You are given a list of assets like stocks. Goal to find which assets to buy and have finite budget (decision variable). You have to maximise profit (cost function). Constraints could be total budget and maximum volatility.
+
+### Convexity
+Three types of convexity
+* Sets: A set is convex, all values between to elements of the set exist in the set. Imagine
+a set a blob with a hole in it.
+* Function: It's epigraph, the region of the space above the function is convex.
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/epigraph-fn.png" width="40%" %}
+* Optimisation: The cost function, $$f(x)$$ is convex. The inequality constraints are convex
+$$g_i(x) \leq 0, \forall i$$ and the equality constraint is linear, $$h_j(x)=0, \forall j$$. The equality
+is linear because it can be written as two convex functions, $$h_j \leq 0 $$ and $$h_j \geq 0$$ and
+this can only occur for a linear $$h_j(x)$$.
+
+### Duality
+* Sets: The definition above is internal. We can have an external definition. Take a hyperplane
+that supports this set (the set falls on the positive regions of the hyperplane). A convex set
+is such that if you take the intersection of the positive regions of all the support hyperplane
+you recover the convex set. There can be infinitely many linear inequalities (hyperplane). Imagine
+defining a circle, we need infinite tangents.
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/dual-cvx-set.png" width="40%" %}
+* Functions: Duality let's you extrapolate the local behaviour of a function to the global
+behaviour of the function. $$f(x)$$ is convex iff, if it's graph is always above it's tangent
+hyperplanes for all values of x. 
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/dual-cvx-fn.png" width="40%" %}
+If you find the value where $$\nabla f(x) = 0$$, then it absolutely is global minima as it's
+a flat hyperplane and all values of $$f(x)$$ need to be greater than this value. Using this
+property we can solve the minimum of an **uncontrained optimisation of convex functions**
+by taking the gradient and setting it to 0. 
+> We went from a gradient at a local point to a global property of this function.
+
+### TODO: Write notes on the KKT conditions and solving primal/dual formulations of convex problems
