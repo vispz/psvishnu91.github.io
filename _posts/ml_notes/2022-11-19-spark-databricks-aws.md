@@ -1,7 +1,7 @@
 ---
-title: Spark Workflow with Databricks
+title: Spark on databricks with AWS
 blog_type: ml_notes
-excerpt: Notes on playing with databricks spark workflow.
+excerpt: Setting up spark on databricks with an AWS backend.
 layout: post
 ---
 
@@ -10,7 +10,6 @@ In this blog, I am going to play around with spark with databricks running on AW
 
 ### Resources and Credits
 - [Abdul Zedan's wonderful YT tutorial](https://www.youtube.com/watch?v=Ocdv0Z4rwTQ)
-- [Databricks YT series](https://youtu.be/TeFXA2imXCs)
 
 
 ### AWS Setup
