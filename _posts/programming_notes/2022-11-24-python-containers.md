@@ -234,10 +234,10 @@ class DisjointUnionSet:
         self.rank = [1] * n
   
     def find_leader(self, x: int) -> int:
-        """Find's the leader of x and also moves all of x's parents directly under
+        """Finds the leader of x and also moves all of x's parents directly under
         the leader of x.
 
-        :param x: Index in the list of elements described by self.parent, 0<=x<n
+        :param x: Node in the graph `0<=x<n`
         :returns: The leader of the set containing index `x`.
         """
         if self.parent[x] == x:
