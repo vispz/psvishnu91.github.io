@@ -242,7 +242,7 @@ class DisjointUnionSet:
         """
         if self.parent[x] == x:
             return x
-        self.parent[x] = leader(self.parent[x])
+        self.parent[x] = self.find_leader(self.parent[x])
         return self.parent[x]
 
     def union(self, x: int, y: int) -> None:
