@@ -34,6 +34,7 @@ r = 100_000 % 52
 We can ignore $$(3^{52})^{q}$$ as the remainder will be $$1$$ multiplied by $$1$$, $$q$$ times, ie., $$1$$. So $$3^{100,000}\ \%\ 53=3^r\ \%\ 53$$. In this example, r is 4. So the answer is $$3^4$$ % $$53$$ or $$81\ \% \ 53$$ which is 28.
 
 Mathematically, this can be written as
+
 $$3^{100,000}=(3^{52})^{1923} \cdot 3^4$$
 $$3^{52} \equiv 1\ (\text{mod}\ 53)$$
 $$(3^{52})^{1923} \equiv 1^{1923}\ (\text{mod}\ 53)$$
@@ -50,6 +51,14 @@ The key here is the **Euclidean algorithm**. $$gcd(a,b) = gcd(a,b-a)$$. That is 
 Proof: Let $$p$$ be the GCD of $$a$$ and $$b$$. We can write $$a$$ and $$b$$ as $$a = p \times m, b = p \times n$$. Now, $$a-b=p\times(m-n)$$. As we can see the GCD is preserved. Repeatedly subtracting merely changes the coefs of $$m$$ and $$n$$. For instance, $$a-b-b=p\times(m-2n)$$.
 
 <a href="/assets/Images/posts/programming_notes/euclid-theorem-proof.png"><img src="/assets/Images/posts/programming_notes/euclid-theorem-proof.png" alt="Euclid theorem formal proof" width="400"/></a>
+
+We can make the above faster by using modulo instead of subtraction.
+``` python
+def gcd(a, b):
+    if a == 0:
+        return b
+    return gcd(b % a, a)
+```
 
 ## Sum of natural numbers
 

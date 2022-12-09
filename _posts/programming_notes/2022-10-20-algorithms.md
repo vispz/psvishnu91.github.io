@@ -70,7 +70,7 @@ Follows quicksort almost verbatim.
 
 **Algorithm:**
 - Randomly choose a pivot and apply the partition subroutine from quicksort
-- If the index is of the pivot is k, return the value at the pivot.
+- If the index of the pivot is k, return the value at the pivot.
 - If the index of the pivot is greater than k (kth order statistic), then recurse on
 the left half of the array, otherwise recurse on the right half of the array.
 
@@ -92,12 +92,12 @@ work becomes upper bounded by $$8cn$$.
 ### Deterministic - Median of medians
 
 The algorithm is precisely the same as the randomised approach except how we choose our
-pivots. This algorithgm is deterministically guaranteed to be of $$O(n)$$. However,
+pivots. This algorithm is deterministically guaranteed to be of $$O(n)$$. However,
 we pay in terms of very large constants in the big-O notation, need for an extra storage
 of length $$O\left(\frac{n}{5}\right)$$.
 
 **Algorithm**
-- First split the array into n/5 buckets. For each bucket find the median through sorting.
+- First split the array into n/5 buckets of sizes 5 each. For each bucket find the median through sorting.
 - Store these medians in a new list.
 - Then find the median of these medians by recursively calling this function.
 - Once we have the pivot the rest is the same as the randomised selection.
@@ -120,7 +120,8 @@ Elements: Nodes or vertices $$(V)$$ and edges $$(E)$$.
 **Types**
 {% include image.html id="/assets/Images/posts/programming_notes/graphs.png" width="20%" %}
 
-1. Undirected graph - Edges are directed or undirected. The nodes are unordered.
+Edges are directed or undirected
+1. Undirected graph - The nodes are unordered.
 2. Directed graph - Has directed edges. There is a first (tail) and the last vertex (head)
    or end point. Directed edge is also called an Arc. If a -> b, then a is the tail
    and b is the head.
@@ -136,7 +137,7 @@ Elements: Nodes or vertices $$(V)$$ and edges $$(E)$$.
 - **Number of edges:** n-num vertices and m-num edges. For an connected undirected graph
 and with no parallel edges, the min and max number of possible edges is $$(n-1)$$ and
 $$\frac{n(n-1)}{2}$$.
-- Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$\Omega(n)$$ $$O(n^2)$$. If m is closer to
+- Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$O(n^2)$$. If m is closer to
   $$\Omega(n)$$ then it's a sparse graph, if it's closer to $$\Omega(n)$$ it's a dense graph.
 - $$\sum_v degree(v) = 2m$$. Each edge is a part of two nodes. 
 
@@ -190,10 +191,10 @@ class Edge:
 @dataclass
 class Node:
     val: int = 0
-    outward_edges: Optional[List['Edge']]
+    outward_edges: Optional[List['Edge']] = None
     # This variable is optional and adds to storage. We
     # can get away with just the outward edges.
-    inward_edges: Optional[List['Edge']]
+    inward_edges: Optional[List['Edge']] = None
 
 """
 Graph

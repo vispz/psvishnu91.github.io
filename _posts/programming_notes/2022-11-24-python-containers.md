@@ -11,14 +11,16 @@ In production environments in Python, we almost exclusively only use the
 expected to the exotic data strucutre realm of
 
 1. Balanced binary tree
-2. Heap or a Priority Queue
+2. Heap or a PriorityQueue
 3. Queue/Stack
 4. Tries
 5. Bloom filters
 
 AFAIK there are no standard implementations for Tries and bloom filters in Python, hence
 I will merely iterate on implementing the remaining datastructures. As
-a bonus, I have included the bisect library which provides fast binary search.
+a bonus, I have included 
+- the bisect library which provides fast binary search.
+- an implementation of a disjoint union set
 
 ### `sortedcontainers` library
 
@@ -88,6 +90,10 @@ Out[15]: True
 ### `heapq` library
 A heap provides $$O(\log n)$$ `insertion` and `extract_min`. `extract_min` pops out the
 min object. Heaps represent a binary tree but are internally stored as arrays.
+
+> `queue.PriorityQueue` is a thread safe implementation of a heap which uses
+> `heapq` underneath. Unless interview deals with concurrency, you're better off
+> using the more lightweight `heapq` library.
 
 **Second order properties:**<br/>
 - $$O(n)$$ heapify, convert a list of unsorted numbers to one with heap properties.
@@ -201,3 +207,59 @@ Out: [5, 5, 5, 6]
     Task(order=0, name='BB'),
     Task(order=1, name='X')]
   ```
+
+### Disjoint Union Set (DSU) in Python
+
+The operations provided by the datastructure are
+- Amortised O(1) Union two sets.
+- Amortised O(1) Find if two sets are connected
+
+We can add other amortised O(1) operations like finding the maximum or minimum
+size amongst disjoint sets.
+
+> The actual time complexity is $$O(\alpha(n))$$ where $$\alpha$$ is the inverse
+> Ackermann function which grows extremely slowly. For all reasonable sizes of n
+> this can be assumed to be constant time.
+
+``` python
+class DisjointUnionSet:
+
+    def __init__(self, n: int) -> None:
+        """Constructor
+        :param n: The number of nodes in the graph. These can be connected
+            later using the :meth:`.union`.
+        """
+        # Everyone's their own parent at the beginning 
+        self.parent = [i for i in range(n)]
+        self.rank = [1] * n
+  
+    def find_leader(self, x: int) -> int:
+        """Find's the leader of x and also moves all of x's parents directly under
+        the leader of x.
+
+        :param x: Index in the list of elements described by self.parent, 0<=x<n
+        :returns: The leader of the set containing index `x`.
+        """
+        if self.parent[x] == x:
+            return x
+        self.parent[x] = leader(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x: int, y: int) -> None:
+        """Joins sets containing x and y. If set(x) is higher rank ie., taller tree than
+        set(y), y will go under x and vice-versa. If they are of the same rank or height
+        then we pick one randomly but also update the rank as the height has increased.
+        """
+        leader_x = self.find_leader(x=x)
+        leader_y = self.find_leader(y=y)
+        if self.rank[leader_x] > self.rank[leader_y]:
+            self.parent[leader_y] = leader_x
+        elif self.rank[leader_x] < self.rank[leader_y]:
+            self.parent[leader_x] = leader_y
+        else:
+            self.parent[leader_x] = leader_y
+            self.rank[leader_y] += 1
+
+    def is_connected(self, x: int, y: int):
+        return self.find_leader(x=x) == self.find_leader(y=y)
+```

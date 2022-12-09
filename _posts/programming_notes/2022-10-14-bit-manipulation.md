@@ -167,11 +167,13 @@ a 7-bit binary number.
 - Right shifting a number n times is the same as dividing the by $$2^n$$.
 
 ``` python
-In [23]: a >> 3
-Out[23]: 3
+In [1]: a = 25
 
-In [24]: a << 2
-Out[24]: 100
+In [2]: a >> 3
+Out[2]: 3
+
+In [3]: a << 2
+Out[3]: 100
 ```
 
 ## Masking
