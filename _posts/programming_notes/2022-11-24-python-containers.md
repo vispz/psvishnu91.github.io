@@ -251,7 +251,7 @@ class DisjointUnionSet:
         then we pick one randomly but also update the rank as the height has increased.
         """
         leader_x = self.find_leader(x=x)
-        leader_y = self.find_leader(y=y)
+        leader_y = self.find_leader(x=y)
         if self.rank[leader_x] > self.rank[leader_y]:
             self.parent[leader_y] = leader_x
         elif self.rank[leader_x] < self.rank[leader_y]:
@@ -261,5 +261,24 @@ class DisjointUnionSet:
             self.rank[leader_y] += 1
 
     def is_connected(self, x: int, y: int):
-        return self.find_leader(x=x) == self.find_leader(y=y)
+        return self.find_leader(x=x) == self.find_leader(x=y)
+```
+
+#### Test
+```python
+dsu = DisjointUnionSet(n=10)
+dsu.union(x=2,y=3)
+dsu.union(x=2,y=3)
+dsu.union(x=4,y=3)
+dsu.union(x=4,y=9)
+dsu.union(x=5,y=7)
+
+dsu.is_connected(5,7)
+Out: True
+
+dsu.is_connected(4,3)
+Out: True
+
+dsu.is_connected(5,3)
+Out: False
 ```
