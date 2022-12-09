@@ -230,7 +230,7 @@ class DisjointUnionSet:
             later using the :meth:`.union`.
         """
         # Everyone's their own parent at the beginning 
-        self.parent = [i for i in range(n)]
+        self.parent = list(range(n))
         self.rank = [1] * n
   
     def find_leader(self, x: int) -> int:
