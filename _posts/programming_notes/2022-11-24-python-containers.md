@@ -133,6 +133,12 @@ Out[9]: -1
 
 In [10]: h
 Out[10]: [1, 3, 5, 5, 4, 9, 7]
+
+In [11]: heap.nsmallest(2, h)
+Out[11]: [1, 3]
+
+In [12]: heap.nlargest(2, h)
+Out[12]: [9, 7]
 ```
 
 ### Stack / Queue
