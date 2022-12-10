@@ -108,8 +108,8 @@ we would like to find the 2s complement representation of
         =>   100_0000
 -64     => 1 100_0000
 ```
-> From above the pattern is clear, the negative integers which are powers of two are 
-> represented as ones followed by zeros.  
+> From above the pattern is clear, the negative integers which are powers of two are
+> represented as ones followed by zeros.
 
 
 -128. We actually need 8 unsigned bits to represent +128, `1000_0000`. If we do a negation
@@ -159,10 +159,10 @@ else:
 16
 ```
 
-- Left shifting 1 by n is the same as raising 2 to the power of n. 
+- Left shifting 1 by n is the same as raising 2 to the power of n.
 - If you left shift by n, the output is a (n+1)-bit binary.  For example if you left
 shift by 1, the output is a 2-bit binary number (2 => 10). Another example $$2^6$$ is
-a 7-bit binary number. 
+a 7-bit binary number.
 - Left shifting a number n times is the same as multiplying the by $$2^n$$.
 - Right shifting a number n times is the same as dividing the by $$2^n$$.
 

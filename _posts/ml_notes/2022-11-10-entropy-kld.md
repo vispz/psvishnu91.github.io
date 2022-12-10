@@ -14,21 +14,21 @@ uncertainty in the system.
 $$Entropy(x) = S\left[P(x)\right] = - \sum_{x \in X}P(x)\log P(x) = - E_{x \sim P(x)} [\log P(x)]$$
 
 Above we are sampling $$x$$ from the distribution $$P(x)$$: that is the probability of
-sampling the specific value $$x$$ is defined by the probability distribution $$P(x)$$. 
+sampling the specific value $$x$$ is defined by the probability distribution $$P(x)$$.
 
-> [This medium blog post](https://towardsdatascience.com/entropy-how-decision-trees-make-decisions-2946b9c18c8) 
+> [This medium blog post](https://towardsdatascience.com/entropy-how-decision-trees-make-decisions-2946b9c18c8)
 > works through examples that might be instructive.
 
 Entropy is a positive real number. Entropy is bounded between 0 and 1 when there are only
 two outcomes. However, if there are more outcomes it can be greater than 1. In ML parlance,
 for a binary output variable `Y`, entropy can be at most 1 but for a multiclass setup,
-it can be greater than 1. 
+it can be greater than 1.
 
 
 ### Cross entropy
 
 This is the entropy of a distribution $$q(x)$$ when $$x$$ is sampled from another distribution
-$$p(x)$$. 
+$$p(x)$$.
 
 > Paraphrasing **Wikipedia:** Cross entropy measures the average number of bits needed to represent
 > a specific $$x$$ if the coding scheme used is optimized for an
@@ -38,9 +38,9 @@ $$ H(p(x), q(x)) = - E_{x \sim p(x)}\left[ \log q(x) \right] $$
 
 In ML, $$p(x)$$ represents the true unknown distribution we are trying to model with $$q(x)$$.
 We never really have access to the true distribution $$p(x)$$, but only $$X$$, our
-dataset sampled from $$p(x)$$. Here $$X$$ represents the entire dataset, $$X$$ 
-and $$y$$ in supervised learning, not just the features. When we actually go about 
-computing cross entropy, we merely compute the average $$\log q(x)$$ with $$x$$'s 
+dataset sampled from $$p(x)$$. Here $$X$$ represents the entire dataset, $$X$$
+and $$y$$ in supervised learning, not just the features. When we actually go about
+computing cross entropy, we merely compute the average $$\log q(x)$$ with $$x$$'s
 sampled from our data. This is an unbiased estimate of the true cross entropy of
 $$q(x)$$ wrt $$p(x)$$.
 
@@ -85,7 +85,7 @@ $$D_{KL}(p(x)||q(x)) = \int_{-\infty}^{\infty} { p(x) \log \frac{p(x)}{q(x)} dx}
 
 **When $$p(x) \neq 0$$ but $$q(x) = 0$$**
 
-If $$p(x) \neq 0$$ for some $$x \in X$$, but $$q(x) = 0$$, 
+If $$p(x) \neq 0$$ for some $$x \in X$$, but $$q(x) = 0$$,
 then $$D_{KL} = p(x) (\log p(x) - \log 0) = \infty$$. If there's a point which has non-zero
 probability in the true distribution that the model distribution thinks is impossible,
 then the two distributions are considered absolutely different. This can be addressed
@@ -99,20 +99,20 @@ Credits: [stats.stackexchange](https://stats.stackexchange.com/a/357974/84357)
 > **tl;dr:** KL-Divergence is composed of entropy of the true distribution
 >  $$p(x), E\left[\log p(x)\right]$$ and
 > the cross entropy, $$H(p(x), q_{\Theta}(x))$$. Since optimising the
-> parameters of the model $$\left(\Theta\right)$$, only depends on $$q_\Theta{(x)}$$ and 
+> parameters of the model $$\left(\Theta\right)$$, only depends on $$q_\Theta{(x)}$$ and
 > hence only the
 > $$H(p(x), q_{\Theta}(x))$$ term, we can leave out entropy of $$p(x)$$ from the objective function.
 
 Cross-entropy is the loss function used in logistic regression. We pair softmax and cross-entropy
-loss in 
+loss in
 
-$$ 
+$$
 \begin{align*}
 D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\} \\
  D_{KL}(p(x)||q(x)) &= E_{x\sim p(x)}\left[\log p(x)\right] - E_{x \sim p(x)} \left[\log q(x)\right]\\
 \end{align*}\\
 \boxed{D_{KL}(p(x)||q(x)) = -\text{Entropy}\left[p(x)\right] + H(p(x), q(x))}\\
-\text{KL Divergence of $q(x)$ wrt $p(x)$} = -\text{Entropy of } p(x) + \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$} 
+\text{KL Divergence of $q(x)$ wrt $p(x)$} = -\text{Entropy of } p(x) + \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$}
 $$
 
 The signs are flipped in the final equation because entropy and cross entropy are
@@ -122,12 +122,12 @@ Hence, we can decompose KL-Divergence into the entropy of the true unknown distr
 plus the cross entropy of $$q(x)$$ with respect to the true distribution $$p(x)$$.
 While learning a model, we try to figure out the parameters $$\left(\Theta\right)$$ of our model defining $$q_{\Theta}(x)$$
 which minises our loss. The parameters of the model do not affect the true probability
-distribution $$p(x)$$, so 
+distribution $$p(x)$$, so
 
-$$ 
+$$
 \begin{align*}
 \arg\min_{\Theta} \left\{E_{x\sim p(x)}\left[\log p(x)\right] - E_{x\sim p(x)}\left[\log q_{\Theta}(x)\right]\right\} &= \arg\min_{\Theta} \left\{-E_{x\sim p(x)} \left[\log q_{\Theta}(x)\right] \right\}(\because p(x) \perp \Theta)\\
-\arg\min_{\Theta} D_{KL}(p(x)||q_\Theta(x)) &=  \arg\min_{\Theta} H(p(x),q_\Theta(x)) 
+\arg\min_{\Theta} D_{KL}(p(x)||q_\Theta(x)) &=  \arg\min_{\Theta} H(p(x),q_\Theta(x))
 \end{align*}
 $$
 
@@ -140,7 +140,7 @@ import numpy as np
 
 def create_y(num_data: int, num_classes: int) -> np.ndarray:
     """Creates a random class probability labels.
-    
+
     :returns: A ``num_data x num_classes`` matrix such
         that each row sums to 1 (corresponds to probabilities).
     """
@@ -150,7 +150,7 @@ def create_y(num_data: int, num_classes: int) -> np.ndarray:
 def cross_entropy(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     """"Computes multiclass cross entropy.
 
-    :param y_true: A matrix of dimenions (n, m), for n datapoints and   
+    :param y_true: A matrix of dimenions (n, m), for n datapoints and
         m labels. True class labels. Can be OHE or probabilities.
     :param y_pred: A matrix of dimensions (n, m) with prediction probabilities for
         the n-datapoints for the m-classes. We will assume that all probabilities are > 0.
@@ -180,15 +180,15 @@ print(F.cross_entropy(input=torch.log(y_pred_tnsr), target=y_true_tnsr))
 ```
 
 ## Which one should you use in production? Normalised Cross Entropy
-Well honestly, you can track either KL-Divergence $$D_{KL}$$ or Cross entropy $$H$$ in production. 
+Well honestly, you can track either KL-Divergence $$D_{KL}$$ or Cross entropy $$H$$ in production.
 Minimising either loss is identical as we have seen above.
 
 However, KL-Divergence is slightly easier to reason with.
 
 Let's say we have a perfect model
-such that $$q(x) = p(x) \forall x \in X$$. Cross entropy $$ H(p, q) $$ will be non zero 
+such that $$q(x) = p(x) \forall x \in X$$. Cross entropy $$ H(p, q) $$ will be non zero
 whereas KL-Divergence will be zero $$D_{KL}(p, q)$$.
-For a concrete example, say for $$x=1$$, $$p(x)=0.5$$ and hence $$q(x)=0.5$$, 
+For a concrete example, say for $$x=1$$, $$p(x)=0.5$$ and hence $$q(x)=0.5$$,
 cross entropy will be $$ H(p, q) = - p(x) \log q(x) = - 0.5 \log 0.5 = 0.35 $$, whereas
 KL-Divergence will be $$D_{KL}(p, q) = E[\log p] + H(p, q) = -0.35 + 0.35 = 0 $$.
 
@@ -214,12 +214,12 @@ $$
 **Does that mean our homepage model is twice as good as the searchpage model?** Well intuitively
 we want to say no. We see that cross entropy value is highest when the probability of the
 binary number variable is 0.5 and we predict 0.5 for all the samples. This makes comparing
-models difficult with cross entropy. Note: KL-Divergence of the above example will be 0. 
+models difficult with cross entropy. Note: KL-Divergence of the above example will be 0.
 
 ### Normalised Cross Entropy
 
 As discussed above cross entorpy is hard to reason about. Is a cross entropy of 0.3 good?
-Who knows?! The standard trick to arrive at numbers that we can intuit about is to normalise. 
+Who knows?! The standard trick to arrive at numbers that we can intuit about is to normalise.
 
 From the [literature](http://quinonero.net/Publications/predicting-clicks-facebook.pdf)
 literature, we see that Normalised Cross Entropy is used widely in the industry
@@ -265,17 +265,17 @@ number of bits to represent this rare event.
 <iframe width="100%" height="400" frameborder="0" scrolling="no" src="//plotly.com/~visperz/1.embed"></iframe>
 
 This definition of entropy was proposed by Claude Shannon in the paper
-[A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf). 
-He shows that only a function of the form $$ -K \sum_i p_i \log p_i $$ 
+[A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+He shows that only a function of the form $$ -K \sum_i p_i \log p_i $$
 satisfies the the three requirements he places for entropy. See section 6 of the paper for details.
 
 {% include image.html id="/assets/Images/posts/ml_notes/entropy/entropy-of-binary-var.png" width="50%" %}
 
 
-Here's a [jupyter notebook](https://nbviewer.org/gist/psvishnu91/738cbc59e9f80fa72c3942e9aa2cfd48) 
+Here's a [jupyter notebook](https://nbviewer.org/gist/psvishnu91/738cbc59e9f80fa72c3942e9aa2cfd48)
 with visualisation of entropy as a function of how spread out a distribution is.
 
-<iframe 
+<iframe
     src="https://nbviewer.org/gist/psvishnu91/738cbc59e9f80fa72c3942e9aa2cfd48"
     title="Entropy as a function of how spread out a distribution is."
     width="100%" height="350"

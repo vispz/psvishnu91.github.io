@@ -33,4 +33,3 @@ $$ E\left[\sum_{j=1}^n X_j\right] = \sum_{j=1}^n E[X_j]$$
 
 Linearity expecations works even in the random variables are not independent. This
 is certainly not true for products of random variables.
-

@@ -10,7 +10,7 @@ Notes are primarily derived from [ICL's course on coursera](https://www.coursera
 
 [Cheatsheet](/assets/Docs/posts/ml_notes/mv-calc-cheat-sheet.pdf) from ICL.
 
-## Gradient 
+## Gradient
 <center>
 <img src="/assets/Images/posts/ml_notes/gradient-basics.png" />
 </center>
@@ -67,7 +67,7 @@ f = xy^2 + 2z
 $$
 
 $$
-J = \begin{bmatrix}    y^2 & 2xy & 2 \end{bmatrix} 
+J = \begin{bmatrix}    y^2 & 2xy & 2 \end{bmatrix}
 $$
 
 The Jacobian can be thought of as an algebraic expression for a vector, which when give a specific $$x, y, z$$ coordinate will return a vector pointing in the direction of the steepest slope for this function at $$x, y, z$$. This function has a constant contribution in the $$z$$ direction independent of the $$x,y,z$$ location chosen.
@@ -86,7 +86,7 @@ J(x, y) = \begin{bmatrix}
     cos \theta & - r sin \theta \\
     sin \theta & r cos \theta
 \end{bmatrix} \\
-|J| = r(cos^2 \theta + sin^2 \theta) = r 
+|J| = r(cos^2 \theta + sin^2 \theta) = r
 $$
 
 Though the transformation is clearly non-linear, as a consequence of the transformation being smooth, the areas only depend on $$r$$ and not $$\theta$$, consequently can be closely approximated as linear.
@@ -137,14 +137,14 @@ If $$\Delta$$ is too large it will be a bad approximation, if too small we will 
 ## Multivariate chain rule
 Let $$f(x_1, x_2, ..., x_n) = f(\mathbf{x})$$
 
-$$ 
+$$
 
 \begin{align*}
-\frac{d f (\mathbf{x})}{ d t } &= 
+\frac{d f (\mathbf{x})}{ d t } &=
 \frac{\partial f}{\partial x_1} \frac{d x_1}{dt} + \frac{\partial f}{\partial x_2} \frac{d x_2}{dt}
 + ... + \frac{\partial f}{\partial x_n} \frac{d x_n}{dt} \\
 &= \begin{bmatrix}
-\frac{\partial f}{\partial x_1} & \frac{\partial f}{\partial x_2} &  ...& \frac{\partial f}{\partial x_n} 
+\frac{\partial f}{\partial x_1} & \frac{\partial f}{\partial x_2} &  ...& \frac{\partial f}{\partial x_n}
 \end{bmatrix} \begin{bmatrix}
 \frac{d x_1}{dt} \\
 \frac{d x_2}{dt}\\
@@ -157,8 +157,8 @@ $$
 $$
 
 ### Chaining vectors in differentiation
-Let $$f(\mathbf{x}(\mathbf{u}(t)))$$ 
-$$ 
+Let $$f(\mathbf{x}(\mathbf{u}(t)))$$
+$$
 \begin{align*}
 f(\mathbf{x}) &= f(x_1, x_2) \\
 x(\mathbf{u})&=\begin{bmatrix}
@@ -173,7 +173,7 @@ u_1(t) \\ u_2(t)
 \frac{\partial f}{\partial x_1} & \frac{\partial f}{\partial x_2}
 \end{bmatrix} \begin{bmatrix}
 \frac{\partial x_1}{\partial u_1} & \frac{\partial x_1}{\partial u_2} \\
-\frac{\partial x_2}{\partial u_1} & \frac{\partial x_2}{\partial u_2} 
+\frac{\partial x_2}{\partial u_1} & \frac{\partial x_2}{\partial u_2}
 \end{bmatrix}
 \begin{bmatrix}
 \frac{d u_1}{dt} \\
@@ -221,10 +221,10 @@ For n layers,
 
 $$
 \begin{align*}
-\frac{\partial C_k}{\partial \mathbf{W}^{(i)}} &= \frac{\partial C_k}{\partial 
-\mathbf{a}^{(N)}} \underbrace{\frac{\partial \mathbf{a}^{(N)}}{\partial \mathbf{a}^{(N-1)}} \frac{\partial \mathbf{a}^{(N-1)}}{\partial \mathbf{a}^{(N-2)}} \ldots \frac{\partial \mathbf{a}^{(i+1)}}{\partial \mathbf{a}^{(i)}} }_{\text{from layer } N \text{ to layer } i} \frac{\partial 
-\mathbf{a}^{(i)}}{\partial \mathbf{z}^{(i)}} \frac{\partial 
-\mathbf{z}^{(i)}}{\partial \mathbf{W}^{(i)}} 
+\frac{\partial C_k}{\partial \mathbf{W}^{(i)}} &= \frac{\partial C_k}{\partial
+\mathbf{a}^{(N)}} \underbrace{\frac{\partial \mathbf{a}^{(N)}}{\partial \mathbf{a}^{(N-1)}} \frac{\partial \mathbf{a}^{(N-1)}}{\partial \mathbf{a}^{(N-2)}} \ldots \frac{\partial \mathbf{a}^{(i+1)}}{\partial \mathbf{a}^{(i)}} }_{\text{from layer } N \text{ to layer } i} \frac{\partial
+\mathbf{a}^{(i)}}{\partial \mathbf{z}^{(i)}} \frac{\partial
+\mathbf{z}^{(i)}}{\partial \mathbf{W}^{(i)}}
 \end{align*}
 $$
 
@@ -247,7 +247,7 @@ If we choose, tanh or logistic activation function then $$\frac{\partial \mathbf
 $$
 \begin{align*}
 \frac{\partial C}{\partial \mathbf{z}^{(L)}}_{(n\times 1)} &=  \frac{\partial C}{\partial \mathbf{a}^{(L)}}_{(n\times 1)} \odot tr\left(\frac{\partial \mathbf{a}^{(L)}}{\partial \mathbf{z}^{(L)}}_{(n\times n)}\right) \\
-&=   \left[ 2 (\mathbf{y}-\mathbf{a^{(L)}})_{(n\times 1)} \right] \odot \sigma'(\mathbf{z}^{(L)})_{(n \times 1)} 
+&=   \left[ 2 (\mathbf{y}-\mathbf{a^{(L)}})_{(n\times 1)} \right] \odot \sigma'(\mathbf{z}^{(L)})_{(n \times 1)}
 \end{align*}
 $$
 
@@ -284,9 +284,9 @@ by simply knowing the values of all the infinite differentials at any single poi
 
 
 ### Taylor series
-We can derive the taylor series to follow by essentially taking a polynomial, say 
+We can derive the taylor series to follow by essentially taking a polynomial, say
 $$g(x)= ax + b$$, differentiating it once and setting it's slope to the first derivate of the
-function $$f(x)$$ at a point $$x_0$$, $$a=f'(x_0)$$. Now let's take $$g(x) = ax^2 + bx + c$$, 
+function $$f(x)$$ at a point $$x_0$$, $$a=f'(x_0)$$. Now let's take $$g(x) = ax^2 + bx + c$$,
 differentiating twice and equating the second-derivative we get $$ 2a = f''(x_0)$$. Doing this
 once more we get $$(2)(3) a = f'''(x_0)$$. It's clear that the coefficient of the $$n-th$$
 power of the $$g(x)$$ function is simply $$\frac{f^{(n)}(x_0)}{n!}$$.
@@ -294,7 +294,7 @@ power of the $$g(x)$$ function is simply $$\frac{f^{(n)}(x_0)}{n!}$$.
 #### 1-D
 
 $$
-f(x) = \frac{f(x) (x-a)^0}{0!} + \frac{f'(x) (x-a)^1}{1!} + \frac{f''(x) (x-a)^2}{2!} 
+f(x) = \frac{f(x) (x-a)^0}{0!} + \frac{f'(x) (x-a)^1}{1!} + \frac{f''(x) (x-a)^2}{2!}
 + \ldots + \frac{f^{(n)}(x) (x-a)^n}{n!} + \ldots
 $$
 
@@ -304,7 +304,7 @@ When $$a=0$$, the Taylor series becomes the **Maclaurin series**.
 
 More often this is expressed as
 
-$$ 
+$$
 f(x + \Delta x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x)(\Delta x)^n}{n!}\\
 \boxed{f(x + \Delta x) = f(x) + f'(x)\Delta x + \frac{f''(x)(\Delta x)^2}{2!} + \ldots}
 $$
@@ -356,7 +356,7 @@ The below is just to inspire iterative methods. Do not spend too much time into 
 
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/newton-method.png" %}
 
-This method also applies to complex roots of a function. 
+This method also applies to complex roots of a function.
 
 #### Failure mode
 If you begin your guess of the solution around a local minimum, then the iteration
@@ -386,7 +386,7 @@ $$
 \begin{align*}
 f(\mathbf{x_0}+\Delta \mathbf{x}) &= f(\mathbf{x_0}) + \mathbf{J}\Delta \mathbf{x} \\
 \partial_{\Delta \mathbf{x}} f(\mathbf{x_0}+\Delta \mathbf{x}) &= \partial_{\Delta \mathbf{x}}  \{f(\mathbf{x_0}) + \mathbf{J}\Delta \mathbf{x}\} = 0 \\
-J &= 0 
+J &= 0
 \end{align*}
 $$
 
@@ -397,7 +397,7 @@ $$
 \mathbf{x}_{new} &= \mathbf{x}_{old} - \gamma J^T_{f@{\mathbf{x}_{old}}}\\
 \mathbf{x}_{new} &= \mathbf{x}_{old} - \gamma \nabla_{f@{\mathbf{x}_{old}}}
 \end{align*}
-$$ 
+$$
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/grad-descent.png" %}
 
 Above we use the first-order approximation and follow the gradient down the slope. However since we don't know how to set the step-size $$\gamma$$ we can bounce around the optimum.
@@ -499,7 +499,7 @@ In other words, in a 3-D parameter space of $$(x, y, \lambda)$$ , we want to fin
 $$\nabla L(x, y, \lambda)$$ goes to zero. We can find this with root finding algorithms
 like Newton-Raphson.
 
-$$\nabla \mathcal{L}$$ because it can  be written as the gradient (over 
+$$\nabla \mathcal{L}$$ because it can  be written as the gradient (over
 $$x, y,$$ and $$\lambda$$) of a scalar function
 $$\mathcal{L}(x, y, \lambda)= f(\mathbf{x})− \lambda g(\mathbf{x}) $$.
 
@@ -515,7 +515,7 @@ step size by the inverse of the gradnorm, helps move quicker.
 This works here as the gradients are derived analytically with little noise
 (only from floating pt precision). If we were to do this with an objective function
 approximated from data, inverse scaling with the grad norm with high variance,
-can throw us off track. 
+can throw us off track.
 
 <br/>
 
@@ -538,7 +538,7 @@ def gradf(xy):
 #########################
 # Gradient descent
 X = np.array([1, 1])
-# History of gradient descent points. 
+# History of gradient descent points.
 GDX = np.zeros((100, 2))
 i = 0
 while i< 100_000:
@@ -547,7 +547,7 @@ while i< 100_000:
     # from afar.
     X = X + 0.0001 / linalg.norm(J) * gradf(X)
     if i%1000 == 0:
-        GDX[i//1000,:] = X 
+        GDX[i//1000,:] = X
     i+= 1
 ```
 
@@ -564,7 +564,7 @@ Some of these algorithms are LBFGS, BFGS and conjugate gradient descent. Some ad
 ## Convex optimisation
 
 > **Credits for the images below: [Visually Explained](https://www.youtube.com/@VisuallyExplained) youtube channel.**<br/>
-> [Youtube video series](https://youtu.be/AM6BY4btj-M). 
+> [Youtube video series](https://youtu.be/AM6BY4btj-M).
 
 ### Optimisation
 
@@ -590,12 +590,12 @@ To visualise linear functions $$f(x) = c^T x + d$$, either as a hyperplane or a 
 
 **Hyperplane**
 
-Think of a hyperplane as planes $$f(x)=0, f(x) =1, f(x) =2 ....$$. 
+Think of a hyperplane as planes $$f(x)=0, f(x) =1, f(x) =2 ....$$.
 
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/hyperplane.png" width="40%" %}
 
 Hyperplane divides a space
-into three regions. The positive half space $$x_1+x_2+x_3>0$$, null region or the 
+into three regions. The positive half space $$x_1+x_2+x_3>0$$, null region or the
 hyperplane itself $$x_1+x_2+x_3=0$$ and the negative half space  $$x_1+x_2+x_3<0$$.
 A linear inequality constraint will cut off a part of the feasible space.
 
@@ -628,12 +628,12 @@ defining a circle, we need infinite tangents.
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/dual-cvx-set.png" width="40%" %}
 * Functions: Duality let's you extrapolate the local behaviour of a function to the global
 behaviour of the function. $$f(x)$$ is convex iff, if it's graph is always above it's tangent
-hyperplanes for all values of x. 
+hyperplanes for all values of x.
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/dual-cvx-fn.png" width="40%" %}
 If you find the value where $$\nabla f(x) = 0$$, then it absolutely is global minima as it's
 a flat hyperplane and all values of $$f(x)$$ need to be greater than this value. Using this
 property we can solve the minimum of an **uncontrained optimisation of convex functions**
-by taking the gradient and setting it to 0. 
+by taking the gradient and setting it to 0.
 > We went from a gradient at a local point to a global property of this function.
 
 ### TODO: Write notes on the KKT conditions and solving primal/dual formulations of convex problems

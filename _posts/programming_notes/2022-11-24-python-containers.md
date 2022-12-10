@@ -18,7 +18,7 @@ expected to the exotic data strucutre realm of
 
 AFAIK there are no standard implementations for Tries and bloom filters in Python, hence
 I will merely iterate on implementing the remaining datastructures. As
-a bonus, I have included 
+a bonus, I have included
 - the bisect library which provides fast binary search.
 - an implementation of a disjoint union set
 
@@ -40,13 +40,13 @@ respectively.
 
 | Operation | Time Complexity |
 |-----------|-----------------|
-| Contains | List: $$O(\log n)$$, Set, Dict $$O(1)$$ |      
-| Add item | $$O(\log n)$$    |      
-| Pop item with key or index | $$O(\log n)$$    |      
-| Peek item with index | $$O(\log n)$$    |      
-| bisect_left, bisect_right (see [bisect section](#bisect-library))| $$O(\log n)$$| 
+| Contains | List: $$O(\log n)$$, Set, Dict $$O(1)$$ |
+| Add item | $$O(\log n)$$    |
+| Pop item with key or index | $$O(\log n)$$    |
+| Peek item with index | $$O(\log n)$$    |
+| bisect_left, bisect_right (see [bisect section](#bisect-library))| $$O(\log n)$$|
 | Get index of element in list or key in Map| $$O(\log n)$$ _same as `bisect_left`_|
-| Get item with key (Map only) | $$O(1)$$    |      
+| Get item with key (Map only) | $$O(1)$$    |
 
 <br/>
 
@@ -105,7 +105,7 @@ min object. Heaps represent a binary tree but are internally stored as arrays.
 **Heap internals:**
 The array storing the min-heap represents a binary tree where element at index, `i`
 is the parent of the element at indices `2*i` and `2*i + 1`. The heap invariant is that
-the parent is always smaller than both children. 
+the parent is always smaller than both children.
 
 ``` python
 In [1]: import heapq
@@ -171,7 +171,7 @@ Binary search through a sorted array implemented in C.
 * `bisect.bisect_left(arr, target)`: Leftmost occurrence of target, if not found the
   index immediately left of the first value greater than target.
 * `bisect.bisect_right(arr, target)`: Index of first element greater than target.
-In otherwords, leftmost occurrence `bisect_left`, rightmost occurrence `bisect_right + 1`. 
+In otherwords, leftmost occurrence `bisect_left`, rightmost occurrence `bisect_right + 1`.
 
 ``` python
 a = [1,2,3,3,5,5,5,6]
@@ -186,7 +186,7 @@ Out: 4
 
 In : a[4:]
 Out: [5, 5, 5, 6]
-``` 
+```
 
 #### Insort interface
 `bisect.insort_left(arr, new_val)`, `bisect.insort_right(arr, new_val)`:
@@ -235,10 +235,10 @@ class DisjointUnionSet:
         :param n: The number of nodes in the graph. These can be connected
             later using the :meth:`.union`.
         """
-        # Everyone's their own parent at the beginning 
+        # Everyone's their own parent at the beginning
         self.parent = list(range(n))
         self.rank = [1] * n
-  
+
     def find_leader(self, x: int) -> int:
         """Finds the leader of x and also moves all of x's parents directly under
         the leader of x.

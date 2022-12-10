@@ -19,11 +19,11 @@ T(n) = a \times T \left(\dfrac{n}{b}\right) + O(n^d)
 $$
 
 $$
-    T(n) = 
+    T(n) =
 \begin{cases}
     O(n^d \log(n)),& \text{if } a = b^d \\
     O(n^d),              & \text{if } a \lt b^d \\
-    O(n^{log_{b}^a}),              & \text{if } a \gt b^d 
+    O(n^{log_{b}^a}),              & \text{if } a \gt b^d
 \end{cases}
 $$
 
@@ -131,7 +131,7 @@ Edges are directed or undirected
 - Connected graph: no nodes with zero edges.
 - Complete graph: A graph with all nodes connected to each other.
 - Degree of a node: Number of egdes incident on the node.
-  
+
 
 ### Facts
 - **Number of edges:** n-num vertices and m-num edges. For an connected undirected graph
@@ -139,7 +139,7 @@ and with no parallel edges, the min and max number of possible edges is $$(n-1)$
 $$\frac{n(n-1)}{2}$$.
 - Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$O(n^2)$$. If m is closer to
   $$\Omega(n)$$ then it's a sparse graph, if it's closer to $$\Omega(n)$$ it's a dense graph.
-- $$\sum_v degree(v) = 2m$$. Each edge is a part of two nodes. 
+- $$\sum_v degree(v) = 2m$$. Each edge is a part of two nodes.
 
 ### Graph representation
 #### Adjacency matrix
@@ -151,7 +151,7 @@ matrix, where each entry A[i,j] represents if there is an edge btw the two nodes
 2. Weighted edges: A[i,j] has weights.
 3. Directed edges: A[i,j], 1 if from i to j and -1 if from j to i.
 
-**Space complexity:** O(n^2). Can beat this with sparse matrix representations. 
+**Space complexity:** O(n^2). Can beat this with sparse matrix representations.
 
 #### Adjacency list
 We store the following datastructure
@@ -210,10 +210,10 @@ edges = [
 ]
 nodes[0].outward_edges= [edges[0]]
 nodes[0].inward_edges = [edges[1]]
-nodes[1].outward_edges = [] 
+nodes[1].outward_edges = []
 nodes[1].inward_edges = [edges[0]]
-nodes[2].outward_edges = [edges[1]] 
-nodes[2].inward_edges = [edges[0]] 
+nodes[2].outward_edges = [edges[1]]
+nodes[2].inward_edges = [edges[0]]
 ```
 
 **Space complexity:** $$\theta(m+n)$$. This can be $$O(n^2)$$ for a compelte graph.
@@ -240,10 +240,9 @@ For directed graphs, we only count edges from A to B, i.e., tail in A and head i
 
 For a graph with n-nodes, we have have $$2^n-2$$ different cuts. This is because each
 node is a binary variable with two options, node 1 or node 2. We have a minus two because
-the empty set cases are disallowed (all are in set A or all are in set B). 
+the empty set cases are disallowed (all are in set A or all are in set B).
 
 ## Topological sort
 
 
 ## Dijkstra
-

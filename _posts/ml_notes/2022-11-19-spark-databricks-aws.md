@@ -22,7 +22,7 @@ In this blog, I am going to play around with spark with databricks running on AW
   * We also copy our private external account ID from <br/>
     {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/databricks-cloud-rsrc.png" width="45%" %}
     {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-external-id.png" width="45%" %}
-  * Attach an inline policy. We copy the JSON for [the default policy](https://docs.databricks.com/administration-guide/account-api/iam-role.html#default-policy) 
+  * Attach an inline policy. We copy the JSON for [the default policy](https://docs.databricks.com/administration-guide/account-api/iam-role.html#default-policy)
   which sets up spark in databricks' VPC instead of our private VPC.
   * Copy the ARN of the created policy back to databricks credential management.
 - **Storage credentials:**
@@ -42,7 +42,7 @@ In this blog, I am going to play around with spark with databricks running on AW
     Terminate after = 15 mins
     # 10 cents an hour. Cheapest I can find.
     Worker, Driver Type = m6gd.large
-    Num workers = 1 
+    Num workers = 1
   ```
 - This spun up two instances on aws.
     {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/ec2-mc-spun-up.png" width="45%" %}

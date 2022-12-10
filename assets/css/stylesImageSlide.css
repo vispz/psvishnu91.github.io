@@ -10,16 +10,16 @@
 ::-moz-selection{color:#fff;
                              color:rgb(255,255,255);
                              background:#239AB2}
-                             
+
 ::selection{color:#fff;
                      color:rgb(255,255,255);
                      color:rgb(255,255,255);
                      background:#239AB2}
-                     
+
 html{margin:0;
           padding:0;
           overflow-y:scroll}
-          
+
 body{text-shadow:#fff 0 1px 0;
            color:#2c2c2c;
            font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial;
@@ -33,7 +33,7 @@ body{text-shadow:#fff 0 1px 0;
 :focus{outline:0}
 .right386 .entry{margin-bottom:12px;
              padding-bottom:18px}
-             
+
 input:focus{outline:none;outline-width:0}
 ul{list-style:none}
 input::-moz-focus-inner,input[type="reset"]::-moz-focus-inner,input[type="button"]::-moz-focus-inner,input[type="submit"]::-moz-focus-inner,input[type="file"]>
@@ -42,7 +42,7 @@ input[type="button"]
 
 caption,th,td{text-align:left;
                          font-weight:400}
-                         
+
 strong{font-weight:700}
 
 em{font:italic 17px Georgia, "Times New Roman",Times,serif}
@@ -65,18 +65,18 @@ p{font-size:15px;
     line-height:24px;
     margin-top:10px;
     margin-bottom:18px}
-    
+
 .spaced{margin-bottom:48px}
 
 p.large{font-size:24px;
               font-family:Cambria,Georgia,"Times New Roman",Times,serif;
               line-height:30px;margin-top:0;margin-bottom:12px}
-              
+
 blockquote{font-family:Georgia,"Times New Roman",Times,serif;
                       font-style:italic;
                       margin-top:24px;
                       margin-left:45px}
-                      
+
 blockquote p{ font-size:16px;
                           line-height:26px;
                           word-spacing:1px;
@@ -100,7 +100,7 @@ hr{   clear:both;
          width:100%;
          margin-bottom:20px;
          border:1px 0 solid #b3babf #ddd #ffffff}
-         
+
 .clear{clear:both}
 .toppad{margin-top:36px}
 .rule{background-image:url(../images/rule.gif);
@@ -117,15 +117,15 @@ a.go,span.go a {color:#323232;
                               font:italic 16px Georgia, "Times New Roman", Times, serif;
                               padding:4px 24px 4px 4px}
 a.go:hover,span.go a:hover{text-decoration:none !important}
-span.amp{font:italic 400 1.2em normal "Hoefler Text Alt", Baskerville, "Goudy Bookletter 1911", goudy-bookletter-1911-1, goudy-bookletter-1911-2, 
+span.amp{font:italic 400 1.2em normal "Hoefler Text Alt", Baskerville, "Goudy Bookletter 1911", goudy-bookletter-1911-1, goudy-bookletter-1911-2,
                "Goudy Old Style", Palatino, "Book Antiqua",serif}
-               
+
 h1,h2{font-family:"Hoefler Text","Adobe Garamond Pro","AGaramond LT",Garamond,"Baskerville Old Face","Palatino Linotype",
          "Times New Roman",Times,serif,"Times New Roman"}
 h1{font-size:32px;
       font-weight:400;
       margin-bottom:18px}
-      
+
 h1.posttitle{margin-right:12px;
                        margin-bottom:0;
                        margin-left:12px;
@@ -141,7 +141,7 @@ h1.pagetitle{display:block;
                   text-indent:-9999px;
                   width:960px;
                   height:350px}*/
-                  
+
 h1 a{color:#3d3d3d;
     display:block}
 h1.welcome{font-family:"Adobe Garamond Pro",Garamond,"Baskerville Old Face","Palatino Linotype","Times New Roman",Times,serif;
@@ -154,7 +154,7 @@ h1.welcome{font-family:"Adobe Garamond Pro",Garamond,"Baskerville Old Face","Pal
                        margin-top:30px;
                        margin-bottom:0;
                        text-shadow:#fff 0 1px 0}
-h2{font:400 24px "Adobe Garamond Pro", "AGaramond LT", Garamond, "Baskerville Old Face", "Palatino Linotype", "Times New Roman", Times, serif, 
+h2{font:400 24px "Adobe Garamond Pro", "AGaramond LT", Garamond, "Baskerville Old Face", "Palatino Linotype", "Times New Roman", Times, serif,
       "Times New Roman"}
 .center{text-align:center}.toptitle,.entry .toptitle{margin-top:0}
 h3{color:#3a3a3a;
@@ -169,17 +169,17 @@ h3{color:#3a3a3a;
 h3.portfolio{font-weight:700;
                       border-bottom:1px dotted #7e7563}
 .toprule h3,.toprule h1.entry-title, .capt a{
-	margin-top:20px; 
+	margin-top:20px;
 	font-family:MisoBold;
 	font-size:20px;
 }
 
 h3 a{color:#323232;
          text-decoration:none}
-         
+
 h3 a:hover,.posttitle a:hover{color:#b02d15;
                                                         text-decoration:none}
-                                                        
+
 h4 {color:#323232;text-transform:uppercase;letter-spacing:2px;margin-top:30px;padding-bottom:12px;
        font:400 15px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial}h4
 a{color:#323232;font-weight:700;text-decoration:none}
@@ -190,7 +190,7 @@ a{color:#323232;font-weight:700;text-decoration:none}
 	padding-bottom:48px
 }
 * html .container{
-	width:984px;	
+	width:984px;
 }
 
 
@@ -231,7 +231,7 @@ the-post>p:first-child:first-line,.the-post>.ad:first-child+p:first-line {font-s
                Times,serif,"Times New Roman";
                text-transform:uppercase;
                letter-spacing:1px}
-.the-post>p:first-child:first-letter,.the-post>.ad:first-child+p:first-letter 
+.the-post>p:first-child:first-letter,.the-post>.ad:first-child+p:first-letter
 {letter-spacing:0;text-transform:uppercase;color:#9e291b;font-size:3.5em;
 font-family:"Hoefler Text","AGaramond LT",Garamond,Georgia,"Times New Roman",Times,serif;float:left;margin:.13em .1em 0 0;line-height:0.7}
 
@@ -250,7 +250,7 @@ p{text-shadow:0 1px 0 #bceaf9;
    width:260px;
    z-index:3;
    float:right}
-   
+
  /*.section{height:1%}*/
  .bandwrap{background-color:#f7f5ee;min-height:300px;margin-bottom:48px;padding-top:36px;padding-bottom:48px}
  .bandwrap .left222{width:210px;padding-right:6px;padding-left:6px}
@@ -269,14 +269,14 @@ a{width:21px;height:24px}
                          background-position:0 bottom;
                          margin-bottom:36px;
                          padding-bottom:36px}
-                         
+
                          .ruled1{background-image:url(../images/rule1.gif);
                          background-repeat:repeat-x;
                          background-position:0 bottom;
                          margin-bottom:10px;
                          }
                          .ruled1 br{line-height:5px;}
-                         
+
 
 #header{width:960px;height:50px;margin-right:auto;margin-bottom:18px;margin-left:auto}
 #headerdemo{width:960px;height:70px;margin-right:auto;margin-bottom:24px;margin-left:auto}
@@ -287,9 +287,9 @@ a{width:21px;height:24px}
                text-indent:-9999px;
                width:175px;height:36px;
                display:block;margin:0}
- 
-#flags a span{display:none} 
- /* ****************************************************navigation**********************************************/              
+
+#flags a span{display:none}
+ /* ****************************************************navigation**********************************************/
 ul#nav{float:right;margin:7px 0 0;padding:0}
 #nav li{width:140px;float:left;margin:0 0 0 6px;padding:0}
 
@@ -307,7 +307,7 @@ ul#nav{float:right;margin:7px 0 0;padding:0}
                 border-left:1px solid #ccc5b2;
                 display:block;
                 font:20px MisoBold, "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial}
-                
+
 #nav li a:active{padding-top:5px;padding-bottom:7px}
 #nav li a span{text-transform:lowercase;
                            letter-spacing:normal;
@@ -322,42 +322,42 @@ ul#nav{float:right;margin:7px 0 0;padding:0}
                              padding-bottom:12px;
                              padding-left:54px;
                              border:0 transparent}
-                             
+
 .dev{background-image:url(../images/dev.jpg);
           background-repeat:no-repeat;
           background-position:left center}
-          
+
 .design{background-image:url(../images/design2.jpg);
                background-repeat:no-repeat;
                background-position:left center}
-               
+
 .brand{background-image:url(../images/brand.jpg);
               background-repeat:no-repeat;
               background-position:left top}
-              
+
 .seo{background-image:url(../images/seo.jpg);
-         background-repeat:no-repeat; 
+         background-repeat:no-repeat;
          background-position:left center}
-         
+
 .socialm{background-image:url(../images/social.jpg);
                  background-repeat:no-repeat;
                  background-position:left center}
-                 
+
 .redesign{background-image:url(../images/redesign.jpg);
                    background-repeat:no-repeat;
                    background-position:left center}
-                   
+
 ul.homelist{width:316px;float:left;padding:0;list-style-type:none;display:block}
 .work li{height:197px;float:left;margin-right:12px;margin-left:12px;padding:0;border:solid 6px #e2d9c0;list-style-type:none}
 
 .boxgrid{background-image:none;background-repeat:repeat;background-attachment:scroll;
                  background-position:0 0;width:292px;height:197px;float:left;border:solid 6px #e2d9c0;
                  overflow:hidden;position:relative;margin-right:10px;margin-bottom:24px;margin-left:10px}
-                 
+
  .boxgrid img{position:absolute;top:0;left:0;border:0}
  .boxcaption{color:#fff;float:left;position:relative; background:rgb(51,152,182);background:rgba(51,152,182,.9);height:100px;width:274px;
                         padding-top:12px;padding-left:18px}
-                        
+
 .boxgrid:active{border-top-width:7px;border-bottom-width:5px}
 .captionfull .boxcaption{top:260px;left:0;text-shadow:none !important}
 .boxcaption .caption{font-size:14px;position:absolute;bottom:30px}
@@ -369,16 +369,16 @@ ul.homelist li span,ul.homelist2 li span{font-size:15px;font-weight:700;display:
 ul.homelist2{list-style-type:none;display:block;margin:0;padding:0;width:316px;float:left}
 .arrow{opacity:0.3;background-repeat:no-repeat;background-attachment:scroll;background-position:center;
              display:block;height:300px;width:80px;text-indent:-9999px;position:absolute;top:0;z-index:10;cursor:pointer}
-             
+
 .textholder{color:#fff;padding-right:20px;padding-left:20px;text-shadow:0;-moz-text-shadow:0;-webkit-text-shadow:0}
 .textholder p{padding:20px}
 
 .next{background-image:url(../images/next.png);
            background-position:24px center;right:0}
-           
+
 .prev{background-image:url(../images/prev.png);
             background-position:10px 130px}
-            
+
 #imagecon{background-image:url(../images/foot1.jpg);width:944px;margin-right:auto;margin-left:auto;padding:8px;border-style:none}
 #images{width:944px;margin-right:auto;margin-left:auto}
 #images ul li{width:944px;height:300px;overflow:hidden}
@@ -387,16 +387,16 @@ ul.homelist2{list-style-type:none;display:block;margin:0;padding:0;width:316px;f
 
 .postmeta em{background-repeat:repeat-x;background-position:0 bottom;
                             text-transform:none;font:400 15px Georgia, "Times New Roman",Times,serif}
-                            
+
 .postmeta{font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial;
                     font-variant:small-caps;
-                    background-image:url(../images/rule2.gif); 
+                    background-image:url(../images/rule2.gif);
                     background-repeat:repeat-x;
                     background-position:0 bottom;
                     text-transform:lowercase;
                     margin-bottom:18px;
                     padding-bottom:12px}
-                    
+
 .postmeta a,.posttitle a,.normal{color:#3d3d3d}
 .entry ul li{font-size:15px;line-height:150%;margin-bottom:10px;margin-left:24px;list-style:square}
 
@@ -408,7 +408,7 @@ ul.worklist li,ul.worklist2 li{background-image:url(../images/check2.gif);
                                                  border:0 transparent;
                                                  text-shadow:0 1px 0 #FFF;
                                                  font:italic 17px Cambria, Georgia, "Times New Roman",Times,serif}
-                                                 
+
 ul.worklist{width:180px;float:left;margin:0
 24px 24px 0;padding:0;list-style-type:none;display:block}
 
@@ -422,11 +422,11 @@ ul.worklist2{list-style-type:none;display:block;margin:0
                       margin-top:8px;
                       margin-bottom:18px;
                       padding-bottom:12px}
-                      
+
 .workmeta a,ul.worklist li a,ul.worklist2 li a,.tags a{color:#323232}
 .del li a{color:#3d3d3d;margin-right:6px;padding:6px 12px;border-radius:20px;background-color:#deded3;
               font-size:13px;border:1px solid #c8c8b7}
-              
+
 .entry .del li{float:left;margin:0;display:inline-block;line-height:40px}
 .del{margin-bottom:30px;display:block}
 .crop{width:520px;overflow:hidden;border:solid 6px #cfc7af}
@@ -438,7 +438,7 @@ ul.worklist2{list-style-type:none;display:block;margin:0
 
 .gallery .image{position:relative;width:80px;height:80px;overflow:hidden !important;float:left;margin-top:18px;
                               margin-right:18px;border:solid 3px #cfc7af}
-                              
+
 .tags span{letter-spacing:1px}
 .tags em{font-size:15px;line-height:normal;word-spacing:6px}
 .gallery .image img{position:absolute;top:-100px;left:-60px}
@@ -449,7 +449,7 @@ box-shadow:0 2px 4px #ADADAD inset}
 .thumb{background-position:0 0;background-repeat:no-repeat;border-style:none;color:#000;cursor:pointer;
               display:inline;float:left;font-family:Arial;height:19px;line-height:19px;margin-right:8px;
               overflow:hidden;padding:0;text-align:center;text-indent:-9999px;width:19px}
-              
+
 #items-0-quantity{font-size:15px;margin-bottom:4px;padding:6px
                              4px;border:solid 1px #c4bfb5;
 -moz-box-shadow:0 2px 4px #ADADAD inset;-webkit-box-shadow:0 2px 4px #ADADAD inset;box-shadow:0 2px 4px #ADADAD inset}
@@ -544,7 +544,7 @@ span.wpcf7-list-item{display:block}
                           padding:6px 6px 6px 26px;
                           border-bottom:1px dotted #cbc8c5;
                           display:block}
-                          
+
 .widget li a:hover,.widget li a:active{color:#b02d15;background-color:#f7f6e9}
 
 
@@ -552,10 +552,10 @@ span.wpcf7-list-item{display:block}
                           padding:6px 6px 6px 26px;
                           border-bottom:1px dotted #cbc8c5;
                           display:block;
-                         background-image:url(../images/grid.png);background-repeat:no-repeat;background-position:3px center     
-                          
+                         background-image:url(../images/grid.png);background-repeat:no-repeat;background-position:3px center
+
                           }
-                          
+
 .widget1 li:hover {color:#b02d15;background-color:#f7f6e9}
 
 
@@ -566,22 +566,22 @@ span.wpcf7-list-item{display:block}
 {font-weight:700;background-image:url(../images/arrow2.gif);
   background-repeat:no-repeat;
   background-position:5px center}
-  
-  
+
+
   .widget li.current_page_item li a,.widget li.current_page_item li a:visited,.widget li.current-cat li a,.widget li-current-cat li a:visited{font-weight:400}
   .widget li li{font-size:15px;margin:0;border:0;list-style-image:none}
   .widget ul{margin:0;padding:0}
-  
+
 .prefoot-wrap{background-image:url(../images/foot1.jpg);
                            padding-top:12px;padding-bottom:36px;border-top:1px solid #f6f2e6}
-                           
+
 .pre-foot p{font-size:13px;line-height:22px;margin-top:9px;margin-right:6px;margin-left:6px}
 .pre-foot{font-size:13px;width:984px;margin-right:auto;margin-left:auto;padding-top:16px}
 
 .pre-foot h4{background-image:url(../images/rule4.gif);
                        background-repeat:repeat-x;background-position:0 bottom;
                        margin-top:8px;margin-right:6px;margin-left:6px}
-                       
+
 .pre-foot ul{margin-right:6px;margin-left:6px;list-style-type:none;display:block}
 .pre-foot .social li a span{background-repeat:no-repeat;padding-left:30px;display:block}
 
@@ -597,7 +597,7 @@ span.wpcf7-list-item{display:block}
 .pre-foot ul li a span{font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial;font-weight:400;font-style:normal;background-image:none;
                  background-repeat:no-repeat;background-position:0 center;
                  padding:0;display:block}
-                 
+
 .pre-foot ul li a:hover{text-decoration:none;background:rgb(236,233,218);background:rgba(236,233,218,.4);border-bottom-color:#c2baa2}
 .pre-foot ul.work em{font-size:13px;margin-top:7px;display:block}
 .pre-foot ul li.work a img{float:left;margin-right:12px;border:solid 3px #9b978b}
@@ -652,13 +652,13 @@ acronym{border-bottom:1px dotted #363636;cursor:help}
 #slideback{box-shadow:#fff 0 0 50px;-moz-box-shadow:#fff 0 0 50px;-webkit-box-shadow:#fff 0 0 50px;
                      background-image:url(../images/foot1.jpg);background-repeat:repeat;height:348px;margin-top:30px;
                      margin-bottom:30px;border:solid 1px #dbd1b5}
-                     
+
 #cyclenav{position:absolute;right:30px;bottom:30px;z-index:2000;display:inline-block}
 
-.letstalkbutton{background-image:url(../images/download.png);background-position:left top; 
+.letstalkbutton{background-image:url(../images/download.png);background-position:left top;
                              width:300px;height:55px;display:inline-block;
                              cursor: pointer;}
-                             
+
 .letstalkbutton:hover{background-position:0 -55px}
 /*.letstalkbutton:active{background-position:0 -90px;position:relative;top:1px}*/
 
@@ -680,14 +680,14 @@ overflow:visible;}
 .slideshow .slide-nav li{width:18px;height:18px;float:left;margin:0 8px 0 0;padding:0}
 
 .slideshow .slide-nav a{display:block;width:18px;height:18px;text-align:center;overflow:hidden;color:#fff;
-                                          
+
                                              text-indent:-9999px;
                                              margin:0;
                                              padding:0;cursor:pointer}
-                                             
+
 .slideshow .slide-nav a:hover,.slideshow .slide-nav .active a{background-color:transparent;background-repeat:no-repeat;background-attachment:scroll;
                            background-position:0 0;text-decoration:none}
-                           
+
 .entry h3{margin-top:30px}
 div.wpcf7{margin:0;padding:0}
 div.wpcf7-response-output{margin:2em
