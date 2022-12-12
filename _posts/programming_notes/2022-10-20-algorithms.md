@@ -336,12 +336,88 @@ print(topsort(graph=Graph([[1,2],[3], [3], []])))
 ```
 ### Cycles in graphs
 #### Cycles in Directed Graphs
-A directed graph with no cycles is called a DAG or a Directed Acyclic graph. The
-algorithm uses DFS and 3 sets, `explore`, `visiting` and `done`.
+A directed graph with no cycles is called a DAG or a Directed Acyclic graph.
+
+**Algorithm**
+
+The algorithm uses DFS and 3 sets, `explore`, `visiting` and `done`.
 
 - We add all the nodes to the `explore` set.
-- In the outer wrapper method, iterate over
+- In the outer wrapper method, while loop until `explore` is empty, call the
+  `_dfs` helper method on any node in `explore`.
+- In `_dfs` helper
+  * we move `node` from `explore` to `visiting`
+  * we iterate over
+  neighbours of `node`.
+  * If the neighbour is in `done`, we continue
+  * If it's in `visiting` that is we were able to reach this neighbour earlier in the
+    recursion we have found a cycle, immediately return `False`.
+  * Otherwise we visit the neighbour. If the neighbour returns `False`, we immediately
+    return `False`.
+  * If none of the neighbours have seen a cycle, then we simple move this `node` to the
+    `done` set and return `False`.
 
+{: .code title="Detect cycle in directed graph in Python" .x}
+```python
+def has_dag_cycle(graph: list[set]) -> bool:
+    """Checks if a DAG has a cycle.
+
+    :param graph: Each item in a list is a node and each element in the set are the
+        nodes at the head of the outward arc from this node.
+
+    Sample cyclic input::
+        [{2}, {0}, {3}, {1}]
+
+        [1] -> [0]
+        ^       |
+        |       v
+        [3] <-  [2]
+
+    Sample non-cyclic input::
+        [{}, {0,3}, {0}, {2}, {}]
+          0    1     2    3    4
+
+        [1] -> [0]     [4]
+        |       ^
+        v       |
+        [3] -> [2]
+    """
+    explore = set(range(len(graph)))
+    visiting, done = set(), set()
+    while explore:
+        if _cycle_dfs(
+            node=next(iter(explore)),
+            graph=graph,
+            explore=explore,
+            visiting=visiting,
+            done=done,
+        ):
+            return True
+    else:
+        return False
+
+def _cycle_dfs(node, graph, explore, visiting, done):
+    _move_node(node, explore, visiting)
+    for adj in graph[node]:
+        if adj in done:
+            continue
+        if adj in visiting:
+            # Found a cycle. This node was visited earlier while recursing to this node.
+            # `adj` is both an ancestor and and a descendent of the current node.
+            return True
+        if _cycle_dfs(
+            node=adj, graph=graph, explore=explore, visiting=visiting, done=done,
+        ):
+            return True
+    else:
+        _move_node(node, visiting, done)
+        return False
+
+def _move_node(node, from_set, to_set) -> None:
+    """Side effect, mutates the input sets"""
+    from_set.discard(node)
+    to_set.add(node)
+```
 
 ### Graph min cuts
 
