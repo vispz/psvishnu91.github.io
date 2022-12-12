@@ -37,4 +37,26 @@
   {{ content }}
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="/assets/js/bootstrap.js"></script>
+  <script type="text/javascript">
+    collapse_id_counter = 1;
+    $(document).ready(function() {
+      $(".code").addClass("panel panel-default");
+
+   /* panels have titles and can be collapsed */
+   $('p[title], div[title]').each(function () {
+        let to_open_prefix = '[Expand] → '
+        if ($(this).hasClass('x')) {
+          var randomid = 'collapse_' + (collapse_id_counter++);
+          $(this).wrapInner('<div class="panel-body collapse" id="' + randomid + '"></div>').prepend(function () {
+            return '<div class="panel-heading collapsed" style="cursor: pointer"  data-toggle="collapse" data-target="#' + randomid + '">'
+              + "<i class='toggler fa mr-2'></i>" + to_open_prefix + $(this).attr('title') + "</div></div>";
+          });
+        }
+        else {
+          $(this).wrapInner('<div class="panel-inner"></div>')
+            .prepend(function () { return '<div class="panel-heading">'  + $(this).attr('title') +'</div></div>'; });
+        }
+      });
+    });
+  </script>
 </body>

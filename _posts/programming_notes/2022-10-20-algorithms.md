@@ -63,7 +63,7 @@ k-th order statistic is the kth smallest number.
 The solution is O(n). Using reduction, we can sort the array in O(n log n) by sorting
 and returning the (k+1)th element.
 
-### Randomised
+#### Randomised
 Follows quicksort almost verbatim.
 
 {% include button.html url="https://github.com/psvishnu91/interview-problems/blob/master/design_of_algos/chapter_5_quicksort/selection_randomised.py" name="Github Solution" %}
@@ -141,8 +141,7 @@ $$\frac{n(n-1)}{2}$$.
   $$\Omega(n)$$ then it's a sparse graph, if it's closer to $$\Omega(n)$$ it's a dense graph.
 - $$\sum_v degree(v) = 2m$$. Each edge is a part of two nodes.
 
-### Graph representation
-#### Adjacency matrix
+### Adjacency matrix
 For a graph with n-vertices, the adjacency matrix is a $$n\times n$$
 matrix, where each entry A[i,j] represents if there is an edge btw the two nodes i and j.
 
@@ -153,19 +152,52 @@ matrix, where each entry A[i,j] represents if there is an edge btw the two nodes
 
 **Space complexity:** O(n^2). Can beat this with sparse matrix representations.
 
-#### Adjacency list
+### Adjacency list
 We store the following datastructure
 
-**Undirected**
+#### Programming interview style
+
+1. Nodes are all integers from `0` to `n-1`, we use a `list[set[int]]`.  Each item in the
+   list is a node and each element in the set are the nodes at the head of the outward
+   arc from this node. If undirected it's simply the neighbour of this node.
+2. Node are node datatype. We use `dict[Node,set[Node]]`. It's similar to the above
+   and of course we need to make the node hashable.
+
+{: .code title="Building a graph in Python" .x}
+```python
+def _build_graph(edges: list[list[int]], num_nodes: int) -> list[set]:
+    """Builds a adjacency-list type graph from a list of edges.
+    :param edges: Each item is an edge [i, j] such that we have an edge i -> j.
+
+    Sample input::
+        edges=[[1,0], [2,0], [3,2], [1,3]], num_nodes=5
+        [1] -> [0]   [4]
+         |      ^
+         v      |
+        [3] -> [2]
+
+    Sample output::
+        graph=[set(), {0,3}, {0}, {2}, set()]
+    """
+    adj_set = [set() for _ in range(num_nodes)]
+    for e in edges:
+        adj_set[e[0]].add(e[1])
+    print(f"{adj_set=}")
+    return adj_set
+```
+
+#### Production style
+
+{: .code title="Undirected graph code in Python" .x}
 ``` python
 @dataclass
 class Edge:
-    nodes: Tuple['Node', 'Node']
+    nodes: tuple['Node', 'Node']
 
 @dataclass
 class Node:
     val: int = 0
-    edges: Optional[List['Edge']] = None
+    edges: Optional[set['Edge']] = None
 
 """
 Graph
@@ -182,19 +214,20 @@ nodes[2].edges = [edge[1]]
 
 **Directed**
 
+{: .code title="Directed graph in Python" .x}
 ``` python
 @dataclass
 class Edge:
-    tail_node: 'Node'
-    head_node: 'Node'
+    tail: 'Node'
+    head: 'Node'
 
 @dataclass
 class Node:
     val: int = 0
-    outward_edges: Optional[List['Edge']] = None
+    outward_edges: Optional[set['Edge']] = None
     # This variable is optional and adds to storage. We
     # can get away with just the outward edges.
-    inward_edges: Optional[List['Edge']] = None
+    inward_edges: Optional[set['Edge']] = None
 
 """
 Graph
@@ -205,22 +238,22 @@ Graph
 """
 nodes = [Node(val=0), Node(val=1), Node[val=2]]
 edges = [
-    Edge(tail_node=nodes[0], head_node=nodes[1]),
-    Edge(tail_node=nodes[2], head_node=nodes[0]),
+    Edge(tail=nodes[0], head=nodes[1]),
+    Edge(tail=nodes[2], head=nodes[0]),
 ]
-nodes[0].outward_edges= [edges[0]]
-nodes[0].inward_edges = [edges[1]]
-nodes[1].outward_edges = []
-nodes[1].inward_edges = [edges[0]]
-nodes[2].outward_edges = [edges[1]]
-nodes[2].inward_edges = [edges[0]]
+nodes[0].outward_edges = {edges[0]}
+nodes[0].inward_edges = {edges[1]}
+nodes[1].outward_edges = {}
+nodes[1].inward_edges = {edges[0]}
+nodes[2].outward_edges = {edges[1]}
+nodes[2].inward_edges = {edges[0]}
 ```
 
 **Space complexity:** $$\theta(m+n)$$. This can be $$O(n^2)$$ for a compelte graph.
 However, this is an overestimate. The above complexity handles this as $$m$$ will be
 $$n^2$$, in this case.
 
-#### Which one should you choose
+##### Which one should you choose
 Depends on graph density and operations we want to support.
 
 - For low density, high number of nodes in a graph, it's more efficient to choose
@@ -228,7 +261,89 @@ adjacency list. Imagine the internet where the number of webpages is extremely l
 and the graph is rather sparse.
 - For graph search, adjacency list provides the appropriate operations we need.
 
-## Graph min cuts
+## Graph Algorithms
+### Topological sort
+Algorithm that given a directed _acyclic_ graph, returns an ordering of the nodes with
+the following property:
+
+For any two nodes in the output array `TS` with indices `i` and `j` such `i < j`, then
+all outward arcs from `TS[i]` will end in a node `TS[k]` such that `k <= j`.
+
+The only condition for a Topological Sort to exist is that the directed graph needs to
+be acyclic.
+
+#### Algorithm
+The algorithm piggybacks on DFS.
+
+- Wrapper function and a DFS helper function.
+- In wrapper function, create
+    * create an output list with the same length as number of nodes (n).
+    * create a seen hashset.
+    * Initialise a global index to n-1.
+    * Iterate over all the nodes to handle disjoint nodes.
+- In the dfs helper function
+    * mark the node as seen
+    * recurse over adjacent nodes.
+    * At the end of the recursion, add the node to the current index and decrement
+        the index.
+
+{: .code title="Topological sort in Python" .x}
+```python
+import typing
+from dataclasses import dataclass
+# Graph represented as a list of adj nodes, `len(graph)` is num nodes and
+# `len(graph[i])` is number of adjacent numbers from node `i`.
+Graph = typing.NewType('Graph', list[list[int]])
+
+@dataclass
+class Index:
+    ix: int
+
+def topsort(graph: Graph) -> list[int]:
+    if not graph:
+        return []
+    n = len(graph)
+    output, output_ix, seen = [None]*n,  Index(ix=n-1), set()
+    for i in range(n):
+        if i in seen:
+            continue
+        _dfs(graph=graph, node=i, seen=seen, output=output, output_ix=output_ix)
+    return output
+
+def _dfs(
+    graph: Graph, node: int, seen: set[int], output: list[int], output_ix: Index,
+) -> None:
+    seen.add(node)
+    # This will be only be empty for the sink node; equally this loop will be a no-op
+    # if all the descendents have already been visitied
+    for adj in graph[node]:
+        if adj in seen:
+            continue
+        _dfs(graph=graph, node=adj, seen=seen, output=output, output_ix=output_ix)
+    output[output_ix.ix] = node
+    output_ix.ix -= 1
+
+#          ┌────┐
+#   ┌──────► 1  ├───────┐
+#   │      └────┘       │
+# ┌─┴──┐             ┌──▼─┐
+# │ 0  │             │ 3  │
+# └─┬──┘             └──▲─┘
+#   │      ┌────┐       │
+#   └──────► 2  ├───────┘
+#          └────┘
+print(topsort(graph=Graph([[1,2],[3], [3], []])))
+```
+### Cycles in graphs
+#### Cycles in Directed Graphs
+A directed graph with no cycles is called a DAG or a Directed Acyclic graph. The
+algorithm uses DFS and 3 sets, `explore`, `visiting` and `done`.
+
+- We add all the nodes to the `explore` set.
+- In the outer wrapper method, iterate over
+
+
+### Graph min cuts
 
 The goal is to split the graph of n-vertices into two non-empty sets A, B such that we have
 the least number of crossing edges. Min cut problem allows for _parallel edges_.
@@ -241,8 +356,3 @@ For directed graphs, we only count edges from A to B, i.e., tail in A and head i
 For a graph with n-nodes, we have have $$2^n-2$$ different cuts. This is because each
 node is a binary variable with two options, node 1 or node 2. We have a minus two because
 the empty set cases are disallowed (all are in set A or all are in set B).
-
-## Topological sort
-
-
-## Dijkstra
