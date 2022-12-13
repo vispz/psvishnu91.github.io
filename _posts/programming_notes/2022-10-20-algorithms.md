@@ -2,7 +2,8 @@
 title: Algorithms
 blog_type: programming_notes
 excerpt: Alogrithms for coding interviews.
-layout: post_with_toc
+layout: post_with_toc_lvl3
+last_modified_at: 2022-12-12
 ---
 
 ## Master method
@@ -63,7 +64,7 @@ k-th order statistic is the kth smallest number.
 The solution is O(n). Using reduction, we can sort the array in O(n log n) by sorting
 and returning the (k+1)th element.
 
-#### Randomised
+### Randomised
 Follows quicksort almost verbatim.
 
 {% include button.html url="https://github.com/psvishnu91/interview-problems/blob/master/design_of_algos/chapter_5_quicksort/selection_randomised.py" name="Github Solution" %}
@@ -417,6 +418,148 @@ def _move_node(node, from_set, to_set) -> None:
     """Side effect, mutates the input sets"""
     from_set.discard(node)
     to_set.add(node)
+```
+#### Cycles in Undirected Graphs
+Two algorithms DFS and using Disjoint Union Set (DSU).
+
+> See a notebook version of the code below with graph visualisations on
+> [nbviewer](https://nbviewer.org/github/psvishnu91/interview-problems/blob/633bc3/design_of_algos/cycles-in-undirected-graph.ipynb).
+
+**DSU:** We initialise the DSU with singleton sets containing each graph node. We
+iterate over an edges. Gotcha: for an edge `a-b`, if this edge appears twice once for
+`a` and once for `b`, we ensure we only iterate over it once. We check if the nodes
+of the edge are already connected which means we have a cycle, otherwise we simply
+union the two nodes. Time and memory complexity is $$O(V)$$. We iterate over the edges
+but if there's more edges than nodes, then we definitely have a cycle.
+
+{: .code title="Detect cycle in Undirected Graph with DSU in Python" .x}
+```python
+from collections.abc import Iterable
+from dataclasses import dataclass
+from dataclasses import field
+from typing import Generator
+from typing import Hashable
+
+@dataclass
+class DSU:
+    """Disjoint union set implementation."""
+
+    parent: dict[Hashable, Hashable] = field(default_factory=dict)
+    rank: dict[Hashable, int] = field(default_factory=dict)
+
+    def add_nodes(self, ns: Iterable[Hashable]) -> 'DSU':
+        for n in ns:
+            self.add_node(n=n)
+        return self
+
+    def add_node(self, n: Hashable) -> 'DSU':
+        self.parent[n] = n
+        self.rank[n] = 1
+        return self
+
+    def find_leader(self, n: Hashable) -> Hashable:
+        if self.parent[n] == n:
+            return n
+        self.parent[n] = self.find_leader(n=self.parent[n])
+        return self.parent[n]
+
+    def union(self, n1: Hashable, n2: Hashable) -> 'DSU':
+        n1_leader = self.find_leader(n=n1)
+        n2_leader = self.find_leader(n=n2)
+        if n1_leader == n2_leader:
+            return
+        if self.rank[n1_leader] > self.rank[n2_leader]:
+            self.parent[n2_leader] = n1_leader
+        elif self.rank[n1_leader] < self.rank[n2_leader]:
+            self.parent[n1_leader] = n2_leader
+        else:
+            # equal ht trees
+            self.parent[n2_leader] = n1_leader
+            self.rank[n1_leader] += 1
+        return self
+
+    def is_connected(self, n1: Hashable, n2: Hashable) -> bool:
+        return self.find_leader(n=n1) == self.find_leader(n=n2)
+
+def has_undirected_cycle(graph: dict[str, set[str]]) -> bool:
+    """Finds cycles in an undirected graph.
+
+    :param graph: The keys of the dict are the graph nodes which are strings. The set
+        of strings they hold are the set of nodes connected to them.
+    """
+    dsu = DSU()
+    dsu.add_nodes(ns=graph.keys())
+    for n1, n2 in _iter_edges(graph):
+        if dsu.is_connected(n1, n2):
+            return True
+        dsu.union(n1, n2)
+    else:
+        return False
+
+def _iter_edges(graph: dict[str, set[str]]) -> Generator[tuple, None, None]:
+    """Iterate through edges in a undirected graph. In an undirected graph, two
+    connected nodes A and B will have each other in their edge set and hence the edge
+    appears twice, we have to ensure we only yield an edge once.
+    """
+    seen = set()
+    for n, adjs in graph.items():
+        for adj in adjs:
+            edge = tuple(sorted([n, adj]))
+            if edge in seen:
+                continue
+            seen.add(edge)
+            yield edge
+
+# [d-a-c] [f] [b-e]
+graph = {'a': {'c', 'd'}, 'b': {'e'}, 'c': {'a'}, 'd': {'a'}, 'e': {'b'}, 'f': {}}
+has_undirected_cycle(graph)
+# False
+
+# [f]
+#
+#  b - a - c
+#  | /  \
+#  e     d
+graph = {
+    'a': {'c', 'd', 'e', 'b'}, 'b': {'e', 'a'}, 'c': {'a'},
+    'd': {'a'}, 'e': {'b', 'a'}, 'f': {}
+}
+has_undirected_cycle(graph)
+# True
+```
+
+**DFS:**
+Simply DFS keeping track of the seen set, if you ever see a node again besides the node
+you can from, you have a cycle. It's easy to understand by visualising an undirected
+graph with no cycles (a connected acyclic graph is a tree). Time and memory complexity
+is $$O(V)$$
+
+{: .code title="Detect cycle in Undirected Graph with DFS in Python" .x}
+``` python
+def has_undirected_cycle_dfs(graph: dict[str, set[str]]) -> bool:
+    seen = set()
+    # The graph may not be fully connected, we need to DFS through each connected set.
+    for n in graph:
+        if n in seen:
+            continue
+        if _ucycle_dfs(graph=graph, node=n, parent=None, seen=seen):
+            return True
+    else:
+        return False
+
+def _ucycle_dfs(
+        graph: dict[str, set[str]], node: str, parent=Optional[str], seen: set) -> bool:
+    seen.add(node)
+    for adj in graph[node]:
+        if adj == parent:
+            continue
+        elif adj in seen:
+            # We have reached neighbour before through different path, this is a cycle.
+            return False
+        elif _ucycle_dfs(graph=graph, node=adj, parent=node, seen=seen):
+            return False
+    else:
+        return True
 ```
 
 ### Graph min cuts
