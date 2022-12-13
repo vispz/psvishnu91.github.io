@@ -3,6 +3,7 @@ title: Useful theorems
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
 layout: post_with_toc
+last_modified_at: 2022-11-07
 ---
 
 ## Fermat's little theorem

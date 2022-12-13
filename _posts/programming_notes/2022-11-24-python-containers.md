@@ -3,6 +3,7 @@ title: Python Exotic Containers
 blog_type: programming_notes
 excerpt: Exotic containers in python primarily used for interviews.
 layout: post_with_toc_lvl4
+last_modified_at: 2022-11-24
 ---
 
 ### Foreword

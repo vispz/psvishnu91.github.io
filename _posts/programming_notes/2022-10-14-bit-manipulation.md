@@ -3,6 +3,7 @@ title: Bit Manipulation
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
 layout: post
+last_modified_at: 2022-10-14
 ---
 
 ## Storage

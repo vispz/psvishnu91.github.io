@@ -3,6 +3,7 @@ title: Probability basics
 blog_type: ml_notes
 excerpt: Refresher on probability theory.
 layout: post
+last_modified_at: 2022-10-07
 ---
 
 # Basics

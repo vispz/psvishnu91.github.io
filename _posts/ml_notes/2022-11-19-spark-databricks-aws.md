@@ -3,8 +3,8 @@ title: Spark on databricks with AWS
 blog_type: ml_notes
 excerpt: Setting up spark on databricks with an AWS backend.
 layout: post
+last_modified_at: 2022-11-19
 ---
-
 
 In this blog, I am going to play around with spark with databricks running on AWS.
 
