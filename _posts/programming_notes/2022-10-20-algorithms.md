@@ -425,6 +425,22 @@ Two algorithms DFS and using Disjoint Union Set (DSU).
 > See a notebook version of the code below with graph visualisations on
 > [nbviewer](https://nbviewer.org/github/psvishnu91/interview-problems/blob/633bc3/design_of_algos/cycles-in-undirected-graph.ipynb).
 
+**Graphs tested below**
+
+<font color="gray"><i>See <a href="/blogs/visualising-graphs.html">blog</a> on visualising graphs</i></font>
+<container>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5>Acyclic graph</h5>
+            <iframe width="100%" height="400" frameborder="0" scrolling="no" src="//plotly.com/~visperz/6.embed"></iframe>
+        </div>
+        <div class="col-lg-6">
+            <h5>Cyclic graph</h5>
+            <iframe width="100%" height="400" frameborder="0" scrolling="no" src="//plotly.com/~visperz/4.embed"></iframe>
+        </div>
+    </div>
+</container>
+
 **DSU:** We initialise the DSU with singleton sets containing each graph node. We
 iterate over an edges. Gotcha: for an edge `a-b`, if this edge appears twice once for
 `a` and once for `b`, we ensure we only iterate over it once. We check if the nodes
