@@ -316,7 +316,7 @@ def _move_node(node, from_set, to_set) -> None:
     to_set.add(node)
 ```
 #### Cycles in Undirected Graphs
-Two algorithms DFS and using Disjoint Union Set (DSU).
+Two algorithms DFS and using Disjoint Set Union (DSU).
 
 > See a notebook version of the code below with graph visualisations on
 > [nbviewer](https://nbviewer.org/github/psvishnu91/interview-problems/blob/633bc3/design_of_algos/cycles-in-undirected-graph.ipynb).
@@ -354,7 +354,7 @@ from typing import Hashable
 
 @dataclass
 class DSU:
-    """Disjoint union set implementation."""
+    """Disjoint Set Union implementation."""
 
     parent: dict[Hashable, Hashable] = field(default_factory=dict)
     rank: dict[Hashable, int] = field(default_factory=dict)

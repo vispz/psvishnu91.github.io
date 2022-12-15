@@ -21,7 +21,7 @@ AFAIK there are no standard implementations for Tries and bloom filters in Pytho
 I will merely iterate on implementing the remaining datastructures. As
 a bonus, I have included
 - the bisect library which provides fast binary search.
-- an implementation of a disjoint union set
+- an implementation of a disjoint set union.
 
 ### `sortedcontainers` library
 
@@ -215,7 +215,7 @@ Out: [5, 5, 5, 6]
     Task(order=1, name='X')]
   ```
 
-### Disjoint Union Set (DSU) in Python
+### Disjoint Set Union (DSU) in Python
 
 The operations provided by the datastructure are
 - Amortised O(1) Union two sets.
@@ -229,7 +229,7 @@ size amongst disjoint sets.
 > this can be assumed to be constant time.
 
 ``` python
-class DisjointUnionSet:
+class DisjointSetUnion:
 
     def __init__(self, n: int) -> None:
         """Constructor
@@ -273,7 +273,7 @@ class DisjointUnionSet:
 
 #### Test
 ```python
-dsu = DisjointUnionSet(n=10)
+dsu = DisjointSetUnion(n=10)
 dsu.union(x=2,y=3)
 dsu.union(x=2,y=3)
 dsu.union(x=4,y=3)
