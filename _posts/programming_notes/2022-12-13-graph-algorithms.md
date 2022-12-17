@@ -3,7 +3,7 @@ title: Graph Algorithms
 blog_type: programming_notes
 excerpt: Graph algorithms for coding interviews.
 layout: post_with_toc_lvl3
-last_modified_at: 2022-12-14
+last_modified_at: 2022-12-17
 ---
 
 ## Graph representation
@@ -472,6 +472,117 @@ def _ucycle_dfs(
             return False
     else:
         return True
+```
+### Find all shortest paths between two nodes
+We will use an unweighted undirected graph for this example but we can equally use the
+algorithm for a directed graph. The workhorse of this algorithm will be BFS.
+
+**Algorithm**
+* We need 3 functions, a wrapper, a bfs and finally a `trace_path`.
+* The wrapper will pass into bfs, `graph`, `src`. Bfs will return `parents`.
+* BFS, will maintain two additional maps, `dists` and `parents`.
+  * `dists` is the shortest distance to each node from source. `dists[src] = 0`.
+  * `parents` contains a set of parents which result in the same shortest distance
+        to this node from the source. `parents[src] = None`.
+* The queue in BFS will begin with `src`. We while over q, pop the left node and iterate
+  over adjacent nodes. If the shortest distance of adjacent node is
+    * greater than `dists[node] + 1`, then we
+    have a brand new shortest path and we need to re-explore it's neighbours so that we
+    can update their paths, so we need to add it to the queue.
+    * equal to `dists[node] + 1`, then
+    we just add it to parents (no need to update neighbours).
+    * lesser than `dists[node] + 1`, then we do nothing and move on.
+* `trace_path` will be called with `parents`, `end`, `path=[]`, `paths=[]`. We
+  will begin at the `end` node and we recursively call `trace_path` for every parent
+  until we reach `parent=None` for `src` and we add the `path` to paths after reversing
+  it. After iterating over all the parents we remove `end` from path.
+
+> **Takeaway**: For path finding problems, keep track of parents in a dict or list and
+> then trace path in a separate function.
+
+**Code**
+
+{: .code title="Find all shortest paths between two nodes with BFS" .x}
+```python
+import collections
+from typing import NewType
+from typing import Optional
+
+#: A map of node name to it's set of adjacent nodes.
+Graph = NewType('Graph', dict[str, set[str]])
+#: A path described by a list of node names.
+Path = list[str]
+
+def find_shortest_paths(graph: Graph, src: str, end: str) -> list[Path]:
+    """Finds all the paths with the shortest distance between src and end.
+
+    See tests below for sample input and output.
+    """
+    parents = _find_min_path_parents_bfs(graph=graph, src=src)
+    paths = []
+    _trace_paths(end=end, parents=parents, path=Path([]), paths=paths)
+    return paths
+
+def _find_min_path_parents_bfs(graph: Graph, src: str) -> dict[str, set[Optional[str]]]:
+    dists, parents = {src: 0}, {src: {None}}
+    q = collections.deque([src])
+    while q:
+        node = q.popleft()
+        for adj in graph[node]:
+            adj_dist = dists.get(adj, float('inf'))
+            if adj_dist > dists[node] + 1:
+                # We have found a new shortest path, remove all previous parents.
+                # Update adj distance and add it to the queue as we need to update it's
+                # neighbours.
+                dists[adj] = dists[node] + 1
+                parents[adj] = {node}
+                q.append(adj)
+            elif adj_dist == dists[node] + 1:
+                # We have found another route to adj with the shortest distance
+                parents[adj].add(node)
+    return parents
+
+def _trace_paths(
+    end: str,
+    parents: dict[str, set[Optional[str]]],
+    path: Path,
+    paths: list[Path],
+) -> None:
+    """Side effect: populates paths."""
+    if end is None:
+        # We have reached the parent of source
+        paths.append(list(reversed(path)))
+        return
+    path.append(end)
+    for each_parent in parents[end]:
+        _trace_paths(end=each_parent, parents=parents, path=path, paths=paths)
+    path.pop()
+```
+**Test**
+
+Graph we are using to test:
+
+{% include image.html id="/assets/Images/posts/programming_notes/graph-shortest-paths-test.png" width="25%"%}
+
+
+{: .code title="Tests for shortest paths with BFS" .x}
+``` python
+graph = {
+    "AA": {"BB", "DD", "II"},
+    "BB": {"AA", "CC"},
+    "CC": {"BB", "DD"},
+    "DD": {"AA", "CC", "EE"},
+    "EE": {"DD", "FF"},
+    "FF": {"EE", "GG"},
+    "GG": {"FF", "HH"},
+    "HH": {"GG"},
+    "II": {"AA", "JJ"},
+    "JJ": {"II"}
+}
+find_paths(graph=graph, src='BB', end='FF')
+# [['BB', 'CC', 'DD', 'EE', 'FF'], ['BB', 'AA', 'DD', 'EE', 'FF']]
+find_paths(graph=graph, src='BB', end='JJ')
+# [['BB', 'AA', 'II', 'JJ']]
 ```
 
 ### Dijkstra's shortest path algorithm
