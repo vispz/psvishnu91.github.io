@@ -20,7 +20,7 @@ sampling the specific value $$x$$ is defined by the probability distribution $$P
 > [This medium blog post](https://towardsdatascience.com/entropy-how-decision-trees-make-decisions-2946b9c18c8)
 > works through examples that might be instructive.
 
-Entropy is a positive real number. Entropy is bounded between 0 and 1 when there are only
+Entropy is a non-negative real number. Entropy is bounded between 0 and 1 when there are only
 two outcomes. However, if there are more outcomes it can be greater than 1. In ML parlance,
 for a binary output variable `Y`, entropy can be at most 1 but for a multiclass setup,
 it can be greater than 1.
