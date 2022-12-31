@@ -2,7 +2,7 @@
 title: Minimising Cross Entropy = <br/> Minimising KL-Divergence?
 blog_type: ml_notes
 excerpt: What is entropy and KL-Divergence? Why minimising either, the same?
-layout: post_with_toc
+layout: post_with_toc_lvl4
 last_modified_at: 2022-11-10
 ---
 ## Entropy & KL-Divergence
@@ -31,9 +31,12 @@ it can be greater than 1.
 This is the entropy of a distribution $$q(x)$$ when $$x$$ is sampled from another distribution
 $$p(x)$$.
 
-> Paraphrasing **Wikipedia:** Cross entropy measures the average number of bits needed to represent
-> a specific $$x$$ if the coding scheme used is optimized for an
-> estimated probability distribution $$q(x)$$, rather than the true distribution $$p(x)$$.
+<div class="panel panel-default">
+<div class="panel-body">
+Paraphrasing **Wikipedia:** Cross entropy measures the average number of bits needed to represent a specific $$x$$ if the coding scheme used is optimized for an
+estimated probability distribution $$q(x)$$, rather than the true distribution $$p(x)$$.
+</div>
+</div>
 
 $$ H(p(x), q(x)) = - E_{x \sim p(x)}\left[ \log q(x) \right] $$
 
@@ -45,6 +48,7 @@ computing cross entropy, we merely compute the average $$\log q(x)$$ with $$x$$'
 sampled from our data. This is an unbiased estimate of the true cross entropy of
 $$q(x)$$ wrt $$p(x)$$.
 
+{: .code title="Implementation of Cross entropy in Python" .x}
 ``` python
 import numpy as np
 import numpy.typing as npt
@@ -53,7 +57,7 @@ Vector = npt.NDArray[np.float64]
 
 # Penalty for the model q(x) for estimating 0 probability of seeing a sample x
 # from p(x).
-LARGE_PENALTY = 100
+LARGE_PENALTY = -100
 
 def q(x: Vector) -> Vector:
     model = fetch_model()
@@ -71,10 +75,17 @@ print(cross_entropy(qx=q(x=X)))
 ### KL-Divergence
 Read the treatise on KL-D from [UIUC](http://hanj.cs.illinois.edu/cs412/bk3/KL-divergence.pdf).
 
-KL Divergence is a measure of closeness of two distributions. It is not a distance metric
+KL Divergence is a _measure_ of closeness of two distributions. It is not a distance metric
 as it is asymmetric, more concretely, $$D_{KL}(p(x)||q(x)) \neq D_{KL}(q(x)||p(x))$$.
 As mentioned above, in ML $$q(x)$$ is usually the model we are building to approximate
 the true distribution $$p(x)$$.
+
+<div class="panel panel-default">
+<div class="panel-body">
+KL-Divergence measures the average number of **extra bits** needed to code samples
+$$x$$ from $$p(x)$$ using a coding scheme optimised for $$q(x)$$ instead of $$p(x)$$.
+</div>
+</div>
 
 **Discrete case**
 
@@ -97,15 +108,17 @@ for more details.
 
 Credits: [stats.stackexchange](https://stats.stackexchange.com/a/357974/84357)
 
-> **tl;dr:** KL-Divergence is composed of entropy of the true distribution
->  $$p(x), E\left[\log p(x)\right]$$ and
-> the cross entropy, $$H(p(x), q_{\Theta}(x))$$. Since optimising the
-> parameters of the model $$\left(\Theta\right)$$, only depends on $$q_\Theta{(x)}$$ and
-> hence only the
-> $$H(p(x), q_{\Theta}(x))$$ term, we can leave out entropy of $$p(x)$$ from the objective function.
+<div class="panel panel-default">
+<div class="panel-body">
+**tl;dr:** KL-Divergence is composed of entropy of the true distribution
+ $$p(x), E\left[\log p(x)\right]$$ and
+the cross entropy, $$H(p(x), q_{\Theta}(x))$$. Since optimising the
+parameters of the model $$\left(\Theta\right)$$, only depends on $$q_\Theta{(x)}$$ and
+hence only the $$H(p(x), q_{\Theta}(x))$$ term, we can leave out entropy of $$p(x)$$ from the objective function.
+</div>
+</div>
 
-Cross-entropy is the loss function used in logistic regression. We pair softmax and cross-entropy
-loss in
+Cross-entropy is the loss function used in logistic regression.
 
 $$
 \begin{align*}
@@ -116,8 +129,14 @@ D_{KL}(p(x)||q(x)) &= \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \ri
 \text{KL Divergence of $q(x)$ wrt $p(x)$} = -\text{Entropy of } p(x) + \text{Cross entropy of $q(x)$ wrt to the distribution $p(x)$}
 $$
 
-The signs are flipped in the final equation because entropy and cross entropy are
-the negative expectation of log the distributions.
+<div class="panel panel-default">
+<div class="panel-body">
+$$H(p(x), q(x))$$ is the average number of bits needed to code $$x$$ sampled from
+$$p(x)$$ using a coding scheme optimised for $$q(x)$$. $$H(p(x))$$ is the
+average number of bits with a coding scheme optimised for $$p(x)$$, the difference
+gives the **extra bits** needed. This is our definition of KL-Divergence.
+</div>
+</div>
 
 Hence, we can decompose KL-Divergence into the entropy of the true unknown distribution $$p(x)$$
 plus the cross entropy of $$q(x)$$ with respect to the true distribution $$p(x)$$.
@@ -132,8 +151,7 @@ $$
 \end{align*}
 $$
 
-## Implementation in python
-
+{: .code title="Implementation of Cross entropy and KL Divergence in Python" .x}
 ``` python
 import torch
 import torch.nn.functional as F
@@ -188,10 +206,8 @@ However, KL-Divergence is slightly easier to reason with.
 
 Let's say we have a perfect model
 such that $$q(x) = p(x) \forall x \in X$$. Cross entropy $$ H(p, q) $$ will be non zero
-whereas KL-Divergence will be zero $$D_{KL}(p, q)$$.
-For a concrete example, say for $$x=1$$, $$p(x)=0.5$$ and hence $$q(x)=0.5$$,
-cross entropy will be $$ H(p, q) = - p(x) \log q(x) = - 0.5 \log 0.5 = 0.35 $$, whereas
-KL-Divergence will be $$D_{KL}(p, q) = E[\log p] + H(p, q) = -0.35 + 0.35 = 0 $$.
+whereas KL-Divergence will be zero $$D_{KL}(p, q)$$. For a concrete example, say for
+$$p(x=0)=p(x=1)=0.5$$ and hence $$q(x=0)=q(x=1)=0.5$$, cross entropy will be $$ H(p, q) = - p(x) \log q(x) = - 2 \times (0.5 \log 0.5) = 0.7 $$, whereas KL-Divergence will be $$D_{KL}(p, q) = E[\log p] + H(p, q) = -0.7 + 0.7 = 0 $$.
 
 ### Real world example of cross entropy interpretation issues
 Say we are modelling the probability that the user clicks on an ad (or the Ads Click through Rate).
@@ -222,10 +238,10 @@ models difficult with cross entropy. Note: KL-Divergence of the above example wi
 As discussed above cross entorpy is hard to reason about. Is a cross entropy of 0.3 good?
 Who knows?! The standard trick to arrive at numbers that we can intuit about is to normalise.
 
-From the [literature](http://quinonero.net/Publications/predicting-clicks-facebook.pdf)
-literature, we see that Normalised Cross Entropy is used widely in the industry
-(we did use it at Yelp). Normalised Cross Entropy is the ratio of your model's cross
-entropy over the cross entropy of a model that simply predicts the mean of the labels.
+From the [literature](http://quinonero.net/Publications/predicting-clicks-facebook.pdf),
+we see that Normalised Cross Entropy is used widely in the industry. Normalised Cross
+Entropy is the ratio of your model's cross entropy over the cross entropy of a model
+that simply predicts the mean of the labels.
 
 **The smaller the number the better.** The idea is that the denominator is predicting the
 average and if your model is doing worse using features than predicting the average
