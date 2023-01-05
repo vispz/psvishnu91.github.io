@@ -6,8 +6,10 @@ layout: post_with_toc_lvl3
 last_modified_at: 2023-01-04
 ---
 
-### Acknowledgement
-Most of the deep learning backprop tricks I have learnt over the years come from Andrej Karpathy's lectures and blogs. Here I summarise some of my learnings from his new lecture series on [youtube](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ).
+### Foreword
+These are notes taken from Andrej Karpathy's lecture ["Building makemore Part 3: Activations & Gradients, BatchNorm"](https://youtu.be/P6sfmUTpUmc). Full lecture series: [youtube](https://youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ).
+
+[Here's the Jupyter notebook](https://nbviewer.org/github/psvishnu91/andrej_lectures/blob/main/lecture-4-makemore-activation-grads.ipynb) with code for the plots below.
 
 ### Activation and gradients
 
@@ -59,6 +61,7 @@ In order to not derive the mean and std in inference we compute a running varian
 
 Batch norm is finicky and can lead to a number of bugs. It’s hard to get rid off as it works well both from the optimisation and the regularisation perspective. People have developed other normalisation techniques such as **layer, group, and instance normalisation**.
 
+> We don't get a complete free pass. If the scales of the weight matrices change, even with batch norm, we will have to tune the learning rates.
 
 
 ### Diagnostics
