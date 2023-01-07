@@ -3,13 +3,13 @@ title: Multivariate Calculus
 blog_type: ml_notes
 excerpt: Notes based on ICL's brilliant course or coursera.
 layout: post_with_toc
-last_modified_at: 2022-10-25
+last_modified_at: 2023-01-05
 ---
 
 ## Acknowledgement
-Notes are primarily derived from [ICL's course on coursera](https://www.coursera.org/learn/multivariate-calculus-machine-learning/home/welcome).
+Notes are partially derived from [ICL's course on coursera](https://www.coursera.org/learn/multivariate-calculus-machine-learning/home/welcome).
 
-[Cheatsheet](/assets/Docs/posts/ml_notes/mv-calc-cheat-sheet.pdf) from ICL.
+[Cheatsheet](/assets/Docs/posts/ml_notes/mv-calc-cheat-sheet.pdf) from ICL. Skip to [Gradient Cheatsheet](#gradient-cheatsheet) for if you just want the vector calculus formulas.
 
 ## Gradient
 <center>
@@ -554,6 +554,40 @@ while i< 100_000:
 
 {% include gradient_descent.html %}
 
+## Gradient CheatSheet
+
+Watch 20mins of [this lecture](https://youtu.be/2DYxT4OMAmw?list=PLRQmQC3wIq9zEMK0UjtLtmE65ob3ovSqe&t=1181).
+
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/vec-calc-cheatsheet.png" width="70%" %}
+
+
+#### Gradient of scalar by vector
+
+$$ \frac{\partial y}{\partial \mathbf{x}} =  \left[ \frac{\partial y}{\partial x_1},  \frac{\partial y}{\partial x_2}, ..., \frac{\partial y}{\partial x_n}  \right]$$
+
+#### Gradient of vector by vector
+
+$$ \frac{\partial \mathbf{y}}{\partial \mathbf{x}} = \begin{bmatrix}
+     \frac{\partial y_1}{\partial x_1} & \frac{\partial y_1}{\partial x_2} & \ldots \frac{\partial y_1}{\partial x_n} \\
+     \frac{\partial y_2}{\partial x_1} & \frac{\partial y_2}{\partial x_2} & \ldots \frac{\partial y_2}{\partial x_n} \\
+    \vdots \\
+     \frac{\partial y_m}{\partial x_1} & \frac{\partial y_m}{\partial x_2} & \ldots \frac{\partial y_m}{\partial x_n}
+\end{bmatrix}
+$$
+
+#### Gradient of scalar by matrix
+
+$$ \frac{\partial y}{\partial \mathbf{A}} = \begin{bmatrix}
+     \frac{\partial y}{\partial A_{11}} & \frac{\partial y}{\partial A_{12}} & \ldots \frac{\partial y}{\partial A_{1n}} \\
+     \frac{\partial y}{\partial A_{21}} & \frac{\partial y}{\partial A_{22}} & \ldots \frac{\partial y}{\partial A_{2n}} \\
+    \vdots \\
+     \frac{\partial y}{\partial A_{m1}} & \frac{\partial y}{\partial A_{m2}} & \ldots \frac{\partial y}{\partial A_{mn}} \\
+\end{bmatrix}
+$$
+
+#### Gradient of vector by matrix
+{% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/vec-by-mat-grad.png" width="70%" %}
+
 
 ## Advanced optimisation techniques
 Given some loss function $$J(\theta)$$ and gradient $$\nabla_{\theta} J(\theta)$$, we can use more advanced optimisation algorithms than canonical gradient descent ie.,
@@ -636,5 +670,3 @@ a flat hyperplane and all values of $$f(x)$$ need to be greater than this value.
 property we can solve the minimum of an **uncontrained optimisation of convex functions**
 by taking the gradient and setting it to 0.
 > We went from a gradient at a local point to a global property of this function.
-
-### TODO: Write notes on the KKT conditions and solving primal/dual formulations of convex problems

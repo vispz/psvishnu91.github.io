@@ -3,7 +3,7 @@ title: Linear algebra notes
 blog_type: ml_notes
 excerpt: Linear algebra notes based on 3Brown1Blue videos and ICL course.
 layout: post_with_toc
-last_modified_at: 2022-10-10
+last_modified_at: 2023-01-04
 ---
 
 ## Acknowledgement
