@@ -7,9 +7,9 @@ last_modified_at: 2022-11-24
 ---
 
 ### Foreword
-In production environments in Python, we almost exclusively only use the
+In production environments in Python, we almost exclusively use
 `list`, `set` and `dict` data structures. However in coding problems, we are often
-expected to the exotic data strucutre realm of
+expected to use exotic data structures such as
 
 1. Balanced binary tree
 2. Heap or a PriorityQueue
