@@ -23,7 +23,7 @@ Edges are directed or undirected
 
 ### Terminologies
 - Parallel edges: They are edges connecting the same two nodes.
-- Connected graph: no nodes with zero edges.
+- Connected graph: There is a path between any pair of vertices.
 - Complete graph: A graph with all nodes connected to each other.
 - Degree of a node: Number of egdes incident on the node.
 
@@ -75,8 +75,8 @@ def _build_graph(edges: list[list[int]], num_nodes: int) -> list[set]:
         graph=[set(), {0,3}, {0}, {2}, set()]
     """
     adj_set = [set() for _ in range(num_nodes)]
-    for e in edges:
-        adj_set[e[0]].add(e[1])
+    for tail, head in edges:
+        adj_set[tail].add(head)
     print(f"{adj_set=}")
     return adj_set
 ```
@@ -164,7 +164,7 @@ Algorithm that given a directed _acyclic_ graph, returns an ordering of the node
 the following property:
 
 For any two nodes in the output array `TS` with indices `i` and `j` such `i < j`, then
-all outward arcs from `TS[i]` will end in a node `TS[k]` such that `k <= j`.
+all outward arcs from `TS[j]` will end in a node `TS[k]` such that `k > i`.
 
 The only condition for a Topological Sort to exist is that the directed graph needs to
 be acyclic.
@@ -188,7 +188,7 @@ The algorithm piggybacks on DFS.
 ```python
 import typing
 from dataclasses import dataclass
-# Graph represented as a list of adj nodes, `len(graph)` is num nodes and
+# Graph represented as an adjacency list, `len(graph)` is num nodes and
 # `len(graph[i])` is number of adjacent numbers from node `i`.
 Graph = typing.NewType('Graph', list[list[int]])
 
@@ -338,7 +338,7 @@ Two algorithms DFS and using Disjoint Set Union (DSU).
 </container>
 
 **DSU:** We initialise the DSU with singleton sets containing each graph node. We
-iterate over an edges. Gotcha: for an edge `a-b`, if this edge appears twice once for
+iterate over edges. Gotcha: for an edge `a-b`, if this edge appears twice once for
 `a` and once for `b`, we ensure we only iterate over it once. We check if the nodes
 of the edge are already connected which means we have a cycle, otherwise we simply
 union the two nodes. Time and memory complexity is $$O(V)$$. We iterate over the edges
