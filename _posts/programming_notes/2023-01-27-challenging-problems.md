@@ -20,8 +20,8 @@ In the _Largest rectange in histogram_ problem, for every element we need to kno
 largest subarray such that the element is the smallest number in the subarray. In other
 words we need to know how far can we expand on each side of an element so that all the
 elements in the subarray are at least this number.
-These problems can be trivially solved in $O(n^2)$, by building all possible subarrays.
-However all of these problems  can be solved in $O(n)$ time using a monotonic stack.
+These problems can be trivially solved in $$O(n^2)$$, by building all possible subarrays.
+However all of these problems  can be solved in $$O(n)$$ time using a monotonic stack.
 
 For input `nums` of length `n`, The solution approach that I like is to create 3 datastructres.
 * `left` list of length `n`: Each element `left[i]` contains the index of the nearest
