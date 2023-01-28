@@ -34,14 +34,18 @@ $$
 Multivariate
 
 $$
-\mathcal{N}(\mathbf{x};\mathbf{\mu}, \Sigma) = \frac{1}{ {2 \pi}^{\frac{n}{2}} \sqrt{|\Sigma|}} \exp\left\{\frac{-1}{2}(\mathbf{x}-\mathbf{\mu})^T \Sigma^{-1} (\mathbf{x}-\mathbf{\mu}) \right\}
+\mathcal{N}(\mathbf{x};\mathbf{\mu}, \Sigma) = \frac{1}{ ({2 \pi})^{\frac{d}{2}} \sqrt{|\Sigma|}} \exp\left\{\frac{-1}{2}(\mathbf{x}-\mathbf{\mu})^T \Sigma^{-1} (\mathbf{x}-\mathbf{\mu}) \right\}
 $$
 
-where $$x \in R^n, \mu \in R^n, \Sigma \in R^{n\times n} $$
+where $$x \in R^d, \mu \in R^d, \Sigma \in R^{d\times d} $$
 
 $$ \mu = \frac{1}{m} \sum_{i=1}^m \mathbf{x_i} $$
 
 $$ \Sigma =  (\mathbf{x}-\mathbf{\mu}) (\mathbf{x}-\mathbf{\mu})^T$$
+
+If $$X$$ is $$n \times d$$, then
+
+$$ \Sigma =  \frac{(\mathbf{X}-\mathbf{\mu})^T (\mathbf{X}-\mathbf{\mu})}{n-1} $$
 
 
 
@@ -89,6 +93,3 @@ RV. Highest correlation is at $$\rho_{xy} = \pm 1$$ and when two RV are linearly
 $$\rho_{xy} = 0$$.
 
 $$ \text{Pearson correlation cofficient} = \rho_{xy} = \frac{cov(x, y)}{\sigma_x \sigma_y}$$
-
-
-gini coefficient and relative information gain
