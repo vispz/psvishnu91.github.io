@@ -122,7 +122,8 @@ $$ f = x^2 + y^2 ,  J = \begin{bmatrix} 2x  & 2y \end{bmatrix} , H = \begin{bmat
 
 This function clearly has circular contours with f=(0,0) being the minima. It's easy to see that at $$x=0, y=0, J =0$$, hence this has to be an optima.
 
-> If the determinant of the hessian is positive, then the point is either a minimum or a maximum. And if the first entry of the hessian is positive, it is a minimum. If the determinant is non-positive, we have a saddle point (inflection point). Example: $$x^2 - y^2$$ at $$(0, 0)$$, $$ \| H \| = -4 $$.
+> If the determinant of the hessian is positive, then the point is either a minimum or a maximum. And if the first entry of the hessian is positive, it is a minimum. If the determinant is non-positive, we have a saddle point (inflection point). Example: $$x^2 - y^2$$ at $$(0, 0)$$, $$ \| H \| = -4 $$. See [math.stackexchange](https://math.stackexchange.com/a/1985915)
+> for details.
 
 ## Real world is painful
 In real life, we often don't have an analytical form for the objective function. We instead use the finite difference method (numerical methods) to approximate the gradient/hessian at a given starting point and continue hill climbing.
@@ -238,7 +239,7 @@ $$
 
 ## Activation functions in NN
 ### Sigmoid
-$$tanh$$, logistic function, $$\sigma(\mathbf{z}) = \frac{1}{1 + \exp(-\mathbf{z})}$$. For the logistic activation function, each output node is between 0-1 or can be thought of as a probability (binomial variable). However the sum of the probabilities of the last layer will clearly not be 1, each output refers to an individual probabilty or binominal variable. If you want a multi-class classifier or multinomial variable, then you can use the softmax function, $$ \tau^{(L)} = exp(z^{(L)}), \widehat{y} = \dfrac{\tau^{(L)}}{\sum_{j}\tau^{(L)}_j}$$ .
+$$tanh$$, logistic function, $$\sigma(\mathbf{z}) = \frac{1}{1 + \exp(-\mathbf{z})}$$. For the logistic activation function, each output node is between 0-1 or can be thought of as a probability (bernoulli variable). However the sum of the probabilities of the last layer will clearly not be 1, each output refers to an individual probabilty or bernoulli variable. If you want a multi-class classifier or multinomial variable, then you can use the softmax function, $$ \tau^{(L)} = exp(z^{(L)}), \widehat{y} = \dfrac{\tau^{(L)}}{\sum_{j}\tau^{(L)}_j}$$ .
 
 
 ### Grad of activation functions and the Hadamard product
@@ -254,20 +255,21 @@ $$
 
 The $$\odot$$ is the [**Hadamard product**](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) or the pointwise multiplication product.
 
-(TODO): This only applies to activation functions which are not dependent on the other nodes of the input. For instance, this trick cannot be used for softmax (?).
+This only applies to activation functions which are not dependent on the other nodes of the input.
 
 ## Optimisation: Linearlisation, Power Series and Taylor Series
 
 ### Summary
 The idea here is to approximate the unknown objective function with a n-degree polynomial, usually 1st or 2nd degree polynomial. We minimise this polynomial iteratively moving closer to the minimum of the objective function. The hope is locally a smooth function behaves similar to a simpler polynomial function.
 
-We find the $$\arg\min$$ of the polynomial by differentiating it and solving the parameters for the derivative equal to zero. For a degree-1 polynomial the minimum is where the slope ($$f'(x_0)$$) is zero. We instead move in the direction steepest downward slope with some arbitrary step-size. For a degree-2 polynomial the minimum is exactly at $$ \Delta x = \frac{f'(x_0)}{f''(x_0)}$$.
+We find the $$\arg\min$$ of the polynomial by differentiating it and solving the parameters for the derivative equal to zero. For a degree-1 polynomial the minimum is where the slope ($$f'(x_0)$$) is zero. We instead move in the direction steepest downward slope with some arbitrary step-size. For a degree-2 polynomial the minimum is exactly at $$ \Delta x = -\frac{f'(x_0)}{f''(x_0)}$$.
+
 $$
 \begin{align*}
 g(x_0 + \Delta x) &= f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2 \\
 \partial_{\Delta x} g(x_0 + \Delta x) &= \partial_{\Delta x} \left\{f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2\right\} = 0 \\
 0 &= f'(x_0) + f''(x_0) \Delta x  \\
- \Delta x &= \frac{f'(x_0)}{f''(x_0)}
+ \Delta x &= - \frac{f'(x_0)}{f''(x_0)}
 \end{align*}
 $$
 
@@ -502,7 +504,7 @@ like Newton-Raphson.
 
 $$\nabla \mathcal{L}$$ because it can  be written as the gradient (over
 $$x, y,$$ and $$\lambda$$) of a scalar function
-$$\mathcal{L}(x, y, \lambda)= f(\mathbf{x})− \lambda g(\mathbf{x}) $$.
+$$\mathcal{L}(\mathbf{x} \lambda)= f(\mathbf{x})− \lambda g(\mathbf{x}) $$.
 
 ## Learnings from implementing gradient
 
@@ -614,7 +616,7 @@ Example: $$x_1+x_2+...= 0$$
 
 * Inequality constraints<br/>
 $$g(x) \leq 0 j=1, \dots$$<br/>
-Example: $$x_1^2 + x_2^2 \leq = x_3^2$$
+Example: $$x_1^2 + x_2^2 \leq x_3^2$$
 
 The constraints, together form the feasible set.
 #### Examples

@@ -95,8 +95,6 @@ $$D_{KL}(p(x)||q(x)) =  \sum_{x \in X} \left\{ P(x) \log p(x) - P(x) \log q(x) \
 
 $$D_{KL}(p(x)||q(x)) = \int_{-\infty}^{\infty} { p(x) \log \frac{p(x)}{q(x)} dx}$$
 
-**When $$p(x) \neq 0$$ but $$q(x) = 0$$**
-
 If $$p(x) \neq 0$$ for some $$x \in X$$, but $$q(x) = 0$$,
 then $$D_{KL} = p(x) (\log p(x) - \log 0) = \infty$$. If there's a point which has non-zero
 probability in the true distribution that the model distribution thinks is impossible,

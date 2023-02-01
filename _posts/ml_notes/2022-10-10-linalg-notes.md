@@ -63,7 +63,7 @@ essentially represents
 $$2 \times \begin{bmatrix} 1 \\ 0\end{bmatrix} + 3 \times \begin{bmatrix} 0 \\ 1 \end{bmatrix}$$
 or equally $$2 \widehat{u_1} + 3 \widehat{u_2}$$.
 
-In a projected space represented by the columns of a matrix $$A$$, this vector will be $$2 \widehat{u_1}\prime + 3 \widehat{u_2}\prime$$. The primes are the projections of $$\widehat{u_1}$$ and $$\widehat{u_2}$$ according $$A$$. In other words columns of A. what is the coefficients of the unit vectors in the projected space do not change. The grid lines in the new space will still be parallel and equidistant.
+In a projected space represented by the columns of a matrix $$A$$, this vector will be $$2 \widehat{u_1}\prime + 3 \widehat{u_2}\prime$$. The primes are the projections of $$\widehat{u_1}$$ and $$\widehat{u_2}$$ according $$A$$, in other words columns of A. The grid lines in the new space will still be parallel and equidistant.
 
 > Linear system of equations: Simultaneous equations solved with matrices.
 
@@ -85,9 +85,9 @@ All the output space (all the output vectors $$v$$ of $$Ax = v$$)of your matrix 
 
 ## Rectangular matrices and losing dimensions
 
-3x2 matrix takes a 2D basis vector and maps to 3D space. The column space of this matix a plane slicing through the origin. The matrix is still full rank as the full 2D span is preserved.
+3x2 matrix takes a 2D basis vector and maps to 3D space. The column space of this matix a plane slicing through the origin.
 
-2 x 3 matrix, maps a 3-D vector space on to 2D space. The 3 columns are where the 3 basis vectors land on the 2D space. This is a lower rank matrix.
+2 x 3 matrix, maps a 3-D vector space on to 2D space. The 3 columns are where the 3 basis vectors land on the 2D space.
 
 ## Injective, surjective and bijective matrices
 
@@ -188,9 +188,13 @@ Another way to visualise this: Imagine what $$T_2$$ is the first transformation 
 Given a set of n lin indep vectors $$<v_1, v_2, ..., v_n>$$ what span the space.
 
 $$\widehat{e_1} = \frac{v_1}{||v_1||}$$
+
 $$u_2 = v_2 - (v_2 \cdot e_1) \widehat{e_1}$$
+
 $$\widehat{e_2} = \frac{e_2}{||e_2||}$$
+
 $$u_3 = u_3 - (v3\cdot \widehat{e_1}) \widehat{e_1} - (v3\cdot \widehat{e_2}) \widehat{e_2}$$
+
 $$\widehat{e_3} = \frac{u_3}{||u_3||}$$
 
 For you $$u_3$$, we are projecting $$v_3$$ on to the plan spanned by $$v_1$$ and $$v_2$$. The projection is the projected onto the vectors $$e_1$$ and $$e_2$$. The remaining vector is the vector perpendicular to the plane and what becomes $$u_3$$.

@@ -2,7 +2,7 @@
 title: Challenging problems
 blog_type: programming_notes
 excerpt: Some notes on challenging coding interviews problems.
-layout: post
+layout: post_with_toc_lvl3
 last_modified_at: 2023-01-27
 ---
 
@@ -102,3 +102,24 @@ def build_prefix_sum(nums):
         prefix_sum[ix] = rs
     return prefix_sum
  ```
+<br/>
+
+### Gradient descent, Newton's Method: Leetcode #1515
+#### Best Position for a Service Centre
+
+In this problem we are given a list of positions with x, y coordinates. We need
+to find the point that has the least euclidean distance to all the points.
+Using vanilla gradient descent solves most test cases. However, to
+solve all the test cases within the prescibed time we need to use
+* Second order approximation with Newton's Method for the first 1000 steps.
+* Gradient descent with a clever learning rate decay schedule.
+* Momentum while computing the gradients and hessian.
+* And early stopping by comparing the average losses in the last 1000, to the previous
+  1000 steps.
+
+{% include button.html url="https://github.com/psvishnu91/interview-problems/blob/master/leetcode/1515-best-position-for-a-service-centre.py" name="Github Solution" %}
+
+Given below is the derivation for the step update using the second order approximation
+or Newton's method by computing the Hessian.
+
+{% include image.html id="/assets/Images/posts/programming_notes/leetcode-1515-optima-search.png" %}

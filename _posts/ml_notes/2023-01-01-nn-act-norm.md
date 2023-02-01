@@ -20,7 +20,7 @@ From [medium](https://sh-tsang.medium.com/review-mish-a-self-regularized-non-mon
 
 #### Favourable properties of an activation function
 1. **Unbounded**: tanh, sigmoid are squashing functions whereas ReLu-like activations are unbounded. Though ReLu does cut off half of the input. Squashing functions tend to squash gradients and can lead to vanishing gradient issues.
-2. **Dead neuron**: While randomly initialising weights, we could initialise extreme weight values such that tanh is saturated or ReLu input is negative for all input training instances. In those scenarios, the neuron never receives gradients and never learns. ReLu is prone to this issue. Many
+2. **Dead neuron**: While randomly initialising weights, we could initialise extreme weight values such that tanh is saturated or ReLu input is negative for all input training instances. In those scenarios, the neuron never receives gradients and never learns. ReLu is prone to this issue.
 3. **Zero centeredness**: Zero centeredness appears to be advantageous for backpropagation training. ReLu and sigmoid are not zero centered whereas tanh is. Having said that ReLu outperforms tanh for very deep networks in practice.
 4. **Differentiable**: ReLu, Leaky-ReLu and PReLu are not differentiable at 0.
 5. **Fast** to compute (no exponentiation).
@@ -68,28 +68,34 @@ X = torch.randn(10, 4, 128, 64)  # 10 imgs, 4 channels, H - 128, W - 64
 μ = X.mean(dim=[0,2,3], keepdims=True)  # shape [1, 4, 1, 1]
 ν = X.var(dim=[0,2,3], keepdims=True)  # shape [1, 4, 1, 1]
 Xstd = (X - μ) / (ν + ε)**(0.5)  # 10 x 4 x 128 x 64
-Xbn = ɣ * Xstd + β  # ɣ, β -> [1, 4, 1, 1]; scale and shift
+Xbn = ɣ * Xstd + β  # ɣ, β -> [1, 4, 128, 64]; scale and shift
 ```
 **Salient points**
-* Batch norm couples examples and often leads to bugs. Though it still outperforms other normalisation techniques.
+* The fact that the forward pass depends on other samples in the batch has a regularising
+  effect (entropy is good in training).
+* It outperforms other normalisation techniques.
+* Batch norm couples examples and often leads to bugs. Batch norm needs to keep track
+  of the training mean and stddev for each feature. So we need to switch between
+  `train` and `eval` phases while using batch norms.
 * Batch norm requires the batch size to not be very small (rule of thumb > 16). This is a hinderance to distributed training.
 * Batch norm cannot be easily applied to RNNs as we need a different batch norm layer for each time step.
 
 #### Layer normalisation
 Applied to linear, CNN, and RNN layers.
 
-**Linear layer**: Consider a $$N \times D$$ training batch matrix, with $$N$$ data points and $$D$$ features. We standardise all the features of a single training/test instance with a single $$mu$$ and $$sigma$$ learnt from all the features of that instance. We keep track of $$N$$ $$\mu$$s and $$\sigma^2$$s.
+**Linear layer**: Consider a $$N \times D$$ training batch matrix, with $$N$$ data points and $$D$$ features. We standardise all the features of a single training/test instance with a single $$mu$$ and $$sigma$$ learnt from all the features of that instance. We compute $$N$$ $$\mu$$s and $$\sigma^2$$s but we don't have to keep track of them during testing.
 
 {: .code title="LayerNorm forward through linear layer" .x}
 ``` python
 ε = 1e-5
 X = torch.randn(10, 4)
 μ = X.mean(dim=1, keepdims=True)  # 10 x 1
-ν = X.var(dim=0, keepdims=True)  # 10 x 1
+ν = X.var(dim=1, keepdims=True)  # 10 x 1
 Xstd = (X - μ) / (ν + ε)**(0.5)  # 10 x 4
-Xbn = ɣ * Xstd + β  # ɣ, β -> 1 x 1; scale and shift
+Xln = ɣ * Xstd + β  # ɣ, β -> 1 x 4; scale and shift
 ```
-**CNN**: For CNN's we compute one mean and standard devation per image. We will have $$N$$, $$\mu$$s and $$\sigma$$s.
+**CNN**: For CNN's we compute one mean and standard devation per image across all channels.
+We would have computed $$N$$, $$\mu$$s and $$\sigma$$s.
 
 {: .code title="LayerNorm forward through CNN Layer" .x}
 ``` python
@@ -98,23 +104,25 @@ X = torch.randn(10, 4, 128, 64)  # 10 imgs, 4 channels, H - 128, W - 64
 μ = X.mean(dim=[1,2,3], keepdims=True)  # shape [10, 1, 1, 1]
 ν = X.var(dim=[1,2,3], keepdims=True)  # shape [10, 1, 1, 1]
 Xstd = (X - μ) / (ν + ε)**(0.5)  # 10 x 4 x 128 x 64
-Xbn = ɣ * Xstd + β  # ɣ, β -> 1 x 1; scale and shift (scalar)
+Xbn = ɣ * Xstd + β  # ɣ, β -> 4 x 128 x 64; scale and shift
 ```
+
+For RNN's we don't normalise over the time dimension unlike CNN.
 
 #### Instance normalisation
 Applied to CNN layers. Not applicable to training data tensors smaller than 3 dimensions.
 
 **CNN**: For CNN's we compute one mean and standard devation per image per channel. We will have $$N \times C$$, $$\mu$$s and $$\sigma$$s.
 
-{: .code title="LayerNorm forward through CNN Layer" .x}
+{: .code title="InstanceNorm forward through CNN Layer" .x}
 ``` python
 ε = 1e-5
 X = torch.randn(10, 4, 128, 64)  # 10 imgs, 4 channels, H - 128, W - 64
 μ = X.mean(dim=[2,3], keepdims=True)  # shape [10, 4, 1, 1]
 ν = X.var(dim=[2,3], keepdims=True)  # shape [10, 4, 1, 1]
 Xstd = (X - μ) / (ν + ε)**(0.5)  # 10 x 4 x 128 x 64
-ɣ = β = torch.randn(1, 4, 1, 1)
-Xbn = ɣ * Xstd + β  # ɣ, β -> 1 x 4 x 1 x 1; scale and shift
+ɣ = β = torch.randn(1, 1, 128, 64)
+Xin = ɣ * Xstd + β  # ɣ, β -> 1 x 1 x 128 x 64; scale and shift
 ```
 
 #### Group normalisation

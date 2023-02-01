@@ -21,7 +21,7 @@ $$
 \begin{align*}
 x_0 &- \text{input}\\
 x_1 &= tanh(x_0 W_1 + b_1)\\
-x_2 &= tanh(x_1 W_2 + b_2)\\
+x_2 &= x_1 W_2 + b_2\\
 y &= softmax(x_2)\\
 loss &= \text{cross_entropy}(y, y^{true})
 \end{align*}
@@ -45,10 +45,14 @@ A **dead neuron** is one where the neuron initialised in a region where it's alw
 {% include image.html id="/assets/Images/posts/ml_notes/backprop/saturation.png" width="50%" %}
 
 #### Kaiming He activation
-One solution is to initialise the weights in the correct scale. If the input to the $$\tanh$$ is in the region around 0 and not too spread out we will not have situations. Pytorch uses the **Kaiming He** initialisation. They sample from a uniform distribution between $$\left(-\frac{\text{gain}} {\sqrt{\text{fan_in}}},\frac{\text{gain}} {\sqrt{\text{fan_in}}}\right)$$. This makes the input to the nonlinearity to lie in the non-saturated regions. This also makes the gradients roughly gaussian (no extreme gradients ie., not a wide gaussian).
+One solution is to initialise the weights in the correct scale. If the input to the $$\tanh$$ is in the region around 0 and not too spread out we will not have saturations. Pytorch uses the **Kaiming He** initialisation. They sample from a uniform distribution between $$\left(-\frac{\text{gain}} {\sqrt{\text{fan_in}}},\frac{\text{gain}} {\sqrt{\text{fan_in}}}\right)$$. This makes the input to the nonlinearity to lie in the non-saturated regions. This also makes the gradients roughly gaussian (no extreme gradients ie., not a wide gaussian).
 
 $$tanh$$ is a squashing function and it can only shrink the gradients. This squashing property is also the reason we have a gain when we sample. For $$tanh$$ the empirical gain is (5/3) and for ReLU it's $$\sqrt{2}$$ as half of the space is squashed to 0. If we simply stacked linear layers, we wouldn't need the gain. Without the gain the output of deeper layers start squishing down to 0. The deeper you go the higher the issue.
 
+> From [pouannes blog](https://pouannes.github.io/blog/initialization/]): The only
+> difference is that the Kaiming paper takes into account the
+> activation function, whereas Xavier does not (or rather, Xavier approximates
+> the derivative at 0 of the activation function by 1).
 
 ### Batch norm
 The above careful initialisation is not practical for very deep neural nets. Instead we force the input to the non-linearity to be a unit gaussian. We mean center and divide by the standard deviation of the output of the linear layer from the batch. However, we want the to allow the model to saturate some neurons and shift the mean. Hence, we later multiply with $$\gamma$$ (scale) of dimensions fanout with the output of the standardised linear layer and add $$\beta$$ (shift). These are trained by the model. This guarantees the input to the $$tanh$$ or nonlinearity is roughly gaussian at least at the beginning of the training.
@@ -81,8 +85,8 @@ We want the gradient of all layers to be roughly the same gaussian. We don’t w
 {% include image.html id="/assets/Images/posts/ml_notes/backprop/activation_grad_hist.png" width="100%" %}
 
 
-#### Gradient of the weight matrices `W.grad.std()`
-Also instructive to look at `W.grad.std()/W.data.std()`. This is because we are using these gradients to update the weight matrix values and we want them to be at the right scale. Specifically, if the gradients are too large wrt to the scale of the weights, we are in trouble. Because we artificially shrunk the weights of the last logits layer close to zero, we would expect very large gradients wrt to it's scale. However, this usually will fix itself after a few rounds of training.
+#### Gradient of the weight matrices `W.grad`
+In addition to a histogram of `W.grad`, also instructive to look at `W.grad.std()/W.data.std()`. This is because we are using these gradients to update the weight matrix values and we want them to be at the right scale. Specifically, if the gradients are too large wrt to the scale of the weights, we are in trouble. Because we artificially shrunk the weights of the last logits layer close to zero, we would expect very large gradients wrt to it's scale. However, this usually will fix itself after a few rounds of training.
 {% include image.html id="/assets/Images/posts/ml_notes/backprop/weight_grad_hist.png" width="100%" %}
 
 
