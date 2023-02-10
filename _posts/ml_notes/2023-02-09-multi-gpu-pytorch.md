@@ -48,7 +48,6 @@ the weights.
 ``` python
 @dataclass(frozen=True)
 class TrainConfig:
-
     batch_sz: int
     save_every: int
     learning_rate: float
@@ -57,7 +56,6 @@ class TrainConfig:
     eval_sz: int = 2000
     train_frac: float = 0.9
     checkpoint_folder: str = f"logging/checkpoints/{RUN_ID}/"
-
 
 @dataclass(frozen=True)
 class TransformerConfig:
@@ -71,12 +69,10 @@ class TransformerConfig:
     # number of decoder transformer blocks stacked one on top of another
     num_blocks: int
 
-
 @dataclass(frozen=True)
 class HyperParams:
     transformer_cfg: TransformerConfig
     train_cfg: TrainConfig
-
 
 FULL_MODEL_HYPERPARAMS = HyperParams(
     train_cfg=TrainConfig(
