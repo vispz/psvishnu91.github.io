@@ -21,7 +21,7 @@ $$ a^{p-1} \equiv 1\ (\textrm{mod}\ p)$$
 ### Example usage of fermat's little theorem
 
 > **Takeaway**:
-> Simplify $$a^n\ \%\ p$$ to $$a^r \ \% \ p$$, where r is $$n \ \% \ p-1$$ if p is prime.
+> Simplify $$a^n\ \%\ p$$ to $$a^r \ \% \ p$$, where r is $$n \ \% \ (p-1)$$ if p is prime.
 
 Say we want the remainder of $$3^{100,000}$$ with $$53$$ where $$53$$ is prime.
 
@@ -37,14 +37,19 @@ We can ignore $$(3^{52})^{q}$$ as the remainder will be $$1$$ multiplied by $$1$
 Mathematically, this can be written as
 
 $$3^{100,000}=(3^{52})^{1923} \cdot 3^4$$
+
 $$3^{52} \equiv 1\ (\text{mod}\ 53)$$
+
 $$(3^{52})^{1923} \equiv 1^{1923}\ (\text{mod}\ 53)$$
+
 $$(3^{52})^{1923} \equiv 1\ (\text{mod}\ 53)$$
+
 $$(3^{52})^{1923}\cdot 3^4 \equiv 3^4 \ (\text{mod}\ 53)$$
+
 $$3^{100,000} \equiv 81 \ (\text{mod}\ 53)$$
+
 $$3^{100,000} \equiv 28 \ (\text{mod}\ 53)$$
 
-<br/>
 ## Finding Greatest common divisor (GCD) <br/>or Highest Common Factor (HCF)
 <br/>
 The key here is the **Euclidean algorithm**. $$gcd(a,b) = gcd(a,b-a)$$. That is GCD of two numbers is the same if we subtract the smaller number from the bigger. We can repeatedly subtract the smaller number from the bigger number without sacrificing correctness.

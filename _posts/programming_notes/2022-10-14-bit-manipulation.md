@@ -16,7 +16,7 @@ A 1 bit number can store two numbers `{0, 1}`, 2-bit number can store 4
 Below is a function to compute the number of bits needed to store positive numbers up to a specific
 number. <br/>
 
-
+{: .code title="Number of digits computation" .x}
 ``` python
 import math
 
@@ -50,7 +50,6 @@ def infer_num_bits_pos_2(num: int) -> int:
         n += 1
     return n
 ```
-<br/>
 
 ### Storing integers (negative, 0 and positive)
 
@@ -66,7 +65,13 @@ We store negative integers in **2s-complement** form. The most significant bit (
 a sign bit that is `0` if non-negative and `1` if negative. The negative of a number is the number
 that needs to be added to the positive binary representation of the number to produce the
 number $$2^{\text{num-bits}}$$. This can be obtained adding `1` to the not of the
-positive number. Examples:
+positive number. This technique works if you want to convert a negative number to positive
+as well.
+
+``` python
+def flip_sign(num):
+    return ~num + 1
+```
 
 **Example 1:**
 Let's use a 4-bit number. The numbers that can be represented here are -8 to 7. Say

@@ -26,7 +26,7 @@ However all of these problems  can be solved in $$O(n)$$ time using a monotonic 
 For input `nums` of length `n`, The solution approach that I like is to create 3 datastructres.
 * `left` list of length `n`: Each element `left[i]` contains the index of the nearest
   element to the left of  in `nums[i]` such that `nums[left[i]]` is smaller or greater
-  than `nums[i]`. If we want to keep the invariant that `nums[left[i]+1:i+1` are at most
+  than `nums[i]`. If we want to keep the invariant that `nums[left[i]+1:i+1]` are at most
   `nums[i]`, then `left[i]` will contain the index of the nearest element to the left
   of `nums[i]` that is greater than `nums[i]`.
 * `right` list of length `n`: The same but from the right of the array.
@@ -35,13 +35,12 @@ For input `nums` of length `n`, The solution approach that I like is to create 3
   `left[i]` or `right[i]` such that they store the nearest number **_greater than_**
   `nums[i]` on either side, then we keep the invariant that the largest number is at the
   bottom of the stack and the smallest number is on the top of the stack. Any time we
-  get a new `nums[i]`, if `nums[i]` that is greater than or equal the top of the stack,
+  get a new `nums[i]` such that `nums[i]` is greater than or **equal to** the top of the stack,
   keep popping from the stack until you find the first number greater than this number,
   it's index will `left[i]` or `right[i]`. If you find a number that is smaller than
   the top of the stack then `left[i]` will simply the be the index of the element on
   the top of the stack (because first number larger this number) and we push the current
-  number into the stack. This will be opposite if we want to find the first number smaller
-  than this number.
+  number into the stack.
 
 
 {: .code title="Maximum Subarray Min-Product solution" .x}
