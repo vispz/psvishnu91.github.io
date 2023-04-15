@@ -8,7 +8,8 @@ last_modified_at: 2022-11-10
 ## Entropy & KL-Divergence
 
 ### Entropy summary
-Measures the uncertainty in a system. It can also be thought of as the amount of surprise. In an
+Measures the uncertainty in a system. It can also be thought of as the amount of surprise. In anudtckvebbfkckilrinvhigubgjnkfhnhhf
+
 information theoretic view, it's the amount of information needed to remove the
 uncertainty in the system.
 
