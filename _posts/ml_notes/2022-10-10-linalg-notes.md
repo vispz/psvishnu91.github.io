@@ -237,9 +237,44 @@ This process can be used to extract the eigen vector with the highest eigen valu
 
 > Notice what if you have a valid set of eigen vectors (enough to span the space), then deriving the eigen values is simple. ($$D = C^{-1} A C$$, where C is a matrix with the eigen vectors as columns).
 
-## Shear transformation matrix in 2-D
+### Shear transformation matrix in 2-D
 
 In 2-D, off diagonal elements cause shear, if the other diagonal element is 0. This can be understood geometrically, imagine rotating the y axis but not the x-axis, a unit square in the original space will be squished or sheared.
+
+## Quadratic form
+Given any vector $$\mathbf{z} \in R^n, z\neq \mathbf{0}$$ and a symmetric matrix
+$$A \in R^{n \times n}$$, the
+quadratic form is given by $$\mathbf{z}^T A \mathbf{z}$$.
+
+**Properties**\
+[See [millersville.edu notes](https://sites.millersville.edu/rumble/Math.422/quadform.pdf)]
+Let $$\mathbf{x} \cdot \mathbf{x} = 1$$, ie., $$ \mathbf{x} \in S^{n-1}$$.
+$$\mathbf{x}$$ traces
+a unit sphere in $$R^n$$. The maximum value of the quadratic form $$\mathbf{x}^T A \mathbf{x}$$
+is the largest eigen value of $$A$$ and occurs for the corresponding eigen vector. Similarly
+the smallest value is the smallest eigen value, with $$\mathbf{x}$$ is the corresponding
+eigen vector. The two vectors are diametrically opposite in the unit sphere.
+
+### Definite matrices
+The matrix $$A$$ is
+
+1. Positive definite if $$\mathbf{z}^T A \mathbf{z} > 0$$ (acute angle rotation matrix)
+2. Positive semidefinite if $$\mathbf{z}^T A \mathbf{z} \geq 0$$
+3. Negative semidefinite if $$\mathbf{z}^T A \mathbf{z} \leq 0$$ (obtuse angle rotation matrix)
+4. Negative definite if $$\mathbf{z}^T A \mathbf{z} < 0$$
+
+This can be restated as a matrix is positive-definite if and only if it is the matrix
+of a positive-definite quadratic form.
+
+**Properties**
+1. $$A$$ is positive definite if is symmetric, and all its eigenvalues are real and positive.
+2. [From [wiki](https://en.wikipedia.org/wiki/Definite_matrix)] For any real invertible
+   matrix $$A$$, the product $$A^\textsf{T}A$$ is a positive definite matrix (if the
+   means of the columns of A are 0, then this is also called the [[covariance matrix]]).
+   A simple proof is that for any non-zero vector $$\mathbf z$$, the condition
+   $$\mathbf{z}^\textsf{T} A^\textsf{T} A\mathbf{z} = (A\mathbf{z})^\textsf{T}(A\mathbf{z}) = \|A\mathbf{z}\|^2 > 0,$$ since the invertibility of matrix $$A$$ means that $$A\mathbf{z} \neq 0.$$
+
+
 
 ## Abstract vector space
 
