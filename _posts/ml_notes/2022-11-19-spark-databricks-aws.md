@@ -63,3 +63,11 @@ We create a spark notebook with databricks.
     {% include image_no_center.html id="/assets/Images/posts/ml_notes/spark/db-create-nb.png" width="30%" %}
 
 {% include nbviewer_gist.html src="8fc583d87c49e90dbaf7c39791594bdd" width="100%" height="450" %}
+
+
+### Teardown
+In order to teardown the resources, we need to
+* pop into the VPC section of aws
+* delete the NAT device
+* delete the databricks VPC
+* delete the associated elastic IP address
