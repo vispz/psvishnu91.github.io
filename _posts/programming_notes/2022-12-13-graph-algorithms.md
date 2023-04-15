@@ -474,8 +474,7 @@ def _ucycle_dfs(
         return True
 ```
 ### Find all shortest paths between two nodes
-We will use an unweighted undirected graph for this example but we can equally use the
-algorithm for a directed graph. The workhorse of this algorithm will be BFS.
+The workhorse of this algorithm will be BFS.
 
 **Algorithm**
 * We need 3 functions, a wrapper, a bfs and finally a `trace_path`.
