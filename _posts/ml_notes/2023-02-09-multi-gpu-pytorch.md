@@ -122,17 +122,17 @@ def _checkpoint(model, checkpoint_folder, it, use_multigpu, device):
     state_dict = model.module.state_dict() if use_multigpu else model.state_dict()
     torch.save(state_dict, f=fl)
 ```
-* We all the script logic into functions. Essentially we create a `wrapper` function
+* Move the script logic into functions. Essentially we create a `wrapper` function
   as below
 
 {: .code title="Skeleton of the wrapper function" .x}
 ``` python
 def wrapper(...):
     train_data, val_data, vocab_sz, ixtoc = load_input_file(input_fl)
-    train_data, val_data = get_data_split(train_data, val_data, configs)
+    train_dl, val_dl = get_data_split(train_data, val_data, configs)  # into dataloaders
     model = build_model(vocab_sz, load_model_ckpt_path, configs)
     print(f"Examples BEFORE training the model")
-    gpt.print_examples(model)  # type: ignore
+    gpt.print_examples(model)
     train_model(
         model=model,
         train_dl=train_dl,
@@ -144,7 +144,7 @@ def wrapper(...):
         configs=configs,
     )
     print(f"Examples AFTER training the model")
-    gpt.print_examples(**print_example_kwargs)  # type: ignore
+    gpt.print_examples(**print_example_kwargs)
 ```
 
 #### 2: Moving `get_batch` to Dataloader
