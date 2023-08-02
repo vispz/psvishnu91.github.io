@@ -25,6 +25,9 @@ a bonus, I have included
 
 ### `sortedcontainers` library
 
+A balanced binary search tree can be thought of as a dynamic sorted list which supports
+insertions and deletions in $$O(\log(n))$$ time when a sorted list would take $$O(n)$$.
+
 Python does not have a balanced binary tree implementation. If you are coming from Java
 land, you can use `TreeMap => sc.SortedDict` and
 `TreeSet => sc.SortedList or sc.SortedSet`.
@@ -48,6 +51,7 @@ respectively.
 | bisect_left, bisect_right (see [bisect section](#bisect-library))| $$O(\log n)$$|
 | Get index of element in list or key in Map| $$O(\log n)$$ _same as `bisect_left`_|
 | Get item with key (Map only) | $$O(1)$$    |
+| Print in sorted fashion | $$O(n)$$    |
 
 <br/>
 
