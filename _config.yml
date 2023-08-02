@@ -1,5 +1,5 @@
 coderay:
-  coderay_line_numbers: ''
+  coderay_line_numbers: ""
 defaults:
   - scope:
       path: "" # an empty string here means all files in the project
@@ -12,6 +12,7 @@ kramdown:
   syntax_highlighter: rouge
 markdown: kramdown
 name: Vishnu's Personal Website
+title: Vishnu's Personal Website
 plugins:
   - jekyll-sitemap
 url: "https://vishnu.uk"

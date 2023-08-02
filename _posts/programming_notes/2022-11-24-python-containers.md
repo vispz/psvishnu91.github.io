@@ -289,3 +289,138 @@ Out: True
 dsu.is_connected(5,3)
 Out: False
 ```
+
+### Tries
+Trie (or Prefix-Tree) is a DS used to store strings. It allows for efficiently searching
+strings by their prefix. Autocomplete is perhaps the primary use case.
+
+The operations provided by the datastructure are
+
+- `O(n)` is the average/worst-case time complexity of insertion of a new string.
+- `O(n)` searching for a string of length `n`.
+- `O(n)` listing strings based on a prefix of length `n`.
+
+{: .code title="Implementation of Trie in Python" .x}
+``` python
+"""208. Implement Trie (Prefix Tree)
+
+https://leetcode.com/problems/implement-trie-prefix-tree/
+
+Logic
+-----
+Use a dict of child_char -> children_dict. Add characters iteratively
+and find iteratively. Start with a sentinel root node.
+
+NOTE: Original implementation uses list/arrays and not dicts. This can
+be easily converted to a list of lists.
+
+words: apple, app, be
+
+Root node   {'a':  , 'b':}
+              /        \
+          {'p':}        {'e': }
+           /                \
+         {'p':}             {'E': {}}
+         /
+        {'l': , 'E': {}}
+        /
+      {'e':}
+      /
+      {'E': {}}
+
+The trie is maintained by a dict where each key is
+a child character which contains a dict of it's child_char -> children_dict.
+
+Every time we get a new a word
+1. We add `E` to the end (to mark that it's the end of a complete word).
+2. We recurse/iterate over nodes as long as characters in the string exist as nodes in
+    the trie tree. When we run out of matching nodes, we simply append new nodes.
+"""
+
+class Trie:
+
+    def __init__(self):
+        self.root = {}
+
+    def insert(self, word: str) -> None:
+        """
+        R - a - p - p - l - e - E
+                \
+                 l - e - E
+        Tests
+        =====
+        1. appE, wlen = 4
+           0123
+        node    ix  c
+        {S}     0   a
+        {a}     1   p
+        {p}     2   p
+        {p }    3   E
+        {E}     4
+
+        2. apleE, wlen = 5
+           01234
+        node    ix  c
+        {S}     0   a
+        {a}     1   p
+        {p}     2   l
+        {l}
+        """
+        word = word + "E"
+        ix, node, wlen = 0, self.root, len(word)
+        # Walk through existing nodes
+        while ix < wlen:
+            c = word[ix]
+            if c not in node:
+                break
+            node = node[c]
+            ix += 1
+        # Create missing nodes
+        while ix < wlen:
+            c = word[ix]
+            node[c] = {}
+            node = node[c]
+            ix += 1
+
+    def search(self, word: str) -> bool:
+        return self.startsWith(prefix=word+'E')
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Tests
+        =====
+        1. app: plen = 3
+        012
+        node    ix  c
+        {S}     0   a
+        {a}     1   p
+        {p}     2   p
+        {p}     3
+
+        2. al: plen = 2
+        01
+        node    ix  c
+        {S}     0   a
+        {a}     1   l
+        {l}
+        """
+        node = self.root
+        for c in prefix:
+            if c not in node:
+                return False
+            node = node[c]
+        else:
+            # We iterated through the entire word and found no
+            # missing character
+            return True
+
+# Testing
+# -------
+trie = Trie()
+trie.insert("apple")
+print(trie.search("apple"))   # return True
+print(trie.search("app"))     # return False
+print(trie.startsWith("app")) # return True
+trie.insert("app")
+print(trie.search("app"))     # return True
+```
