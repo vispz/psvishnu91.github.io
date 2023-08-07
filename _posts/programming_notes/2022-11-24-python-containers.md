@@ -25,9 +25,6 @@ a bonus, I have included
 
 ### `sortedcontainers` library
 
-A balanced binary search tree can be thought of as a dynamic sorted list which supports
-insertions and deletions in $$O(\log(n))$$ time when a sorted list would take $$O(n)$$.
-
 Python does not have a balanced binary tree implementation. If you are coming from Java
 land, you can use `TreeMap => sc.SortedDict` and
 `TreeSet => sc.SortedList or sc.SortedSet`.
@@ -43,13 +40,13 @@ are the same. `SortedDict`, `SortedSet` internally contain a `hashmap` and a `ha
 respectively.
 
 | Operation | Time Complexity |
-|-----------|-----------------|
+|:-----------|:-----------------:|
 | Contains | List: $$O(\log n)$$, Set, Dict $$O(1)$$ |
 | Add item | $$O(\log n)$$    |
 | Pop item with key or index | $$O(\log n)$$    |
 | Peek item with index | $$O(\log n)$$    |
 | bisect_left, bisect_right (see [bisect section](#bisect-library))| $$O(\log n)$$|
-| Get index of element in list or key in Map| $$O(\log n)$$ _same as `bisect_left`_|
+| Get index of element in list or key in Map (Rank)| $$O(\log n)$$|
 | Get item with key (Map only) | $$O(1)$$    |
 | Print in sorted fashion | $$O(n)$$    |
 
@@ -104,13 +101,13 @@ min object. Heaps represent a binary tree but are internally stored as arrays.
 - $$O(n)$$ heapify, convert a list of unsorted numbers to one with heap properties.
 - $$O(\log n)$$ random element deletion. This is not a guarantee, some heap
     implementations may internally store a hashmap of number to index on the array
-    and hence can provide this guarantee. However, most heads do not provide this
-    property and you are better off using balanced binary trees.
+    and hence can provide this guarantee. However, most heaps do not provide this
+    property and you are better off using balanced binary search trees.
 
 **Heap internals:**
 The array storing the min-heap represents a binary tree where element at index, `i`
-is the parent of the element at indices `2*i` and `2*i + 1`. The heap invariant is that
-the parent is always smaller than both children.
+is the parent of the element at indices `2*i + 1` and `2*i + 2`. The heap invariant is that
+the parent is always smaller than or equal to both children.
 
 ``` python
 In [1]: import heapq
@@ -148,10 +145,10 @@ Out[12]: [9, 7]
 
 ### Stack / Queue
 There's two ways to implement stacks and queues. One with arrays and the
-other is with linkedlists. In an interview it makes no sense to implement a full blown
-stack interface with arrays, so might be best to use a linkedlist via `deque` instead.
-In practice, `dequeue` are a bit more heavy duty than what we need as they are
-threadsafe but ¯\\\_(ツ)\_/¯
+other is with linkedlists. On `list` vs `deque`, the
+recommendation is `deque`; see [this response](https://stackoverflow.com/a/23487658)
+from Raymond Hettinger on SO. In practice, `deque` is a bit more heavy duty than what
+we need as they are threadsafe but ¯\\\_(ツ)\_/¯
 
 #### Stack interface
 ``` python
@@ -180,6 +177,7 @@ In otherwords, leftmost occurrence `bisect_left`, rightmost occurrence `bisect_r
 
 ``` python
 a = [1,2,3,3,5,5,5,6]
+# ix 0 1 2 3 4 5 6 7
 In : bisect.bisect_left(a, 3)
 Out: 2
 
@@ -225,7 +223,7 @@ The operations provided by the datastructure are
 - Amortised O(1) Union two sets.
 - Amortised O(1) Find if two sets are connected
 
-We can add other amortised O(1) operations like finding the maximum or minimum
+We can add other amortised O(1) operations like finding the maximum
 size amongst disjoint sets.
 
 > The actual time complexity is $$O(\alpha(n))$$ where $$\alpha$$ is the inverse
@@ -242,7 +240,7 @@ class DisjointSetUnion:
         """
         # Everyone's their own parent at the beginning
         self.parent = list(range(n))
-        self.rank = [1] * n
+        self.size = [1] * n
 
     def find_leader(self, x: int) -> int:
         """Finds the leader of x and also moves all of x's parents directly under
@@ -257,41 +255,45 @@ class DisjointSetUnion:
         return self.parent[x]
 
     def union(self, x: int, y: int) -> None:
-        """Joins sets containing x and y. If set(x) is higher rank ie., taller tree than
-        set(y), y will go under x and vice-versa. If they are of the same rank or height
-        then we pick one randomly but also update the rank as the height has increased.
+        """Joins sets containing x and y. If set(x) is higher size ie., taller tree than
+        set(y), y will go under x and vice-versa. If they are of the same size ie., height
+        then we pick one randomly.
         """
         leader_x = self.find_leader(x=x)
         leader_y = self.find_leader(x=y)
-        if self.rank[leader_x] > self.rank[leader_y]:
+        if leader_x == leader_y:
+            return
+        if self.size[leader_x] >= self.size[leader_y]:
             self.parent[leader_y] = leader_x
-        elif self.rank[leader_x] < self.rank[leader_y]:
-            self.parent[leader_x] = leader_y
+            self.size[leader_x] += self.size[leader_y]
         else:
             self.parent[leader_x] = leader_y
-            self.rank[leader_y] += 1
+            self.size[leader_y] += self.size[leader_x]
 
-    def is_connected(self, x: int, y: int):
+    def is_connected(self, x: int, y: int) -> bool:
         return self.find_leader(x=x) == self.find_leader(x=y)
 ```
 
 #### Test
 ```python
-dsu = DisjointSetUnion(n=10)
-dsu.union(x=2,y=3)
-dsu.union(x=2,y=3)
-dsu.union(x=4,y=3)
-dsu.union(x=4,y=9)
-dsu.union(x=5,y=7)
+dsu = DSU(n=10)
+_print()
+for x, y in [
+    (2, 3),
+    (2, 3),
+    (4, 3),
+    (4, 9),
+    (5, 7),
+]:
+    print(f"Union({x}, {y})")
+    dsu.union(x=x,y=y)
+    print(f"dsu.parent:\t{dsu.parent}")
+    print(f"dsu.size:\t{dsu.size}")
+    print()
 
-dsu.is_connected(5,7)
-Out: True
-
-dsu.is_connected(4,3)
-Out: True
-
-dsu.is_connected(5,3)
-Out: False
+print(f"{dsu.is_connected(5,7)=}")  # True
+print(f"{dsu.is_connected(4,3)=}")  # True
+print(f"{dsu.is_connected(5,3)=}")  # False
 ```
 
 ### Tries
@@ -302,7 +304,6 @@ The operations provided by the datastructure are
 
 - `O(n)` is the average/worst-case time complexity of insertion of a new string.
 - `O(n)` searching for a string of length `n`.
-- `O(n)` listing strings based on a prefix of length `n`.
 
 {: .code title="Implementation of Trie in Python" .x}
 ``` python
@@ -315,8 +316,10 @@ Logic
 Use a dict of child_char -> children_dict. Add characters iteratively
 and find iteratively. Start with a sentinel root node.
 
-NOTE: Original implementation uses list/arrays and not dicts. This can
-be easily converted to a list of lists.
+NOTE: Original implementation uses list/arrays and not dicts. So below
+we have both implementations. The dict is easier to understand and with
+python optimisation just as fast and just as memory efficient as arrays.
+The list implementation is solely for interviews.
 
 words: apple, app, be
 
@@ -331,14 +334,17 @@ Root node   {'a':  , 'b':}
       {'e':}
       /
       {'E': {}}
-
 The trie is maintained by a dict where each key is
 a child character which contains a dict of it's child_char -> children_dict.
 
-Every time we get a new a word
-1. We add `E` to the end (to mark that it's the end of a complete word).
-2. We recurse/iterate over nodes as long as characters in the string exist as nodes in
-    the trie tree. When we run out of matching nodes, we simply append new nodes.
+Every time we get a new a word gets added
+1. We add `E` to the end.
+2. We iterate over children of root node and keep moving until we
+    have matching children. The moment we run out of matching children
+    we add new nodes.
+
+`Search` we add `E` to the word. We iterate over node until
+    both match if they stop matching we return False.
 """
 
 class Trie:
@@ -417,6 +423,75 @@ class Trie:
             # We iterated through the entire word and found no
             # missing character
             return True
+
+
+class TrieWLists:
+
+    def __init__(self):
+        self.root = TrieWLists._create_node()
+
+    @staticmethod
+    def _create_node() -> list[Optional[list]]:
+        # Supports only lowercase english characters
+        return [None] * 27
+
+    @staticmethod
+    def _to_pos(c: str) -> int:
+        if c == '\0':
+            return 26
+        return ord(c) - ord('a')
+
+    def insert(self, word: str) -> None:
+        """
+        aab
+        [N, N, N]
+         a  b  \0
+        aab
+                [[...]NN]
+                   |
+                 [[...]NN]
+                    |
+                 [N[...]N]
+                     |
+                 [NN[...]]
+        """
+        word = word + '\0'
+        wlen = len(word)
+        node = self.root
+        i = 0
+        # iterate until we don't have an existing match
+        for i in range(wlen):
+            pos = TrieWLists._to_pos(word[i])
+            if node[pos] is not None:
+                node = node[pos]
+            else:
+                break
+        # add new nodes for missing characters
+        for j in range(i, wlen):
+            pos = TrieWLists._to_pos(word[j])
+            node[pos] = TrieWLists._create_node()
+            node = node[pos]
+
+    def search(self, word: str) -> bool:
+        return self.startsWith(word+'\0')
+
+    def startsWith(self, word: str) -> bool:
+        node = self.root
+        for c in word:
+            pos = TrieWLists._to_pos(c)
+            if node[pos] is None:
+                return False
+            else:
+                node = node[pos]
+        else:
+            return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
 
 # Testing
 # -------

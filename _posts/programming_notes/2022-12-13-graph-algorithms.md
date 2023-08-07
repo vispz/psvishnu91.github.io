@@ -29,7 +29,7 @@ Edges are directed or undirected
 
 
 ### Facts
-- **Number of edges:** n-num vertices and m-num edges. For an connected undirected graph
+- **Number of edges:** n-num vertices and m-num edges. For a connected undirected graph
 and with no parallel edges, the min and max number of possible edges is $$(n-1)$$ and
 $$\frac{n(n-1)}{2}$$.
 - Sparse graph vs Dense graph: m is $$\Omega(n)$$ and $$O(n^2)$$. If m is closer to
@@ -240,7 +240,7 @@ A directed graph with no cycles is called a DAG or a Directed Acyclic graph.
 The algorithm uses DFS and 3 sets, `explore`, `visiting` and `done`.
 
 - We add all the nodes to the `explore` set.
-- In the outer wrapper method, while loop until `explore` is empty, call the
+- In the outer wrapper method, while loop until `explore` is not empty, call the
   `_dfs` helper method on any node in `explore`.
 - In `_dfs` helper
   * we move `node` from `explore` to `visiting`
@@ -248,9 +248,9 @@ The algorithm uses DFS and 3 sets, `explore`, `visiting` and `done`.
   neighbours of `node`.
   * If the neighbour is in `done`, we continue
   * If it's in `visiting` that is we were able to reach this neighbour earlier in the
-    recursion we have found a cycle, immediately return `False`.
-  * Otherwise we visit the neighbour. If the neighbour returns `False`, we immediately
-    return `False`.
+    recursion stack we have found a cycle, immediately return `True`.
+  * Otherwise we visit the neighbour. If the neighbour returns `True`, we immediately
+    return `True`.
   * If none of the neighbours have seen a cycle, then we simple move this `node` to the
     `done` set and return `False`.
 
@@ -265,9 +265,9 @@ def has_dag_cycle(graph: list[set]) -> bool:
     Sample cyclic input::
         [{2}, {0}, {3}, {1}]
 
-        [1] -> [0]
-        ^       |
-        |       v
+        [1] ->  [0]
+         ^       |
+         |       v
         [3] <-  [2]
 
     Sample non-cyclic input::
@@ -586,25 +586,125 @@ find_paths(graph=graph, src='BB', end='JJ')
 
 ### Dijkstra's shortest path algorithm
 
-Dijkstra's algorithm finds the shortest path between two nodes where edges have non
-negative lengths. The shortest path is the path with the smallest sum of edge lengths
-connecting the source to the target node.
+Dijkstra's algorithm finds the shortest path from a source node to other nodes in a
+weighted edge graph. If the weight was 1 for all the edges, we can simply use BFS.
+Dijkstra's algorithm assumes that edges lengths are non-negative. Dijkstra's is a Greedy
+algorithm. In Dijkstra's, once a node is visited, we are guaranteed to have its shortest
+distance from source.
 
-> Dijkstra's algorithm assumes that edges lengths are non-negative.
+**Rough sketch of the algo:**
+1. You are given a graph and a source node.
+2. Instantiate
+   1. `dist` (`dict`) => node -> shortest dist from source (initially `0` for src and `∞` for the rest)
+   2. `parent` (`dict`) => node -> parent_node in the shortest path (initially `None`)
+   3. `visited` (`set`) => initially empty, all the nodes visited already.
+   4. `heap` => Containing a tuple of (dist_from_src, node) where dist_from_src is the
+        ***current*** shortest distance of the node from source (initially `[(0, src)]`).
+3. While the `heap` is not empty and `visited.size < graph.size`: \
+    We pop nodes from the heap, and mark it as visited. We now explore the frontier, ie.,
+    all the neighbours. If the adj not in visited and the dist from source through this
+    cur node is shorter than the previous shortest path, we update the `dist[adj]` and
+    `parent[adj]`. We also `heap.push((dist[adj], adj))`.
 
-BFS provides the shortest path if the edge lengths are 1.
+> Caveat: Ideally, whenever we find a shorter path for a node already in the
+> heap, we would like to delete it from the heap and push a new tuple `(shorter_dist, node)`
+> into the heap. However, at least in python, the standard implementation doesn't keep
+> track of the node positions in the heap array. \
+> We instead merely reinsert the existing node with the shorter distance, which will
+> "bubble up" to the top of the heap. We will ignore the duplicate entry using the
+> `visited` set check.
+
+Time complexity: $$O(E \log V)$$. Todo explain.
 
 
-### Graph min cuts
+{: .code title="Dijkstra's Shortest Path Algorithm" .x}
+``` python
+import heapq
 
-The goal is to split the graph of n-vertices into two non-empty sets A, B such that we have
-the least number of crossing edges. Min cut problem allows for _parallel edges_.
+def dijkstra(
+    graph: dict[str, dict[str, float]],
+    src: str,
+    verbose: bool = False,
+) -> dict:
+    """Returns shortest distance and parent nodes in the shortest path from source.
 
-{% include image.html id="/assets/Images/posts/programming_notes/graph-cut.png" width="80%" %}
+    Dijkstra is very similar to BFS. Instead of a queue, we use a priority queue, where
+    the priority is set by the dist from the source.
 
-For undirected graphs these are any edges from vertices in set A to B or vice-versa.
-For directed graphs, we only count edges from A to B, i.e., tail in A and head in B.
+    :param graph: A map of node -> {neib: edge_wt}
+    """
+    dist = {
+        n: float('inf') if n != src else 0.
+        for n in graph
+    }
+    parent = {n: None for n in graph}
+    heap = [(0, src)]
+    visited = set()
+    while heap and len(visited) < len(graph):
+        _, node = heapq.heappop(heap)
+        if node in visited:
+            continue
+        visited.add(node)
+        for adj, d2adj in graph[node].items():
+            if adj in visited:
+                continue
+            this_dist = dist[node] + d2adj
+            if dist[adj] > this_dist:
+                dist[adj] = this_dist
+                parent[adj] = node
+                heapq.heappush(heap, (this_dist, adj))
+        if verbose:
+            print(f"Visited{node=} \t {heap=}")
+    return {"dist": dist, "parent": parent}
 
-For a graph with n-nodes, we have have $$2^n-2$$ different cuts. This is because each
-node is a binary variable with two options, node 1 or node 2. We have a minus two because
-the empty set cases are disallowed (all are in set A or all are in set B).
+
+def get_shortest_path(graph, src, dst) -> list[str]:
+    # Edge case handling
+    if src == dst:
+        # Same node
+        return [src]
+    # Edge case: not connected
+    dijkstra_res = dijkstra(graph=graph, src=src)
+    s2d_dist = dijkstra_res["dist"][dst]
+    print(f"Distance: {s2d_dist}")
+    if s2d_dist == float('inf'):
+        # Not connected
+        return []
+    # Trace path
+    parent = dijkstra_res["parent"]
+    path_rev = []
+    cur_node = dst
+    while cur_node is not None:
+        path_rev.append(cur_node)
+        cur_node = parent[cur_node]
+    return list(reversed(path_rev))
+```
+
+> Credit for the image below [https://youtu.be/pVfj6mxhdMw](https://youtu.be/pVfj6mxhdMw)
+{% include image.html id="/assets/Images/posts/programming_notes/dijkstra.png" width="50%"%}
+``` python
+# Test
+graph = {
+    'A': {'B': 6, 'D': 1},
+    'B': {'A': 6, 'D': 2, 'E': 2},
+    'C': {'B': 5, 'E': 5},
+    'D': {'A': 1, 'B': 2, 'E': 1},
+    'E': {'B': 2, 'D': 1, 'C': 5},
+}
+print(dijkstra(graph=graph, src='A', verbose=True))
+"""
+Visitednode='A' 	 heap=[(1.0, 'D'), (6.0, 'B')]
+Visitednode='D' 	 heap=[(2.0, 'E'), (6.0, 'B'), (3.0, 'B')]
+Visitednode='E' 	 heap=[(3.0, 'B'), (6.0, 'B'), (7.0, 'C')]
+Visitednode='B' 	 heap=[(6.0, 'B'), (7.0, 'C')]
+Visitednode='C' 	 heap=[]
+{'dist': {'A': 0.0, 'B': 3.0, 'C': 7.0, 'D': 1.0, 'E': 2.0},
+ 'parent': {'A': None, 'B': 'D', 'C': 'E', 'D': 'A', 'E': 'D'}}
+"""
+
+get_shortest_path(graph=graph, src='A', dst='C')
+"""
+Distance: 7.0
+['A', 'D', 'E', 'C']
+"""
+```
