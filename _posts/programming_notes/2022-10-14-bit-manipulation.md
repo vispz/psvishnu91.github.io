@@ -194,3 +194,10 @@ For below remember `i` begins at `0`.
 1. Checking if `i-th` bit is set: `x & (1 << i)`
 2. Setting the `i-th` bit (setting it to `1`): `x | (1 << i)`
 3. Clearing the `i-the` bit (setting it to `0`): `x & (~(1 << i))`
+
+## Make python understand that MSB is sign-bit
+``` python
+# if num is 32 bit int, largest possible value is 2^31 - 1
+if lone >= (1 << 31):
+    lone = lone - (1 << 32)
+```

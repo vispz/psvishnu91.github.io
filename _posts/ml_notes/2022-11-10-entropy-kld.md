@@ -89,7 +89,7 @@ $$x$$ from $$p(x)$$ using a coding scheme optimised for $$q(x)$$ instead of $$p(
 
 **Discrete case**
 
-$$D_{KL}(p(x)||q(x)) =  \sum_{x \in X} \left\{ P(x) \log p(x) - P(x) \log q(x) \right\} =  \sum_{x \in X} P(x) \log \frac{p(x)}{q(x)}$$
+$$D_{KL}(p(x)||q(x)) =  \sum_{x \in X} \left\{ p(x) \log p(x) - p(x) \log q(x) \right\} =  \sum_{x \in X} p(x) \log \frac{p(x)}{q(x)}$$
 
 **Continuous case**
 
@@ -139,7 +139,7 @@ gives the **extra bits** needed. This is our definition of KL-Divergence.
 Hence, we can decompose KL-Divergence into the entropy of the true unknown distribution $$p(x)$$
 plus the cross entropy of $$q(x)$$ with respect to the true distribution $$p(x)$$.
 While learning a model, we try to figure out the parameters $$\left(\Theta\right)$$ of our model defining $$q_{\Theta}(x)$$
-which minises our loss. The parameters of the model do not affect the true probability
+which minimises our loss. The parameters of the model do not affect the true probability
 distribution $$p(x)$$, so
 
 $$
@@ -243,8 +243,9 @@ that simply predicts the mean of the labels.
 
 **The smaller the number the better.** The idea is that the denominator is predicting the
 average and if your model is doing worse using features than predicting the average
-class probability then you are better off just predicting the average. For the homepage
-and searchpage example discussed above this will be 1 in both cases.
+class probability then you are overfitting to noise and you are better off just
+predicting the average. For the homepage and searchpage example discussed above this
+will be 1 in both cases.
 
 $$ \text{NE} = \frac{-\frac{1}{N} \sum_{i=1}^n(y_i\log(p_i) + (1-y_i)\log(1-p_i))}{-(p\log(p) + (1-p)\log(1-p))} $$
 

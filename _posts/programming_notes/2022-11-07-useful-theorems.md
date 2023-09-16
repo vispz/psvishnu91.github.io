@@ -1,5 +1,5 @@
 ---
-title: Useful theorems
+title: Useful Formulas & Theorems
 blog_type: programming_notes
 excerpt: Theorems for coding interviews.
 layout: post_with_toc
@@ -66,11 +66,62 @@ def gcd(a, b):
     return gcd(b % a, a)
 ```
 
-## Sum of natural numbers
+## Sum of series
 
+### Natural numbers
 $$
 \begin{align*}
 1 + 2 + 3 ... + n = \sum_k^n k &= \frac{n(n+1)}{2}\\
 1^2 + 2^2 + 3^2 ... + n^2 = \sum_k^n k^2 &= \frac{n(n+1)(2n+1)}{6}
 \end{align*}
 $$
+
+### Geometric series
+$$
+\begin{align*}
+1 + r + r^2 \ldots + r^k &= \frac{1-r^(k+1)}{1-r}, r\neq 1 \\
+1 + r + r^2 \ldots + r^k &\leq \frac{1}{1-r}, r < 1 \\
+                         &\leq r^k \left(1 + \frac{1}{r-1}\right), r>1
+\end{align*}
+$$
+
+Inequalities tell us that when
+- $$r < 1$$, first value dominates and the total is upper bounded by a constant.
+- $$r > 1$$, the sum is a constant times the highest power in the series
+
+### Other series
+$$
+\begin{align*}
+1 + \frac{1}{2} + \frac{1}{3} + \ldots +\frac{1}{n} = \sum_{r=1}^n \frac{1}{r} &\approx \log n
+\end{align*}
+$$
+
+## Permutations & Combinations
+
+### 1.a Permutations
+Number of ways to seat $$n$$ persons in $$n$$ positions:
+$$P(n) = n!$$
+
+For instance 4 persons A, B, C, and D in 4 chairs:
+$$P(4) = 4!$$
+
+
+### 1.b Permutations
+
+Number of ways to seat $$n$$ persons in $$r$$  positions.
+$$nP_r = \frac{n!}{(n-r)!}$$
+
+For instance 5 persons A, B, C, D, and E in 2 chairs.
+$$5P_2 = \frac{5!}{3!} = 5 \times 4$$
+
+Another way to see this is, the first chair there are 5 options and for each of those 5 options we have 4 options.
+
+{% include image.html id="/assets/Images/posts/programming_notes/perm.png" width="100%" %}
+
+### 2. Combinations
+
+We have $$r$$ seats, what is the number of ways to choose $$r$$ people to seat from $$n$$ people? We don't care about the order in which they sit. This is the number of ways we can seat $$n$$ people in $$r$$ seats ($$nP_r$$) divided by the number of ways we can arrange $$r$$ people in $$r$$ seats.
+
+Say we have 6 people and 3 seats. Number of ways we can choose 3 amongst the 6 to seat is number of different ways we can seat the 6 people in 3 chairs $$6P_3$$ divided by the number of ways we can arrange 3 people in 3 seats ie., $$3!$$; $$6C_3 = \frac{6!}{3!3!}$$.
+
+$$nC_r = \frac{nP_r}{r!} = \frac{n!}{r! (n-r)!}$$

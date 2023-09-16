@@ -28,13 +28,75 @@ $$
 \end{cases}
 $$
 
+The three scenarious above are
+1. $$a = b^d$$ \
+   Work done in each level of the recursion tree is the same. That is the number of
+   subproblems expansion and the reduction of the work due to the shrinking of the
+   problem size match exactly (in Big-O). WKT that the work done in the root is $$O(n^d)$$
+   and that there are $$\log_b n$$ levels giving us a time complexity of $$O(n^d \log_b n)$$.
+2. $$ a < b^d $$ \
+  The work done in each level is decreasing and the root dominates the work
+   as the rate at which the subproblems shrink dominates the number of subproblem proliferation.
+   The work done at the root is $$O(n^d)$$.
+3. $$ a > b^d $$ \
+   The work increases in each level as the number of subproblem proliferation
+   grows faster than the work reduction from problem size shrinking. So the work at the
+   leaves dominate and as such we expect the running time to be proportional to the number of leaves.
+   According time complexity is $$O(\#leaves) = O(a^{\text{last_level}}) = O(a^{\log_b n}) = O(n^{\log_b{a}}) $$.
+
 **Recursion tree method**<br/>
 <a href="/assets/Images/posts/programming_notes/recursion-tree-master-method.png">
     <img src="/assets/Images/posts/programming_notes/recursion-tree-master-method.png" alt="Recursion tree master method" width="50%"/>
 </a>
 
 
-## Quicksort
+## Sorting
+
+### Merge sort
+
+{: .code title="Merge Sort in Python" .x}
+```python
+def merge_sort(arr: list[int]):
+    """Merge in place"""
+    n = len(arr)
+    # Mergesort requires O(n) extra space
+    temp = [None] * n
+    return _merge_sort_rec(lt=0, rt=n-1, arr=arr, temp=temp)
+
+
+def _merge_sort_rec(lt, rt, arr, temp):
+    if lt >= rt:
+        return
+    mid = (lt + rt)//2
+    _merge_sort_rec(lt=lt, rt=mid, arr=arr, temp=temp)
+    _merge_sort_rec(lt=mid + 1, rt=rt, arr=arr, temp=temp)
+    _merge(lt=lt, rt=rt, mid=mid, arr=arr, temp=temp)
+
+
+def _merge(lt, rt, mid, arr, temp):
+    i, j = lt, mid + 1
+    for k in range(lt, rt + 1):
+        if i > mid:
+            temp[k] = arr[j]
+            j += 1
+        elif j > rt:
+            temp[k] = arr[i]
+            i += 1
+        elif arr[i] <= arr[j]:
+            temp[k] = arr[i]
+            i += 1
+        else:
+            # arr[j] < arr[i]
+            temp[k] = arr[j]
+            j += 1
+    arr[lt:rt+1] = temp[lt:rt+1]
+
+
+arr = [3, 1, -1, 7, 0, 4, 5, 3, 0]
+merge_sort(arr)
+print(arr) # [-1, 0, 0, 1, 3, 3, 4, 5, 7]
+```
+### Quicksort
 Average run time $$O(n \log n)$$ and worst case running time $$O(n^2)$$. The running time of quicksort depends on the choice of the pivot element. For instance, if the pivot element chosen is the first element and the array is already sorted, then the running time will be $$O(n^2)$$. This is because in each step of the recursion, array is split into a left (smaller) subarray of size 0 and right subarray of size (n-i) where is the index of this pivot. The left recursion does no work, whereas in each right recursion, we recurse through $$n-1,n-2,...1$$ elements which is quadratic time.
 
 If at every iteration we pick the **median** as the pivot element, then the array will get perfectly split into two arrays of size $$n/2$$. This will perfectly match the mergesort situation ergo running in $$\theta(n \log n)$$ time.
@@ -44,6 +106,44 @@ Even if we can choose a pivot that splits the problem into say 25-75 split, the 
 <a href="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png">
 <img src="/assets/Images/posts/programming_notes/unequal-subprobs-rec-tree-method.png" alt="Recursion Tree unequal subproblems quicksort" width="50%"/>
 </a>
+
+{: .code title="Randomised Quicksort in Python" .x}
+``` python
+import random
+
+def quicksort(arr) -> None:
+    """Sorts in-place"""
+    qs_rec(arr=arr, lt=0, rt=len(arr)-1)
+
+def qs_rec(arr, lt, rt):
+    if lt >= rt:
+        return
+    # This partitions and places the pivot in the rightful place
+    pivot_ix = partition(arr=arr, lt=lt, rt=rt)
+    qs_rec(arr=arr, lt=lt, rt=pivot_ix-1)
+    qs_rec(arr=arr, lt=pivot_ix+1, rt=rt)
+
+def partition(arr, lt, rt):
+    """Choosen a random pivot and partition the array such that all elements less than
+    the pivot are to the left and greater than are to the right of the pivot.
+    """
+    # choose a random pivot and move it to the front
+    pivot_ix = random.randint(lt, rt)
+    pivot = arr[pivot_ix]
+    arr[pivot_ix], arr[lt] = arr[lt], arr[pivot_ix]
+    i = lt + 1  # first ix > pivot
+    for j in range(lt + 1, rt + 1):
+        if arr[j] <= pivot:  # arr[j] > pivot: do nothing
+            arr[i], arr[j] = arr[j], arr[i]
+            i += 1
+    # swap the pivot to the correct position
+    arr[lt], arr[i-1] = arr[i-1], arr[lt]
+    return i-1
+
+arr=[4, 5, 1, 1, 3, 1, 2, 0, 5, 7]
+quicksort(arr)
+print(arr)  # [0, 1, 1, 1, 2, 3, 4, 5, 5, 7]
+```
 
 ### Decomposition principle
 
@@ -240,4 +340,34 @@ def inorder(node: Node) -> None:
     inorder(node.lt)
     print(node.val)
     inorder(node.rt)
+```
+
+
+## Binary search
+### Insort
+```python
+
+def insort(a, x):
+    n = len(a)
+    lt, rt = 0, n - 1
+    while lt <= rt:
+        mid = (lt + rt) // 2
+        if a[mid] == x:
+            rt = mid
+            break
+        elif a[mid] > x:
+            rt = mid - 1
+        else:
+            # a[mid] < x:
+            lt = mid + 1
+    a.insert(rt+1, x)
+    return a
+
+ a = [1,2,3,4,5]
+
+ insort(a, 2.3)
+ insort(a, 88)
+ insort(a, 0)
+ insort(a, 4.5)
+ # Out:  [0, 1, 2, 2.3, 3, 4, 4.5, 5, 88]
 ```

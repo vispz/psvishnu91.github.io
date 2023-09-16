@@ -21,7 +21,7 @@ These are notes taken during the following courses/videos
   - If p then q; example if figure is a rectangle then it is a square (needn't be true)
   - **If hypothesis is true, then contrapositive is true. If converse is true, then inverse is true.**
   - Hyp: p -> q; Converse: q -> p; Inverse ~p -> ~q; Contrapositive ~q -> ~p
-  - _Converse_: if figure is a square then it is rectangle. _Inverse:_ if shape is not a squre, then it not a rectangle.
+  - _Converse_: if figure is a square then it is rectangle. _Inverse:_ if shape is not a rectangle, then it not a square.
   - _Contrapositive_: If figure is not a square, then it is not a rectangle.
 
 ## Coordinate frame and transformation matrices
@@ -81,7 +81,7 @@ All the output space (all the output vectors $$v$$ of $$Ax = v$$)of your matrix 
 
 > **_NOTE:_** For full rank matrices only the $$0$$ input vector ($$x$$) can produce the $$0$$ output vector $$v$$. There's is always a unique input vector what maps to an output vector. For lower rank matrices, many input vectors can fall on the zero ouptut vector. The set of input vectors $$\{x\}$$ what fall on the origin or $$0$$ output vector $$v$$ is called the **Null Space** or the **Kernel** of the matrix.
 
-> **The row space** is the space spanned by the row vectors of a matrix. For instance 2x3 matrix spans a 2D space. Say we have 2 linearly independent vectors, then the null space of this 2x3 matrix will be a **line what is perpendicular** to both the row vectors. This can be seen from the definition of the null space. It is the space where the input vectors are mapped to the zero vector. So the dot product of a row vector and the input vector is zero, in other words it's perpendicular. For an $$m \times n$$, matrix the row space sits in a n-dimensional space. If the rank of the matrix is r, then the null space is $$n-r$$ dimensional subspace what is perpendicular to the space r dimensional space spanned by the row vectors.
+> **The row space** is the space spanned by the row vectors of a matrix. For instance 2x3 matrix spans a 2D space. Say we have 2 linearly independent vectors, then the null space of this 2x3 matrix will be a **line that is perpendicular** to both the row vectors. This can be seen from the definition of the null space. It is the space where the input vectors are mapped to the zero vector. So the dot product of a row vector and the input vector is zero, in other words it's perpendicular. For an $$m \times n$$, matrix the row space sits in a n-dimensional space. If the rank of the matrix is r, then the null space is $$n-r$$ dimensional subspace what is perpendicular to the space r dimensional space spanned by the row vectors.
 
 ## Rectangular matrices and losing dimensions
 
@@ -104,9 +104,9 @@ Both injective and bijective
 
 ### Square matrix
 
-A square matrix is either bijective or is neither injective or surjective. If a square matrix is full rank, then every input vector in the input space maps to a unique vector in the output space (injective). Since the input is the entire n-dim input space, and every vector maps to a unique output vector in the same n-dim output space, the output has to span the entire n-dim output space (surjective).
+A square matrix is either bijective or is neither injective nor surjective. If a square matrix is full rank, then every input vector in the input space maps to a unique vector in the output space (injective). Since the input is the entire n-dim input space, and every vector maps to a unique output vector in the same n-dim output space, the output has to span the entire n-dim output space from the pigeon-hole principle (surjective).
 
-If the matrix is not full rank, then at least one dimension will be lost. Now many input vectors have to map to a single output vector (the input space of n-dim is larger than the output space of < n-dim>) (not 1-1). And at least one of the dimensions of the output space unreachable (not onto).
+If the matrix is not full rank, then at least one dimension will be lost. Now many input vectors have to map to a single output vector (the input space of n-dim is larger than the output space of < n-dim) (not 1-1). And at least one of the dimensions of the output space unreachable (not onto).
 
 ### Non square matrix
 
@@ -115,7 +115,7 @@ Say the matrix is rectangular of shape $$m \times n$$.
 If it is full rank, i.e., $$rank = min \{m,n\}$$, then the matrix is. There are 2 possibilities:
 
 - m > n, injective: We are sending lower dimensional space to higher dimension (say 3x2 matrix, we are mapping to 2-D space to 3-D). We will span a plane slicing through the origin in this 3-D space. This will be injective but not surjective.
-- m < n, surjective: We are sending higher dimensions to lower dimensions (say 2x3 matrix, we are mapping to 3-D space to 2-D, 3 basis vectors are mapped to three 2-D basis vectors). One of the dimensions is collapsed. For 3-D, we can collapse either into a plane, line or a point. Here all of the smaller output space is spanned but many input vectors will map to the same output vector. Hence, this will be surjective but not injective. Also we will have a null space of cardinality greater than 1 (0 vector).
+- m < n, surjective: We are sending higher dimensions to lower dimensions (say 2x3 matrix, we are mapping to 3-D space to 2-D, 3 basis vectors are mapped to three 2-D basis vectors). One of the dimensions is collapsed. For 3-D, we can collapse either into a plane, line or a point. Here all of the smaller output space is spanned but many input vectors will map to the same output vector. Hence, this will be surjective but not injective. Also we will have a null space of cardinality greater than 1 (not just the $$\mathbf{0}$$ vector).
 
 If $$rank < min \{m, n\}$$, neither injective or surjective:
 
@@ -123,6 +123,24 @@ If $$rank < min \{m, n\}$$, neither injective or surjective:
 - m < n: Mapping to lower dimension. Since rank is less than m, we can't even span the lower dimensional output space. Can't be surjective.
 
 ## Dot product
+
+> cosine rule $$c^2 = a^2 + b^2 - 2 a b cos \theta$$, where $$\theta$$ is the angle
+> between the sides $$a$$ and $$b$$.
+
+**Scalar projection** \
+Scalar projection of $$\mathbf{s}$$ onto $$\mathbf{r}$$
+
+$$\text{scalar projection} = \frac{\mathbf{r . s}}{|\mathbf{r}|} = |\mathbf{s}| cos \theta$$
+
+**Vector projection** \
+Vector projection of $$\mathbf{s}$$ onto $$\mathbf{r}$$
+
+$$\begin{align*}
+\text{vector projection} &= \frac{\mathbf{r . s}}{\mathbf{r.r}} \mathbf{r} \\
+                         &= \text{scalar projection} \times \mathbf{\hat{r}}
+\end{align*}
+$$
+
 
 Why is dot product the projection? Imagine we have an arbitrary line passing through the origin in 2-D. Let the unit vector along this line be $$\widehat{u}$$. The coordinates of $$\widehat{u}$$ are $$\begin{bmatrix} u_x \\ u_y \end{bmatrix}$$. Now let's project the unit vectors $$\widehat{i}$$ onto the line with unit vector $$\widehat{u}$$. Because both are $$\widehat{i}$$ and $$\widehat{u}$$ are unit vectors, the projection of $$\widehat{i}$$ onto $$\widehat{u}$$ is the same as $$\widehat{u}$$ onto $$\widehat{i}$$ which is $$u_x$$. Similarly projection of $$\widehat{j}$$ onto $$\widehat{u}$$ is $$u_y$$. The projection of the 2-D space onto the line is given by the matrix with column vectors of where the unit vectors land, which is simply $$T = \begin{bmatrix}u_x & u_y\end{bmatrix}$$. This is clearly the unit vector transpose. Now in order to project (or transform) any vector $$v$$ in the 2-D space onto the line and represent the output in the original space we simply have to compute $$Tv$$ which is a scalar. Use these as coordinates of the unit vectors in the new space which is simply $$\widehat{u}$$.
 
@@ -151,7 +169,7 @@ This can obviously be extended to n dimensions. Say I have a set of features in 
 
 Say
 
-- $$X$$ is original feacture matrix (each column is a feature).
+- $$X$$ is original feature matrix (each column is a feature).
 - $$V$$ is the matrix with the new orthonormal basis vectors as columns.
 
 Then simply $$X^{\prime} = XV$$ will transform $$X$$ in to the new space. In other words, each row of $$X^{\prime}$$ will contain the coordinates of each data point's coordinates in the new coordinate frame.

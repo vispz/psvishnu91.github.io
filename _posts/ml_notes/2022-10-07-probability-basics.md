@@ -21,7 +21,7 @@ Let $$ X_1, X_2, \cdots, X_n $$ be random variables defined in the same sample s
 
 $$ E\left[\sum_{j=1}^n X_j\right] = \sum_{j=1}^n E[X_j]$$
 
-Linearity expecations works even in the random variables are not independent. This
+Linearity expecations works even if the random variables are not independent. This
 is certainly not true for products of random variables.
 
 ### Gaussian or Normal distribution
