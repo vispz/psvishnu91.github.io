@@ -48,16 +48,13 @@ $$
 f'(x) = 10x
 $$
 
-### What is a variable?
-Sometimes $$y = f(x)$$ makes sense but $$x = g(y)$$ does not make sense. This is because a function can have only one output. For a single input time, a car will have exactly one speed but for a single speed there could be multiple times where the car was at that speed. In other $$g(y)$$ is not a function but a relation.
-
 ## Total derivative
 
 $$
 \frac{df(x,y,z)}{dt}=\dfrac{\partial f}{\partial x}\dfrac{d x}{d t} + \dfrac{\partial f}{\partial y}\frac{d y}{d t} + \frac{\partial f}{\partial z}\frac{d z }{d t}
 $$
 
-Imagine you want to find the rate of change of temperature faced by a particle wrt to time. The temperature in the space is constant, however the particle is moving in space. So, temperature is a function of x, y, z and these are functions of t.
+Imagine you want to find the rate of change of temperature faced by a particle wrt to time. The temperature in the space does not change with time, however the particle is moving in space. So, temperature is a function of x, y, z and these are functions of t.
 
 ## Jacobian
 If you have $$f(x_1, x_2, x_3, ..., x_n)$$, the Jacobian $$J$$ is given by $$J = \begin{bmatrix} \dfrac{\partial f}{\partial x_1}, \dfrac{\partial f}{\partial x_2}, \dfrac{\partial f}{\partial x_3}, ..., \dfrac{\partial f}{\partial x_n}\end{bmatrix}$$. As a convention this is written as a row vector.
@@ -266,15 +263,15 @@ We find the $$\arg\min$$ of the polynomial by differentiating it and solving the
 
 $$
 \begin{align*}
-g(x_0 + \Delta x) &= f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2 \\
-\partial_{\Delta x} g(x_0 + \Delta x) &= \partial_{\Delta x} \left\{f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2\right\} = 0 \\
+f(x_0 + \Delta x) &= f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2 \\
+\partial_{\Delta x} f(x_0 + \Delta x) &= \partial_{\Delta x} \left\{f(x_0) + f'(x_0)\Delta x + \frac{1}{2} f''(x_0)\Delta x^2\right\} = 0 \\
 0 &= f'(x_0) + f''(x_0) \Delta x  \\
  \Delta x &= - \frac{f'(x_0)}{f''(x_0)}
 \end{align*}
 $$
 
 ### Power series approximations
-$$g(x)$$ is a power series, $$ g(x) = a+bx+bx^2+\ldots$$
+$$g(x)$$ is a power series, $$ g(x) = a+bx+cx^2+\ldots$$
 Hope is to represent or approximate a general function $$f(x)$$ with a polynomial function
 $$g(x)$$.
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/power-series.png" %}
@@ -347,7 +344,7 @@ $$
 It's easy to see how the higher order terms will take on the binomial expansion form.
 
 #### Multivariate
-In a multivariate setting the taylor series can be extrapolates as
+In a multivariate setting the taylor series can be extrapolated as
 
 $$
 \boxed{f(\mathbf{x} + \Delta \mathbf{x}) = f(\mathbf{x}) + \frac{1}{1!}J_f (\Delta \mathbf{x}) + \frac{1}{2!}\Delta \mathbf{x}^T H_f  \Delta \mathbf{x} + \ldots}
@@ -355,7 +352,7 @@ $$
 
 ### Newton-Raphson method
 
-The below is just to inspire iterative methods. Do not spend too much time into understanding this.
+The below is just to inspire iterative methods.
 
 {% include image.html id="/assets/Images/posts/ml_notes/mvariate-calc/newton-method.png" %}
 
