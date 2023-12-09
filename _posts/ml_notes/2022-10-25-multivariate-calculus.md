@@ -440,9 +440,9 @@ def next_step(f, J, H) :
 
 
 ## Lagrange multipliers & constrained optimisation
-<div style="text-align: center">
-{% include youtube.html id="5A39Ht9Wcu0" width="40%" height="100%" %}
-</div>
+
+[This video](https://youtu.be/5A39Ht9Wcu0?si=7XkKNwVRcmuiPcnr) from Texas A&M is quite
+instructive.
 
 Say we have an objective function $$f(x,y)=x^2y$$ that we would like to optimise. However,
 we would like to constraint to solutions which lie on the circle $$g(x,y)=x^2+y^2=a^2$$.
