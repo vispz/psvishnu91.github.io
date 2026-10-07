@@ -241,7 +241,7 @@ depending on if it's balanced. So most operations are $$\theta(height)$$.
     current node. TC is $$\theta(height)$$.
 * **Insertion** is identical to search but we add the new node when
     the search terminates at a Null node.
-    In case of duplicates, we take the conversion of adding to the rightmost position
+    In case of duplicates, we take the convention of adding to the rightmost position
     of the left subtree left of the matching node.  TC is $$\theta(height)$$.
 * To find the **minimum**, we traverse to the leftmost element and similarly to find
   the **maximum** to traverse to the rightmost element of the tree. TC is $$\theta(height)$$.

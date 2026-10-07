@@ -22,6 +22,7 @@ I will merely iterate on implementing the remaining datastructures. As
 a bonus, I have included
 - the bisect library which provides fast binary search.
 - an implementation of a disjoint set union.
+- an implementation of tries.
 
 ### `sortedcontainers` library
 
@@ -171,9 +172,8 @@ Binary search through a sorted array implemented in C.
 
 #### Bisect interface
 * `bisect.bisect_left(arr, target)`: Leftmost occurrence of target, if not found the
-  index immediately left of the first value greater than target.
+  index immediately right of the last element smaller than the target.
 * `bisect.bisect_right(arr, target)`: Index of first element greater than target.
-In otherwords, leftmost occurrence `bisect_left`, rightmost occurrence `bisect_right + 1`.
 
 ``` python
 a = [1,2,3,3,5,5,5,6]
